@@ -1,5 +1,8 @@
 package com.diploma.TicketSystem.user;
 
-enum Role {
 
+public enum Role {
+
+    USER,
+    ADMIN
 }

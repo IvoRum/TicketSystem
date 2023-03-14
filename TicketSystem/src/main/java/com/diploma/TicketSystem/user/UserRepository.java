@@ -1,9 +1,12 @@
 package com.diploma.TicketSystem.user;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
 
-interface UserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByEmail(String email) ;
+import org.apache.catalina.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+    Optional<User> findByEmail(String email);
+
 }
