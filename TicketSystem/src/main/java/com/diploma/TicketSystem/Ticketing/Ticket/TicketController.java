@@ -17,6 +17,7 @@ public class TicketController {
 
     @GetMapping
     public List<Ticket> getTickets(){
+
         return ticketService.getTickets();
     }
 

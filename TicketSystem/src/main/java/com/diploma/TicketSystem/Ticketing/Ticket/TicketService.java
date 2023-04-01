@@ -30,10 +30,6 @@ public class TicketService {
     }
 
     public void updateTicket(Long ticketId, Ticket ticket) {
-//    private Long id;
-//    private String name;//?
-//    private Long number;
-//    private TicketType type;
         Long numbet=ticket.getNumber();
         Ticket updatedTicket=ticketRepository.findById(ticketId).orElseThrow(()->
                 new IllegalStateException("ticket whit id "+ ticketId+" or does not exost")

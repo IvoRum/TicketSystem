@@ -19,8 +19,19 @@ public class TicketType {
     private Long id;
     private String name;
     private String discription;
+    /**
+     * This ticket opttion represents if the ticket hase
+     * a check and uncheked option to fish of the ticket
+     */
     private boolean chekedTicket;
+    /**
+     * Ticket option that represents if the thicket has
+     * any sub articles
+     */
     private boolean subTicket;
+    /**
+     * Shows if the ticket is active or not
+     */
     private boolean active;
 
     public TicketType(TicketTypeBuilder ticketTypeBuilder) {
