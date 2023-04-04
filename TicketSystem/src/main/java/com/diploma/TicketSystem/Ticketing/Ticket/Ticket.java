@@ -3,36 +3,43 @@ package com.diploma.TicketSystem.Ticketing.Ticket;
 import com.diploma.TicketSystem.Ticketing.TicketType.TicketType;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="Ticket")
-class Ticket {
+public class Ticket {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "Ticket_sequence"
-    )
-    @SequenceGenerator(
-            name="Ticket_sequence",
-            sequenceName = "Ticket_sequence",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;//?
     private Long number;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TicketType_id")
-    private TicketType type;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ticket_type")
+    private List<TicketType> type;
 
     Ticket(){}
 
-    public Ticket(Long id, String name, Long number, TicketType type) {
+    /**
+     * Crates a Tickete
+     * @param id
+     * @param name
+     * @param number
+     * @param type
+     */
+    public Ticket(Long id, String name, Long number, List<TicketType> type) {
         this.id = id;
         this.name = name;
         this.number = number;
         this.type = type;
     }
 
-    public Ticket(String name, Long number, TicketType type) {
+    /**
+     * Creates a Ticket
+     * @param name
+     * @param number
+     * @param type
+     */
+    public Ticket(String name, Long number, List<TicketType> type) {
         this.name = name;
         this.number = number;
         this.type = type;
@@ -72,11 +79,11 @@ class Ticket {
         this.number = number;
     }
 
-    public TicketType getType() {
+    public List<TicketType> getType() {
         return type;
     }
 
-    public void setType(TicketType type) {
+    public void setType(List<TicketType> type) {
         this.type = type;
     }
 }

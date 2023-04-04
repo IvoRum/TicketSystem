@@ -4,18 +4,10 @@ import jakarta.persistence.*;
 
 import java.util.List;
 @Entity
-@Table(name = "TicketType")
+@Table(name = "ticket_type")
 public class TicketType {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "Ticket_sequence"
-    )
-    @SequenceGenerator(
-            name="Ticket_sequence",
-            sequenceName = "Ticket_sequence",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String discription;
@@ -34,11 +26,12 @@ public class TicketType {
      */
     private boolean active;
 
-    public TicketType(TicketTypeBuilder ticketTypeBuilder) {
-        this.name=ticketTypeBuilder.getName();
-        this.discription=ticketTypeBuilder.getDiscription();
-        this.chekedTicket=ticketTypeBuilder.isChekedTicket();
-        this.subTicket=ticketTypeBuilder.isSubTicket();
+    public TicketType(String name, String discription, boolean chekedTicket, boolean subTicket, boolean active) {
+        this.name = name;
+        this.discription = discription;
+        this.chekedTicket = chekedTicket;
+        this.subTicket = subTicket;
+        this.active = active;
     }
 
     public Long getId() {
