@@ -27,8 +27,8 @@ public class TicketController {
     }
 
     @PutMapping(path="{ticketId}")
-    public void updateTicket(@PathVariable("ticketId")Long id,
+    public void updateTicket(@PathVariable("ticketName")String name,
                              @RequestBody Ticket ticket){
-        ticketService.updateTicket(id,ticket);
+        ticketService.updateTicket(name,ticket);
     }
 }

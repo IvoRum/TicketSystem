@@ -12,7 +12,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;//?
-    private Long number;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_type")
     private List<TicketType> type;
@@ -23,25 +23,21 @@ public class Ticket {
      * Crates a Tickete
      * @param id
      * @param name
-     * @param number
      * @param type
      */
-    public Ticket(Long id, String name, Long number, List<TicketType> type) {
+    public Ticket(Long id, String name, List<TicketType> type) {
         this.id = id;
         this.name = name;
-        this.number = number;
         this.type = type;
     }
 
     /**
      * Creates a Ticket
      * @param name
-     * @param number
      * @param type
      */
-    public Ticket(String name, Long number, List<TicketType> type) {
+    public Ticket(String name, List<TicketType> type) {
         this.name = name;
-        this.number = number;
         this.type = type;
     }
 
@@ -50,7 +46,6 @@ public class Ticket {
         return "Ticket{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", number=" + number +
                 ", type=" + getType().getClass() +
                 '}';
     }
@@ -69,14 +64,6 @@ public class Ticket {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getNumber() {
-        return number;
-    }
-
-    public void setNumber(Long number) {
-        this.number = number;
     }
 
     public List<TicketType> getType() {

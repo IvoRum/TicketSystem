@@ -30,15 +30,14 @@ class TicketRepositoryTest {
 
         listOfTypes.add(type);
 
-        Long ticketNumber = (long)55;
         underTest.saveAllAndFlush(List.of(
-                new Ticket("DA",ticketNumber,listOfTypes),
-                new Ticket("DA",(long)66,listOfTypes),
-                new Ticket("DA", (long)77,listOfTypes)
+                new Ticket("DA1",listOfTypes),
+                new Ticket("DA",listOfTypes),
+                new Ticket("DA",listOfTypes)
         ));
 
         //when
-        Optional<Ticket> exists=underTest.findByTicketNumber(ticketNumber);
+        Optional<Ticket> exists=underTest.findByTicketName("DA1");
 
         //then
         assertThat(exists.isPresent()).isTrue();
@@ -54,15 +53,14 @@ class TicketRepositoryTest {
 
         listOfTypes.add(type);
 
-        Long ticketNumber = (long)55;
         underTest.saveAllAndFlush(List.of(
-                new Ticket("DA",ticketNumber,listOfTypes),
-                new Ticket("DA",(long)66,listOfTypes),
-                new Ticket("DA", (long)77,listOfTypes)
+                new Ticket("DA",listOfTypes),
+                new Ticket("DA",listOfTypes),
+                new Ticket("DA",listOfTypes)
         ));
 
         //when
-        Optional<Ticket> exists=underTest.findByTicketNumber((long) 88);
+        Optional<Ticket> exists=underTest.findByTicketName("NE");
 
         //then
         assertThat(exists.isPresent()).isFalse();

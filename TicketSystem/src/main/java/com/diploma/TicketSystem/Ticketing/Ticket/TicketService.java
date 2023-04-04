@@ -22,7 +22,7 @@ public class TicketService {
 
     public void addNewTicket(Ticket ticket) {
         Optional<Ticket> ticketOptional
-                =ticketRepository.findByTicketNumber(ticket.getNumber());
+                =ticketRepository.findByTicketName(ticket.getName());
         boolean exists=ticketOptional.isPresent();
         if(exists){
             throw new IllegalStateException("Number is taken");
@@ -30,16 +30,16 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
-    public void updateTicket(Long numberOfTicketToUpdate, Ticket ticket) {
-        Long numbet=ticket.getNumber();
-        Optional<Ticket> updatedTicket=ticketRepository.findByTicketNumber(numberOfTicketToUpdate);
+    public void updateTicket(String nameOfTicketToUpdate, Ticket ticket) {
+        String name=ticket.getName();
+        Optional<Ticket> updatedTicket=ticketRepository.findByTicketName(nameOfTicketToUpdate);
         boolean exits=updatedTicket.isPresent();
         if(exits) {
-            new IllegalStateException("ticket whit number " + numberOfTicketToUpdate + " does not exost");
+            new IllegalStateException("ticket whit name " + nameOfTicketToUpdate + " does not exost");
         }
-        if(numbet!=null
-                &&!Objects.equals(ticket.getNumber(),numbet)){
-            updatedTicket.get().setNumber(numbet);
+        if(name!=null
+                &&!Objects.equals(ticket.getName(),name)){
+            updatedTicket.get().setName(name);
         }
         ticketRepository.save(ticket);
     }

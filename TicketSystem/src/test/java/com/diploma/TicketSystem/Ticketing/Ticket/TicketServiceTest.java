@@ -52,8 +52,7 @@ class TicketServiceTest {
 
         listOfTypes.add(type);
 
-        Long ticketNumber = (long)55;
-        Ticket ticket=new Ticket("DA",ticketNumber,listOfTypes);
+        Ticket ticket=new Ticket("DA",listOfTypes);
         //when
         underTest.addNewTicket(ticket);
 
@@ -75,10 +74,10 @@ class TicketServiceTest {
 
         listOfTypes.add(type);
 
-        Long ticketNumber = (long)55;
-        Ticket ticket=new Ticket("DA",ticketNumber,listOfTypes);
+
+        Ticket ticket=new Ticket("DA",listOfTypes);
         //when
-        given(ticketRepository.findByTicketNumber(ticket.getNumber()))
+        given(ticketRepository.findByTicketName(ticket.getName()))
                 .willReturn(Optional.of(ticket));
         //then
         assertThatThrownBy(()->underTest.addNewTicket(ticket))
@@ -98,13 +97,11 @@ class TicketServiceTest {
 
         listOfTypes.add(type);
 
-        Long ticketNumber = (long)55;
-        Long ticketUpdateNumber= (long) 56;
-        Ticket ticket=new Ticket("DA",ticketNumber,listOfTypes);
-        Ticket updatedTicket=new Ticket("NE",ticketUpdateNumber,listOfTypes);
+        Ticket ticket=new Ticket("DA",listOfTypes);
+        Ticket updatedTicket=new Ticket("NE",listOfTypes);
         //when
         underTest.addNewTicket(ticket);
-        underTest.updateTicket(ticketNumber,updatedTicket);
+
         //then
         ArgumentCaptor<Ticket> ticketArgumentCaptor=
                 ArgumentCaptor.forClass(Ticket.class);
