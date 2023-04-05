@@ -8,12 +8,17 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name="personal_ticket")
+@Table(name="PersonalTicket")
 public class PersonalTicket {
     @Id
     @Column(name="number")
     private Long number;
     private boolean active=true;
+    public PersonalTicket(){}
+
+    public PersonalTicket(boolean active) {
+        this.active = active;
+    }
 
     public PersonalTicket(Long number, boolean active) {
         this.number = number;

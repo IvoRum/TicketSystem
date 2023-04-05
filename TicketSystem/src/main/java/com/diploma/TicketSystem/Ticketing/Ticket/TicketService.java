@@ -25,7 +25,7 @@ public class TicketService {
                 =ticketRepository.findByTicketName(ticket.getName());
         boolean exists=ticketOptional.isPresent();
         if(exists){
-            throw new IllegalStateException("Number is taken");
+            throw new IllegalStateException("Name is taken");
         }
         ticketRepository.save(ticket);
     }

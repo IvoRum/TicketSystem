@@ -1,6 +1,7 @@
 package com.diploma.TicketSystem.Ticketing.Ticket;
 
 import com.diploma.TicketSystem.Ticketing.TicketType.TicketType;
+import com.diploma.TicketSystem.Ticketing.personalTicket.PersonalTicket;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class Ticket {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_type")
     private List<TicketType> type;
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="PersonalTicket")
+    private List<PersonalTicket> personalTickets;
 
     Ticket(){}
 
