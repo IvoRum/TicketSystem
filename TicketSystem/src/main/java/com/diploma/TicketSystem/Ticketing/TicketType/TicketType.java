@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 
 import java.util.List;
 @Entity
-@Table(name = "ticket_type")
+@Table(name = "TicketType")
 public class TicketType {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String discription;
@@ -25,6 +25,7 @@ public class TicketType {
      * Shows if the ticket is active or not
      */
     private boolean active;
+    public TicketType(){}
 
     public TicketType(String name, String discription, boolean chekedTicket, boolean subTicket, boolean active) {
         this.name = name;
@@ -72,5 +73,61 @@ public class TicketType {
 
     public void setSubTicket(boolean subTicket) {
         this.subTicket = subTicket;
+    }
+    public static class TicketTypeBuilder {
+        private String name="";
+        private String discription="";
+        private boolean chekedTicket=false;
+        private boolean subTicket=false;
+
+        public TicketTypeBuilder(String name, String discription, boolean chekedTicket, boolean subTicket) {
+            this.name = name;
+            this.discription = discription;
+            this.chekedTicket = chekedTicket;
+            this.subTicket = subTicket;
+        }
+
+        public TicketTypeBuilder() {}
+
+        public TicketType build(){
+
+            return new TicketType(this.name,this.discription,chekedTicket,subTicket,true);
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public TicketTypeBuilder setName(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public String getDiscription() {
+            return discription;
+        }
+
+        public TicketTypeBuilder setDiscription(final String discription) {
+            this.discription = discription;
+            return this;
+        }
+
+        public boolean isChekedTicket() {
+            return chekedTicket;
+        }
+
+        public TicketTypeBuilder setChekedTicket(final boolean chekedTicket) {
+            this.chekedTicket = chekedTicket;
+            return this;
+        }
+
+        public boolean isSubTicket() {
+            return subTicket;
+        }
+
+        public TicketTypeBuilder setSubTicket(final boolean subTicket) {
+            this.subTicket = subTicket;
+            return this;
+        }
     }
 }

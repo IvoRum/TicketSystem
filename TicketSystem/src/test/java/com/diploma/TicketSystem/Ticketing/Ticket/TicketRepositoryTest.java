@@ -1,7 +1,6 @@
 package com.diploma.TicketSystem.Ticketing.Ticket;
 
 import com.diploma.TicketSystem.Ticketing.TicketType.TicketType;
-import com.diploma.TicketSystem.Ticketing.TicketType.TicketTypeBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +24,19 @@ class TicketRepositoryTest {
     void itShouldCheckIfTicketfindByTicketNumberDoseExists() {
         //given
         TicketType type=new
-                TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
+                TicketType.TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
         List<TicketType> listOfTypes= new ArrayList<>();
 
         listOfTypes.add(type);
 
         underTest.saveAllAndFlush(List.of(
-                new Ticket("DA1",listOfTypes),
-                new Ticket("DA",listOfTypes),
-                new Ticket("DA",listOfTypes)
+                new Ticket("Name1",listOfTypes),
+                new Ticket("Name2",listOfTypes),
+                new Ticket("Name3",listOfTypes)
         ));
 
         //when
-        Optional<Ticket> exists=underTest.findByTicketName("DA1");
+        Optional<Ticket> exists=underTest.findByTicketName("Name1");
 
         //then
         assertThat(exists.isPresent()).isTrue();
@@ -48,19 +47,19 @@ class TicketRepositoryTest {
     void itShouldCheckIfTicketfindByTicketNumberDoseNotExists() {
         //given
         TicketType type=new
-                TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
+                TicketType.TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
         List<TicketType> listOfTypes= new ArrayList<>();
 
         listOfTypes.add(type);
 
         underTest.saveAllAndFlush(List.of(
-                new Ticket("DA",listOfTypes),
-                new Ticket("DA",listOfTypes),
-                new Ticket("DA",listOfTypes)
+                new Ticket("Name1",listOfTypes),
+                new Ticket("Name2",listOfTypes),
+                new Ticket("Name3",listOfTypes)
         ));
 
         //when
-        Optional<Ticket> exists=underTest.findByTicketName("NE");
+        Optional<Ticket> exists=underTest.findByTicketName("Name4");
 
         //then
         assertThat(exists.isPresent()).isFalse();

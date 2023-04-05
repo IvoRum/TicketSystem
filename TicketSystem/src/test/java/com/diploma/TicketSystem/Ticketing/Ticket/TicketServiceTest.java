@@ -1,15 +1,12 @@
 package com.diploma.TicketSystem.Ticketing.Ticket;
 
 import com.diploma.TicketSystem.Ticketing.TicketType.TicketType;
-import com.diploma.TicketSystem.Ticketing.TicketType.TicketTypeBuilder;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -47,7 +44,7 @@ class TicketServiceTest {
     void canAddNewTicket() {
         //given
         TicketType type=new
-                TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
+                TicketType.TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
         List<TicketType> listOfTypes= new ArrayList<>();
 
         listOfTypes.add(type);
@@ -69,7 +66,7 @@ class TicketServiceTest {
     void WillThrowWhenTicketTaken() {
         //given
         TicketType type=new
-                TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
+                TicketType.TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
         List<TicketType> listOfTypes= new ArrayList<>();
 
         listOfTypes.add(type);
@@ -92,7 +89,7 @@ class TicketServiceTest {
     void canUpdateTicket() {
         //given
         TicketType type=new
-                TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
+                TicketType.TicketTypeBuilder().setDiscription("Some description").setChekedTicket(true).build();
         List<TicketType> listOfTypes= new ArrayList<>();
 
         listOfTypes.add(type);

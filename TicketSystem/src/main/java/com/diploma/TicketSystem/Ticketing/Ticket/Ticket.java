@@ -9,9 +9,11 @@ import java.util.List;
 @Table(name="Ticket")
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;//?
+    private String name;
+    //TODO add a conection to the Personal ticket tale
+    
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_type")
