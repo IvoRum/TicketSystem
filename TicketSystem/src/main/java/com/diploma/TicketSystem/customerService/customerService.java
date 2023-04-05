@@ -1,7 +1,7 @@
 package com.diploma.TicketSystem.customerService;
 
 import com.diploma.TicketSystem.Ticketing.article.ArticleType;
-import com.diploma.TicketSystem.Ticketing.conuter.Counter;
+import com.diploma.TicketSystem.conuter.Counter;
 
 import java.util.List;
 

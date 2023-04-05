@@ -22,8 +22,14 @@ public class Ticket {
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="PersonalTicket")
     private List<PersonalTicket> personalTickets;
-
+    //TODO add contection to the User class wen it is done
     Ticket(){}
+
+    public Ticket(String name, List<TicketType> type, List<PersonalTicket> personalTickets) {
+        this.name = name;
+        this.type = type;
+        this.personalTickets = personalTickets;
+    }
 
     /**
      * Crates a Tickete
@@ -47,6 +53,7 @@ public class Ticket {
         this.type = type;
     }
 
+
     @Override
     public String toString() {
         return "Ticket{" +
@@ -54,6 +61,14 @@ public class Ticket {
                 ", name='" + name + '\'' +
                 ", type=" + getType().getClass() +
                 '}';
+    }
+
+    public List<PersonalTicket> getPersonalTickets() {
+        return personalTickets;
+    }
+
+    public void setPersonalTickets(List<PersonalTicket> personalTickets) {
+        this.personalTickets = personalTickets;
     }
 
     public Long getId() {
