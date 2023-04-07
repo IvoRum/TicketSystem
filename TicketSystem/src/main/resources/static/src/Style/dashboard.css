@@ -86,6 +86,38 @@
     margin-bottom: 0;
   }
   
+  .card {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 2px 2px 5px #cccccc;
+}
+
+.card h2 {
+  font-size: 24px;
+  margin-top: 0;
+}
+
+.card p {
+  font-size: 16px;
+}
+
+.card button {
+  background-color: #0066cc;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.card button:hover {
+  background-color: #004c99;
+  cursor: pointer;
+}
+
 
   @media screen and (max-width: 768px) {
     .grid-container {
@@ -98,4 +130,27 @@
       grid-template-columns: 1fr;
     }
   }
+  .container {
+    display: flex;
+  }
   
+  .column {
+    flex: 1;
+    padding: 10px;
+  }
+
+
+  
+  .userCard {
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .bigCard {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
