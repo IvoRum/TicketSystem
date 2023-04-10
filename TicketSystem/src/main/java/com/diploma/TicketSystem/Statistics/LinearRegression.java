@@ -1,8 +1,7 @@
 package com.diploma.TicketSystem.Statistics;
 
 import org.springframework.stereotype.Service;
-//TODO rename class and pakage
-@Service
+
 public class LinearRegression {
     private final double intercept, slope;
     private final double r2;

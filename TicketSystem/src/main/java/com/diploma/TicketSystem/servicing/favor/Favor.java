@@ -1,13 +1,12 @@
-package com.diploma.TicketSystem.servicing.service;
+package com.diploma.TicketSystem.servicing.favor;
 
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
 
 import java.sql.Time;
 
 @Entity
 @Table(name="Service")
-public class Service {
+public class Favor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +17,7 @@ public class Service {
     //TODO add Service type wen it is ready
 
 
-    public Service(Long id, String name, String description, Time workStart, Time workEnd) {
+    public Favor(Long id, String name, String description, Time workStart, Time workEnd) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,7 +26,7 @@ public class Service {
 
     }
 
-    public Service(String name, String description, Time workStart, Time workEnd) {
+    public Favor(String name, String description, Time workStart, Time workEnd) {
         this.name = name;
         this.description = description;
         this.workStart = workStart;

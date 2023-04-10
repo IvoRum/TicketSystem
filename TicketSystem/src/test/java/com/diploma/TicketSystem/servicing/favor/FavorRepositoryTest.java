@@ -1,4 +1,4 @@
-package com.diploma.TicketSystem.servicing.service;
+package com.diploma.TicketSystem.servicing.favor;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -9,12 +9,12 @@ import java.sql.Time;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
-class ServiceRepositoryTest {
+class FavorRepositoryTest {
 
     @Autowired
-    private ServiceRepository underTest;
+    private FavorRepository underTest;
 
     @AfterEach
     void tearDown() {
@@ -24,10 +24,10 @@ class ServiceRepositoryTest {
     @Test
     void findServiceByNameSouldExist() {
         //given
-        Service service=new Service("ServiceName1","ServiceDescription1",new Time(8,0,0),new Time(17,0,0));
-        underTest.save(service);
+        Favor favor =new Favor("ServiceName1","ServiceDescription1",new Time(8,0,0),new Time(17,0,0));
+        underTest.save(favor);
         //when
-        Optional<Service> exists=underTest.findServiceByName("ServiceName1");
+        Optional<Favor> exists=underTest.findServiceByName("ServiceName1");
         //den
         assertThat(exists.isPresent()).isTrue();
     }
@@ -35,10 +35,10 @@ class ServiceRepositoryTest {
     @Test
     void findServiceByNameSouldThrow() {
         //given
-        Service service=new Service("ServiceName1","ServiceDescription1",new Time(8,0,0),new Time(17,0,0));
-        underTest.save(service);
+        Favor favor =new Favor("ServiceName1","ServiceDescription1",new Time(8,0,0),new Time(17,0,0));
+        underTest.save(favor);
         //when
-        Optional<Service> exists=underTest.findServiceByName("ServiceName2");
+        Optional<Favor> exists=underTest.findServiceByName("ServiceName2");
         //den
         assertThat(exists.isPresent()).isFalse();
     }
