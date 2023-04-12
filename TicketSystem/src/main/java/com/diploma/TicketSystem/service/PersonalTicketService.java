@@ -1,8 +1,7 @@
-package com.diploma.TicketSystem.Ticketing.personalTicket;
+package com.diploma.TicketSystem.service;
 
-import com.diploma.TicketSystem.Ticketing.Ticket.Ticket;
-import com.diploma.TicketSystem.Ticketing.Ticket.TicketRepository;
-import com.diploma.TicketSystem.Ticketing.Ticket.TicketService;
+import com.diploma.TicketSystem.entity.PersonalTicket;
+import com.diploma.TicketSystem.repository.PersonalTicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

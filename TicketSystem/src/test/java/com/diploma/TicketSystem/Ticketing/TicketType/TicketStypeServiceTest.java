@@ -1,6 +1,8 @@
 package com.diploma.TicketSystem.Ticketing.TicketType;
 
-import com.diploma.TicketSystem.Ticketing.Ticket.Ticket;
+import com.diploma.TicketSystem.entity.TicketType;
+import com.diploma.TicketSystem.repository.TicketTypeRepository;
+import com.diploma.TicketSystem.service.TicketStypeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -9,13 +11,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;

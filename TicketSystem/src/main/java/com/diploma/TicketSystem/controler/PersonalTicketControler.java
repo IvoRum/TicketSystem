@@ -1,5 +1,7 @@
-package com.diploma.TicketSystem.Ticketing.personalTicket;
+package com.diploma.TicketSystem.controler;
 
+import com.diploma.TicketSystem.service.PersonalTicketService;
+import com.diploma.TicketSystem.entity.PersonalTicket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,8 +1,7 @@
-package com.diploma.TicketSystem.Ticketing.TicketType;
+package com.diploma.TicketSystem.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 @Entity
 @Table(name = "TicketType")
 public class TicketType {

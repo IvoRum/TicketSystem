@@ -1,6 +1,8 @@
 package com.diploma.TicketSystem.Ticketing.Ticket;
 
-import com.diploma.TicketSystem.Ticketing.TicketType.TicketType;
+import com.diploma.TicketSystem.entity.TicketType;
+import com.diploma.TicketSystem.entity.Ticket;
+import com.diploma.TicketSystem.repository.TicketRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,8 @@
 package com.diploma.TicketSystem.Ticketing.personalTicket;
 
-import com.diploma.TicketSystem.Ticketing.Ticket.TicketRepository;
-import com.diploma.TicketSystem.Ticketing.Ticket.TicketService;
+import com.diploma.TicketSystem.entity.PersonalTicket;
+import com.diploma.TicketSystem.repository.PersonalTicketRepository;
+import com.diploma.TicketSystem.service.PersonalTicketService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 class PersonalTicketServiceTest {
 

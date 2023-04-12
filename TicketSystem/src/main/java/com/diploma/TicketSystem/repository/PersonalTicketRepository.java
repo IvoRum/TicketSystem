@@ -1,6 +1,6 @@
-package com.diploma.TicketSystem.Ticketing.personalTicket;
+package com.diploma.TicketSystem.repository;
 
-import com.diploma.TicketSystem.Ticketing.Ticket.Ticket;
+import com.diploma.TicketSystem.entity.PersonalTicket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

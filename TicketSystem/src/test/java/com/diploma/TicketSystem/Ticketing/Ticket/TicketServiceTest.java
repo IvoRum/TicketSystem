@@ -1,6 +1,9 @@
 package com.diploma.TicketSystem.Ticketing.Ticket;
 
-import com.diploma.TicketSystem.Ticketing.TicketType.TicketType;
+import com.diploma.TicketSystem.entity.TicketType;
+import com.diploma.TicketSystem.entity.Ticket;
+import com.diploma.TicketSystem.repository.TicketRepository;
+import com.diploma.TicketSystem.service.TicketService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

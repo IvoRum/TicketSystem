@@ -1,4 +1,4 @@
-package com.diploma.TicketSystem.Ticketing.personalTicket;
+package com.diploma.TicketSystem.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

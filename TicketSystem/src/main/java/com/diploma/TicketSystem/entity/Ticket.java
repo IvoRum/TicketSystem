@@ -1,7 +1,5 @@
-package com.diploma.TicketSystem.Ticketing.Ticket;
+package com.diploma.TicketSystem.entity;
 
-import com.diploma.TicketSystem.Ticketing.TicketType.TicketType;
-import com.diploma.TicketSystem.Ticketing.personalTicket.PersonalTicket;
 import jakarta.persistence.*;
 
 import java.util.List;
