@@ -1,5 +1,8 @@
 package com.diploma.TicketSystem.servicing.favor;
 
+import com.diploma.TicketSystem.entity.Favor;
+import com.diploma.TicketSystem.repository.FavorRepository;
+import com.diploma.TicketSystem.service.FavorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

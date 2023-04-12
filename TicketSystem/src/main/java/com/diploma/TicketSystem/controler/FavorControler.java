@@ -1,5 +1,7 @@
-package com.diploma.TicketSystem.servicing.favor;
+package com.diploma.TicketSystem.controler;
 
+import com.diploma.TicketSystem.entity.Favor;
+import com.diploma.TicketSystem.service.FavorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

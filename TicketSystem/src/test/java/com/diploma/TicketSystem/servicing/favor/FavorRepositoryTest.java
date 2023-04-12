@@ -1,5 +1,7 @@
 package com.diploma.TicketSystem.servicing.favor;
 
+import com.diploma.TicketSystem.entity.Favor;
+import com.diploma.TicketSystem.repository.FavorRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

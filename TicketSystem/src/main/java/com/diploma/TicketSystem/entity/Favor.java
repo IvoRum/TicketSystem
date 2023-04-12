@@ -1,4 +1,4 @@
-package com.diploma.TicketSystem.servicing.favor;
+package com.diploma.TicketSystem.entity;
 
 import jakarta.persistence.*;
 

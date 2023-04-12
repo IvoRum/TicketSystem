@@ -1,5 +1,6 @@
-package com.diploma.TicketSystem.servicing.favor;
+package com.diploma.TicketSystem.repository;
 
+import com.diploma.TicketSystem.entity.Favor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

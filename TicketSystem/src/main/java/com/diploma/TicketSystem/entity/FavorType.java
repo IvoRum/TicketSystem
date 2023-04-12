@@ -1,26 +1,23 @@
-package com.diploma.TicketSystem.servicing.serviceType;
+package com.diploma.TicketSystem.entity;
 
-import com.diploma.TicketSystem.user.User;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name="ServiceType")
-public class ServiceType {
+public class FavorType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
 
-    public ServiceType(){}
-    public ServiceType(String name, String description) {
+    public FavorType(){}
+    public FavorType(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public ServiceType(Long id, String name, String description) {
+    public FavorType(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
