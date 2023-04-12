@@ -2,6 +2,9 @@ package com.diploma.ticket.system.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name="Counter")
 public class Counter {
@@ -10,18 +13,26 @@ public class Counter {
     private Long id;
     private String name;
     private String description;
-    //TODO add List of Service_Type that t counter will sevice
+    private Integer number;
+
+    @ManyToMany
+    @JoinColumn(name = "fovor_type")
+    private Set<FavorType> favorType;
     public Counter(){}
 
-    public Counter(Long id, String name, String description) {
+    public Counter(Long id, String name, String description, Integer number, Set<FavorType> favorType) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.number = number;
+        this.favorType = favorType;
     }
 
-    public Counter(String name, String description) {
+    public Counter(String name, String description, Integer number, Set<FavorType> favorType) {
         this.name = name;
         this.description = description;
+        this.number = number;
+        this.favorType = favorType;
     }
 
     public Long getId() {

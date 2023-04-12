@@ -11,14 +11,12 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    //TODO add a conection to the Personal ticket tale
-    
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_type")
     private List<TicketType> type;
     @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="PersonalTicket")
+    @JoinColumn(name="personal_ticket")
     private List<PersonalTicket> personalTickets;
     //TODO add contection to the User class wen it is done
     Ticket(){}

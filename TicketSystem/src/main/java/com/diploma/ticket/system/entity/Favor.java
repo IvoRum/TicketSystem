@@ -3,6 +3,7 @@ package com.diploma.ticket.system.entity;
 import jakarta.persistence.*;
 
 import java.sql.Time;
+import java.util.List;
 
 @Entity
 @Table(name="Service")
@@ -14,7 +15,10 @@ public class Favor {
     private String description;
     private Time workStart;
     private Time workEnd;
-    //TODO add Service type wen it is ready
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="type")
+    private List<FavorType> type;
 
 
     public Favor(Long id, String name, String description, Time workStart, Time workEnd) {
@@ -31,6 +35,14 @@ public class Favor {
         this.description = description;
         this.workStart = workStart;
         this.workEnd = workEnd;
+    }
+
+    public Favor(String name, String description, Time workStart, Time workEnd, List<FavorType> type) {
+        this.name = name;
+        this.description = description;
+        this.workStart = workStart;
+        this.workEnd = workEnd;
+        this.type = type;
     }
 
     @Override

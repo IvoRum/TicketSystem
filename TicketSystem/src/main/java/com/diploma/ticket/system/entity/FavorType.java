@@ -2,6 +2,8 @@ package com.diploma.ticket.system.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name="ServiceType")
 public class FavorType {
@@ -10,6 +12,13 @@ public class FavorType {
     private Long id;
     private String name;
     private String description;
+
+    @ManyToMany
+    @JoinColumn(name = "counter")
+    private Set<Counter> counter;
+    //TODO ADD User
+    //TODO add Machine
+
 
     public FavorType(){}
     public FavorType(String name, String description) {
