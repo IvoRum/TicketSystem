@@ -1,6 +1,6 @@
 package com.diploma.TicketSystem.customerService;
 
-import com.diploma.TicketSystem.conuter.Counter;
+import com.diploma.TicketSystem.entity.Counter;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.diploma.TicketSystem.conuter;
+package com.diploma.TicketSystem.entity;
 
 import jakarta.persistence.*;
 

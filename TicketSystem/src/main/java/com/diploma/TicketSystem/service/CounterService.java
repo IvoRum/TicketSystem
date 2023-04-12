@@ -1,5 +1,7 @@
-package com.diploma.TicketSystem.conuter;
+package com.diploma.TicketSystem.service;
 
+import com.diploma.TicketSystem.entity.Counter;
+import com.diploma.TicketSystem.repository.CounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
