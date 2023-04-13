@@ -12,7 +12,7 @@ import java.util.Optional;
 public class TicketStypeService {
     private final TicketTypeRepository ticketRepository;
     @Autowired
-    TicketStypeService(TicketTypeRepository ticketTypeRepository){this.ticketRepository=ticketTypeRepository;}
+    public TicketStypeService(TicketTypeRepository ticketTypeRepository){this.ticketRepository=ticketTypeRepository;}
     public List<TicketType> getTicketTypes() {
         return ticketRepository.findAll();
     }
