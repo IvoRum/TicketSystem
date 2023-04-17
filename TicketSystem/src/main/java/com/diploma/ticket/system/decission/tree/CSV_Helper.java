@@ -1,3 +1,5 @@
+package com.diploma.ticket.system.decission.tree;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

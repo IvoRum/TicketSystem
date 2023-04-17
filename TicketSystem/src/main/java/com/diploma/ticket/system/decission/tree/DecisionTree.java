@@ -1,3 +1,5 @@
+package com.diploma.ticket.system.decission.tree;
+
 import java.util.*;
 
 public class DecisionTree {

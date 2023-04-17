@@ -1,3 +1,4 @@
+package com.diploma.ticket.system.decission.tree;
 
 import java.util.HashMap;
 import java.util.Map;

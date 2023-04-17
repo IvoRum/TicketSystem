@@ -1,3 +1,4 @@
+package com.diploma.ticket.system.decission.tree;
 
 public class Attribute {
     public static final String FINISHED = "FINISHED";
