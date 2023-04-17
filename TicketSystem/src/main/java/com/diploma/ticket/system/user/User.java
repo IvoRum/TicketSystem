@@ -4,6 +4,8 @@ import com.diploma.ticket.system.entity.FavorType;
 import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.token.Token;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,7 +31,11 @@ public class User implements UserDetails {
     private Integer id;
     private String firstname;
     private String lastname;
+    @NotBlank
+    @Size(min = 3, max = 20)
     private String email;
+    @NotBlank
+    @Size(min = 6, max = 40)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -79,5 +85,73 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public List<FavorType> getFavorTypes() {
+        return favorTypes;
+    }
+
+    public void setFavorTypes(List<FavorType> favorTypes) {
+        this.favorTypes = favorTypes;
     }
 }

@@ -1,12 +1,11 @@
 package com.diploma.ticket.system.config;
 
-import com.diploma.ticket.system.dao.UserDao;
+import com.diploma.ticket.system.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.CachingUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +20,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RequiredArgsConstructor
 public class JwtAthFilter extends OncePerRequestFilter {
 
-    private final UserDao userDao;//TODO RESPLACE DIS WHIT THE REPOSITORY
+    private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -41,7 +40,7 @@ public class JwtAthFilter extends OncePerRequestFilter {
 
         if(userEmail!=null&& SecurityContextHolder
                 .getContext().getAuthentication()==null){
-            UserDetails userDetails=userDao.findUserByEmail(userEmail);//TODO replace this whit the repository
+            UserDetails userDetails=userRepository.findByEmail(userEmail);
             final boolean isTokenValid;
             if(jwtUtil.isTokenValid(jwtToken,userDetails)){
                 UsernamePasswordAuthenticationToken authToken=
