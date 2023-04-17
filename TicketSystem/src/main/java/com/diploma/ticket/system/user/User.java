@@ -1,5 +1,7 @@
 package com.diploma.ticket.system.user;
 
+import com.diploma.ticket.system.entity.FavorType;
+import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +37,14 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="personal_ticket")
+    private List<Ticket> tickets;
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="service")
+    private List<FavorType> favorTypes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
