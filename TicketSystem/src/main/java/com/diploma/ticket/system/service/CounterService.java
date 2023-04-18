@@ -33,14 +33,14 @@ public class  CounterService {
 
     public void updateCounter(String nameOfCounterToUpdate, Counter counter) {
         String name=counter.getName();
-        Optional<Counter> updatedTicket=counterRepository.findCounterByName(nameOfCounterToUpdate);
-        boolean exits=updatedTicket.isPresent();
+        Optional<Counter> updatedCounter=counterRepository.findCounterByName(nameOfCounterToUpdate);
+        boolean exits=updatedCounter.isPresent();
         if(exits) {
-            new IllegalStateException("ticket whit name " + nameOfCounterToUpdate + " does not exost");
+            new IllegalStateException("counter whit name " + nameOfCounterToUpdate + " does not exost");
         }
         if(name!=null
                 &&!Objects.equals(counter.getName(),name)){
-            updatedTicket.get().setName(name);
+            updatedCounter.get().setName(name);
         }
         counterRepository.save(counter);
     }

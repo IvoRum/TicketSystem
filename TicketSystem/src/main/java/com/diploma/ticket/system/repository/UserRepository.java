@@ -1,6 +1,6 @@
-package com.diploma.ticket.system.user;
+package com.diploma.ticket.system.repository;
 
-import java.util.Optional;
+import com.diploma.ticket.system.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {

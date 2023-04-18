@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.user;
+package com.diploma.ticket.system.domain;
 
 
 public enum Role {

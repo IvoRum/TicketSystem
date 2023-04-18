@@ -1,8 +1,6 @@
-package com.diploma.ticket.system.user;
+package com.diploma.ticket.system.entity;
 
-import com.diploma.ticket.system.entity.FavorType;
-import com.diploma.ticket.system.entity.Ticket;
-import com.diploma.ticket.system.token.Token;
+import com.diploma.ticket.system.domain.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

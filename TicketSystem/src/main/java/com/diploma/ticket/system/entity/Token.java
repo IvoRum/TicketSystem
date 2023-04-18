@@ -1,7 +1,7 @@
-package com.diploma.ticket.system.token;
+package com.diploma.ticket.system.entity;
 
 
-import com.diploma.ticket.system.user.User;
+import com.diploma.ticket.system.domain.TokenType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -35,6 +35,22 @@ public class Counter {
         this.favorType = favorType;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Set<FavorType> getFavorType() {
+        return favorType;
+    }
+
+    public void setFavorType(Set<FavorType> favorType) {
+        this.favorType = favorType;
+    }
+
     public Long getId() {
         return id;
     }

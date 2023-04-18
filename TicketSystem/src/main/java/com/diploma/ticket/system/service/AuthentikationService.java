@@ -2,12 +2,12 @@ package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.config.JwtUtil;
 import com.diploma.ticket.system.domain.dto.*;
-import com.diploma.ticket.system.token.Token;
-import com.diploma.ticket.system.token.TokenRepository;
-import com.diploma.ticket.system.token.TokenType;
-import com.diploma.ticket.system.user.Role;
-import com.diploma.ticket.system.user.User;
-import com.diploma.ticket.system.user.UserRepository;
+import com.diploma.ticket.system.entity.Token;
+import com.diploma.ticket.system.repository.TokenRepository;
+import com.diploma.ticket.system.domain.TokenType;
+import com.diploma.ticket.system.domain.Role;
+import com.diploma.ticket.system.entity.User;
+import com.diploma.ticket.system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.security.authentication.AuthenticationManager;

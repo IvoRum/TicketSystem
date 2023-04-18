@@ -3,6 +3,7 @@ package com.diploma.ticket.system.entity;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Ticket")
@@ -11,6 +12,10 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @ManyToMany
+    @JoinColumn(name = "favor")
+    Set<Favor> favors;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_type")
@@ -26,6 +31,8 @@ public class Ticket {
         this.type = type;
         this.personalTickets = personalTickets;
     }
+
+
 
     /**
      * Crates a Tickete

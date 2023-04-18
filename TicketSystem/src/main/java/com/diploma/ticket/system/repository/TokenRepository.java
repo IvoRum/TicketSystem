@@ -1,5 +1,6 @@
-package com.diploma.ticket.system.token;
+package com.diploma.ticket.system.repository;
 
+import com.diploma.ticket.system.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

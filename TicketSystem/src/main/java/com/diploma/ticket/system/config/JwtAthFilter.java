@@ -1,6 +1,6 @@
 package com.diploma.ticket.system.config;
 
-import com.diploma.ticket.system.user.UserRepository;
+import com.diploma.ticket.system.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

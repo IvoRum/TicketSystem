@@ -3,12 +3,12 @@ package com.diploma.ticket.system.entity;
 import jakarta.persistence.*;
 
 import java.sql.Time;
-import java.util.List;
 import java.util.Set;
 
+
 @Entity
-@Table(name="Service")
-public class Favor {
+@Table(name="Article")
+public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,60 +16,48 @@ public class Favor {
     private String description;
     private Time workStart;
     private Time workEnd;
-
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="type")
-    private List<FavorType> type;
-
+    private String type;
     @ManyToMany
-    @JoinColumn(name = "ticket")
-    Set<Ticket> tickets;
+    @JoinColumn(name = "favor")
+    Set<Favor> favors;
+    public Article(){}
+    public Article(String description, Time workStart, Time workEnd) {
+        this.description = description;
+        this.workStart = workStart;
+        this.workEnd = workEnd;
+    }
 
-    @ManyToMany
-    @JoinColumn(name = "article")
-    Set<Article> article;
+    public Article(String name, String description, Time workStart, Time workEnd, String type, Set<Favor> favors) {
+        this.name = name;
+        this.description = description;
+        this.workStart = workStart;
+        this.workEnd = workEnd;
+        this.type = type;
+        this.favors = favors;
+    }
 
-    public Favor(Long id, String name, String description, Time workStart, Time workEnd) {
+    public Article(String name, String description, Time workStart, Time workEnd, String type) {
+        this.name = name;
+        this.description = description;
+        this.workStart = workStart;
+        this.workEnd = workEnd;
+        this.type = type;
+    }
+
+    public Article(Long id, String name, String description, Time workStart, Time workEnd, String type) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.workStart = workStart;
         this.workEnd = workEnd;
-
-    }
-
-    public Favor(String name, String description, Time workStart, Time workEnd) {
-        this.name = name;
-        this.description = description;
-        this.workStart = workStart;
-        this.workEnd = workEnd;
-    }
-
-    public Favor(String name, String description, Time workStart, Time workEnd, List<FavorType> type) {
-        this.name = name;
-        this.description = description;
-        this.workStart = workStart;
-        this.workEnd = workEnd;
         this.type = type;
     }
 
-    public List<FavorType> getType() {
-        return type;
-    }
-
-    public void setType(List<FavorType> type) {
-        this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "Service{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", workStart=" + workStart +
-                ", workEnd=" + workEnd +
-                '}';
+    public Article(Long id, String description, Time workStart, Time workEnd) {
+        this.id = id;
+        this.description = description;
+        this.workStart = workStart;
+        this.workEnd = workEnd;
     }
 
     public Long getId() {
@@ -78,14 +66,6 @@ public class Favor {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -110,5 +90,21 @@ public class Favor {
 
     public void setWorkEnd(Time workEnd) {
         this.workEnd = workEnd;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

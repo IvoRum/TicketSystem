@@ -1,15 +1,15 @@
-package generate;
+package com.diploma.ticket.system.decission.tree.generate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class orcestrator {
-    public static void main(String[] args){
-        CsvWriter write=new CsvWriter();
+    public static void main(String[] args){/*
+        generate.CsvWriter write=new generate.CsvWriter();
         List<Ticket> tickets=new ArrayList<>();
         for(int i=0;i<1000;i++){
             tickets.add(write.generateTicketTest());
         }
-        write.writeCsvFile("test.csv",tickets);
+        write.writeCsvFile("test.csv",tickets);*/
     }
 }
