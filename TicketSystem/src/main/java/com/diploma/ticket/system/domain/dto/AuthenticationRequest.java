@@ -1,15 +1,18 @@
 package com.diploma.ticket.system.domain.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record AuthenticationRequest (
-    @NotNull
-    @Email String username,
-    @NotNull String password) {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthenticationRequest {
 
-  public AuthenticationRequest() {
-            this(null, null);
-        }
-    }
+    private String email;
+    String password;
+}
+
 

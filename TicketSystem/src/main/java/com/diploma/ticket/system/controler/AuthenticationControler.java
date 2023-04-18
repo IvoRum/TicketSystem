@@ -1,9 +1,7 @@
 package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.config.JwtUtil;
-import com.diploma.ticket.system.domain.dto.AuthenticationRequest;
-import com.diploma.ticket.system.domain.dto.CreateUserRequest;
-import com.diploma.ticket.system.domain.dto.UserView;
+import com.diploma.ticket.system.domain.dto.*;
 import com.diploma.ticket.system.service.AuthentikationService;
 import com.diploma.ticket.system.user.UserRepository;
 import jakarta.validation.Valid;
@@ -19,20 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationControler {
 
-
+    private final AuthentikationService authentikationService;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-    private final AuthentikationService authentikationService;
-
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(
+    public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ){
-        return authentikationService.authenticat(request);
-     }
-    @PostMapping("register")
-    public UserView register(@RequestBody @Valid CreateUserRequest request) {
-        return authentikationService.create(request);
+        return ResponseEntity.ok(authentikationService.authenticate(request));
+    }
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody RegisterRequest request
+    ) {
+        return ResponseEntity.ok(authentikationService.register(request));
     }
 }
