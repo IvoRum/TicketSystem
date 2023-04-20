@@ -14,7 +14,11 @@ public class Favor {
     private Long id;
     private String name;
     private String description;
+    @Basic
+    @Temporal(TemporalType.TIME)
     private Time workStart;
+    @Basic
+    @Temporal(TemporalType.TIME)
     private Time workEnd;
 
     @OneToMany(cascade=CascadeType.ALL)

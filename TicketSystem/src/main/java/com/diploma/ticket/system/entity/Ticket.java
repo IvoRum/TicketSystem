@@ -2,6 +2,7 @@ package com.diploma.ticket.system.entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class Ticket {
 
     @ManyToMany
     @JoinColumn(name = "favor")
-    Set<Favor> favors;
+    private Set<Favor> favors;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_type")
@@ -23,7 +24,18 @@ public class Ticket {
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="personal_ticket")
     private List<PersonalTicket> personalTickets;
-    //TODO add contection to the User class wen it is done
+
+    @Basic
+    @Temporal(TemporalType.TIME)
+    private Time workStart;
+
+    @Basic
+    @Temporal(TemporalType.TIME)
+    private Time workEnd;
+
+    @ManyToMany
+    @JoinColumn(name = "user")
+    private Set<User> users;
     Ticket(){}
 
     public Ticket(String name, List<TicketType> type, List<PersonalTicket> personalTickets) {
@@ -32,7 +44,12 @@ public class Ticket {
         this.personalTickets = personalTickets;
     }
 
-
+    public Ticket(String name, Set<Favor> favors, List<TicketType> type, List<PersonalTicket> personalTickets) {
+        this.name = name;
+        this.favors = favors;
+        this.type = type;
+        this.personalTickets = personalTickets;
+    }
 
     /**
      * Crates a Tickete
@@ -65,6 +82,7 @@ public class Ticket {
                 ", type=" + getType().getClass() +
                 '}';
     }
+
 
     public List<PersonalTicket> getPersonalTickets() {
         return personalTickets;
