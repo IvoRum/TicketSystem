@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.domain.dto;
+package com.diploma.ticket.system.entity.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

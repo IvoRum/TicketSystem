@@ -1,6 +1,7 @@
 package com.diploma.ticket.system.config;
 
 import com.diploma.ticket.system.repository.UserRepository;
+import com.diploma.ticket.system.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,10 +19,11 @@ import java.io.IOException;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Component
 @RequiredArgsConstructor
-public class JwtAthFilter extends OncePerRequestFilter {
+public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -31,7 +33,7 @@ public class JwtAthFilter extends OncePerRequestFilter {
         final String jwtToken;
 
         if(authHeader==null||
-        !authHeader.startsWith("Bearer")){
+                !authHeader.startsWith("Bearer")){
             filterChain.doFilter(request,response);
             return;
         }
@@ -40,7 +42,7 @@ public class JwtAthFilter extends OncePerRequestFilter {
 
         if(userEmail!=null&& SecurityContextHolder
                 .getContext().getAuthentication()==null){
-            UserDetails userDetails=userRepository.findByEmail(userEmail);
+            UserDetails userDetails=userRepository.findByEmail(userEmail).get();
             final boolean isTokenValid;
             if(jwtUtil.isTokenValid(jwtToken,userDetails)){
                 UsernamePasswordAuthenticationToken authToken=

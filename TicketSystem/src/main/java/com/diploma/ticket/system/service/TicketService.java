@@ -4,6 +4,7 @@ import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,6 @@ public class TicketService {
     public TicketService(TicketRepository ticketRepository){
         this.ticketRepository=ticketRepository;
     }
-
     public List<Ticket> getTickets() {
         return ticketRepository.findAll();
     }

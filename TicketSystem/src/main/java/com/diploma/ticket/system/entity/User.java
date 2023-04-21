@@ -1,13 +1,10 @@
 package com.diploma.ticket.system.entity;
 
-import com.diploma.ticket.system.domain.Role;
+import com.diploma.ticket.system.entity.domain.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Setter
 @Table(name = "_user")
 public class User implements UserDetails {
 
@@ -33,14 +31,12 @@ public class User implements UserDetails {
     @Size(min = 3, max = 20)
     private String email;
     @NotBlank
-    @Size(min = 6, max = 40)
+    @Size(max = 120)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="personal_ticket")
@@ -129,13 +125,6 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public List<Token> getTokens() {
-        return tokens;
-    }
-
-    public void setTokens(List<Token> tokens) {
-        this.tokens = tokens;
-    }
 
     public List<Ticket> getTickets() {
         return tickets;

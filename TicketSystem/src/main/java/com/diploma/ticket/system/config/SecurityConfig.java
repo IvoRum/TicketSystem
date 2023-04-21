@@ -1,19 +1,24 @@
 package com.diploma.ticket.system.config;
 
 import com.diploma.ticket.system.repository.UserRepository;
+import com.diploma.ticket.system.util.JwtUtil;
+import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,28 +30,38 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAthFilter jwtAthFilter;
+    private final JwtAuthFilter jwtAuthFilter;
+    @Autowired
     private final UserRepository userRepository;
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
-                .csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/vi/auth/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
+                .cors().and().csrf().disable()
+
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/vi/auth/**").permitAll().anyRequest().authenticated();
+        http
+                .headers().frameOptions().sameOrigin();
+        http
+                .authenticationProvider(authenticationProvider());
+        http
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
         ;
         return http.build();
     }
+
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider=
@@ -63,9 +78,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //TODO popitai dali e ucachno
-        //return new BCryptPasswordEncoder();
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -73,7 +86,7 @@ public class SecurityConfig {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-                return userRepository.findByEmail(email);
+                return userRepository.findByEmail(email).orElseThrow();
             }
         };
     }

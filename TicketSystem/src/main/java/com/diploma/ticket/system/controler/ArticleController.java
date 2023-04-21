@@ -10,10 +10,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path="api/v1/article")
-public class ArticleControler  {
+public class ArticleController {
     private final ArticleService articleService;
     @Autowired
-    public ArticleControler(ArticleService articleService) {
+    public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
     }
 

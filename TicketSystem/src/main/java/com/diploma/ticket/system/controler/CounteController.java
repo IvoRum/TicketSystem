@@ -9,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/counter")
-public class CounteControler {
+public class CounteController {
 
     private final CounterService counterService;
 
     @Autowired
-    public CounteControler(CounterService counterService){
+    public CounteController(CounterService counterService){
         this.counterService=counterService;
     }
 

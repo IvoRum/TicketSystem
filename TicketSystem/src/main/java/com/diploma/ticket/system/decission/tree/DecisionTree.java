@@ -102,6 +102,7 @@ public class DecisionTree {
         return Collections.max(valueCount.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
 
+
     private String getBestSplitAttribute(Set<Passenger> data, String [] attributes){
         double [] gainResults = new double[attributes.length];
         // calculate information gain for every attribute (that is still available)
@@ -215,9 +216,7 @@ public class DecisionTree {
         return possAttValues;
     }
 
-    /*
-     * Print the trained decision tree
-     */
+
     public void print(){
         Queue<Node> q = new LinkedList();
         Queue<Node> q2 = new LinkedList();
