@@ -1,6 +1,5 @@
 package com.diploma.ticket.system.config;
 
-import com.diploma.ticket.system.entry.point.BearerTokenAuthenticationEntryPoint;
 import com.diploma.ticket.system.filter.JwtAuthFilter;
 import com.diploma.ticket.system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,20 +35,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
-                .cors().and().csrf().disable()
+                .csrf().disable()
 
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-
-                .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/vi/auth/**").permitAll().anyRequest().authenticated();
-        http
-                .headers().frameOptions().sameOrigin();
         http
                 .authenticationProvider(authenticationProvider());
         http
