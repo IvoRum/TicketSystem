@@ -1,27 +1,27 @@
 package com.diploma.ticket.system.service;
 
+import com.diploma.ticket.system.type.Role;
 import com.diploma.ticket.system.util.JwtUtil;
-import com.diploma.ticket.system.entity.domain.dto.AuthenticationRequest;
-import com.diploma.ticket.system.entity.domain.dto.AuthenticationResponse;
+import com.diploma.ticket.system.dto.AuthenticationRequest;
+import com.diploma.ticket.system.dto.AuthenticationResponse;
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.convert.ReadingConverter;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
 @Transactional(readOnly = true)
 @ReadingConverter
 @RequiredArgsConstructor
-public class AuthentikationService {
+public class AuthenticationService {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
@@ -45,12 +45,23 @@ public class AuthentikationService {
                                 request.getPassword()
                         )
         );
-        var user = userRepository.findByEmail(request.getEmail());
-        var jwtToken = jwtUtil.generateToken(user.get());
-        var refreshToken = jwtUtil.generateRefreshToken(user.get());
+
+        var user = userRepository.findByEmail(request.getEmail()).orElseThrow(
+                ()-> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "user not found"
+                )
+        );
+
+        String username= user.getUsername();
+        String email=user.getEmail();
+        Role role=user.getRole();
+        var jwtToken = jwtUtil.generateToken(user);
+        var refreshToken = jwtUtil.generateRefreshToken(user);
 
 
         return AuthenticationResponse.builder()
+                .email(email)
+                .roles(role)
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();

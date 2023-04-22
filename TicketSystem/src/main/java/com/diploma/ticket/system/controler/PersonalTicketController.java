@@ -9,11 +9,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/personalticket")
-public class PersonalTicketControler {
+public class PersonalTicketController {
     private final PersonalTicketService personalTicketService;
 
     @Autowired
-    public PersonalTicketControler(PersonalTicketService personalTicketService){
+    public PersonalTicketController(PersonalTicketService personalTicketService){
         this.personalTicketService=personalTicketService;
     }
     @GetMapping

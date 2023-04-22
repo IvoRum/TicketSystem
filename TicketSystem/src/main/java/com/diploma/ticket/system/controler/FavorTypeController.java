@@ -9,13 +9,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/servicetype")
-public class FavorTypeControler {
+public class FavorTypeController {
 
 
     private final FavorTypeService favorTypeService;
 
     @Autowired
-    public FavorTypeControler(FavorTypeService favorTypeService){
+    public FavorTypeController(FavorTypeService favorTypeService){
 
         this.favorTypeService = favorTypeService;
     }

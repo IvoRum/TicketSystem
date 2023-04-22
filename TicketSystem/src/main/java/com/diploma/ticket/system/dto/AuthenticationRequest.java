@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.entity.domain.dto;
+package com.diploma.ticket.system.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

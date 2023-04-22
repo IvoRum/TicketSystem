@@ -1,5 +1,6 @@
-package com.diploma.ticket.system.entity.domain.dto;
+package com.diploma.ticket.system.dto;
 
+import com.diploma.ticket.system.type.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
+    private Long id;
+    private String email;
+    private Role roles;
+
 
     @JsonProperty("access_token")
     private String accessToken;

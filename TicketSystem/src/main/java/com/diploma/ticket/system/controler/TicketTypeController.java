@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
 @RequestMapping(path="api/v1/tickettype")
-public class TicketTypeControler {
+public class TicketTypeController {
 
     private final TicketStypeService ticketTypeService;
 
     @Autowired
-    public TicketTypeControler(TicketStypeService ticketTypeService){
+    public TicketTypeController(TicketStypeService ticketTypeService){
         this.ticketTypeService=ticketTypeService;
     }
 

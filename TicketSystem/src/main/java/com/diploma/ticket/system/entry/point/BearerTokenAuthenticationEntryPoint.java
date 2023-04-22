@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.config;
+package com.diploma.ticket.system.entry.point;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

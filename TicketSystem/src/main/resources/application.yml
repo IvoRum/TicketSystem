@@ -1,4 +1,6 @@
 spring:
+  app:
+    jwtSecret: s3cr37
   datasource:
     url: jdbc:postgresql://localhost:5432/ticketsystem
     username: postgres

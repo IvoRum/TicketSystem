@@ -9,10 +9,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/service")
-public class FavorControler {
+public class FavorController {
     private final FavorService favorService;
     @Autowired
-    public FavorControler(FavorService favorService){this.favorService = favorService;}
+    public FavorController(FavorService favorService){this.favorService = favorService;}
 
     @GetMapping
     public List<Favor> getService(){

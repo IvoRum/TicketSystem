@@ -1,7 +1,7 @@
 package com.diploma.ticket.system.initialization;
 
 import com.diploma.ticket.system.entity.User;
-import com.diploma.ticket.system.entity.domain.Role;
+import com.diploma.ticket.system.type.Role;
 import com.diploma.ticket.system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

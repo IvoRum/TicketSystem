@@ -1,9 +1,7 @@
 package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.entity.Machine;
-import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.service.MachineService;
-import com.diploma.ticket.system.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/machine")
-public class MachineControler {
+public class MachineController {
 
     private final MachineService machineService;
 
     @Autowired
-    public MachineControler(MachineService service){
+    public MachineController(MachineService service){
         this.machineService=service;
     }
 

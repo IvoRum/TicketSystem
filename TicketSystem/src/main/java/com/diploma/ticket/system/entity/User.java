@@ -1,6 +1,6 @@
 package com.diploma.ticket.system.entity;
 
-import com.diploma.ticket.system.entity.domain.Role;
+import com.diploma.ticket.system.type.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -141,4 +141,5 @@ public class User implements UserDetails {
     public void setFavorTypes(List<FavorType> favorTypes) {
         this.favorTypes = favorTypes;
     }
+
 }
