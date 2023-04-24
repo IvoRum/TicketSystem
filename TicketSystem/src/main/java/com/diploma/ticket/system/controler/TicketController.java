@@ -1,6 +1,6 @@
 package com.diploma.ticket.system.controler;
-import com.diploma.ticket.system.dto.TicketCreationRequest;
-import com.diploma.ticket.system.dto.TicketCreationResponse;
+import com.diploma.ticket.system.payload.request.TicketCreationRequest;
+import com.diploma.ticket.system.payload.response.TicketCreationResponse;
 import com.diploma.ticket.system.service.TicketService;
 import com.diploma.ticket.system.entity.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;

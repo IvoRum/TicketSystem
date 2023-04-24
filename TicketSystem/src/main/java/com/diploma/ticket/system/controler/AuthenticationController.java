@@ -2,8 +2,8 @@ package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.util.JwtUtil;
-import com.diploma.ticket.system.dto.AuthenticationRequest;
-import com.diploma.ticket.system.dto.AuthenticationResponse;
+import com.diploma.ticket.system.payload.request.AuthenticationRequest;
+import com.diploma.ticket.system.payload.response.AuthenticationResponse;
 import com.diploma.ticket.system.service.AuthenticationService;
 import com.diploma.ticket.system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

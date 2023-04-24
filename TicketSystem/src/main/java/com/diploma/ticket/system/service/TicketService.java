@@ -1,24 +1,25 @@
 package com.diploma.ticket.system.service;
 
-import com.diploma.ticket.system.dto.TicketCreationRequest;
-import com.diploma.ticket.system.dto.TicketCreationResponse;
+import com.diploma.ticket.system.payload.request.TicketCreationRequest;
+import com.diploma.ticket.system.payload.response.TicketCreationResponse;
+import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.Ticket;
+import com.diploma.ticket.system.repository.FavorRepository;
 import com.diploma.ticket.system.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
+    private final FavorRepository favorRepository;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository){
+    public TicketService(TicketRepository ticketRepository, FavorRepository favorRepository){
         this.ticketRepository=ticketRepository;
+        this.favorRepository=favorRepository;
     }
     public List<Ticket> getTickets() {
         return ticketRepository.findAll();
@@ -31,11 +32,18 @@ public class TicketService {
         if(exists){
             throw new IllegalStateException("Name is taken");
         }
+
+        Favor favor
+                =favorRepository.getReferenceById(request.getFavorId());
+        Set<Favor> favors=new HashSet<>();
+        favors.add(favor);
+
         Ticket createdTicke=
                  Ticket.builder()
                          .name(request.getName())
                          .workStart(request.getWorkStart())
                          .workEnd(request.getWorkEnd())
+                         .favors(favors)
                          .build();
 
         ticketRepository.save(createdTicke);

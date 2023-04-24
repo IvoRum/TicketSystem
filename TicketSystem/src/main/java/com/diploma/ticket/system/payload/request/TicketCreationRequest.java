@@ -1,6 +1,5 @@
-package com.diploma.ticket.system.dto;
+package com.diploma.ticket.system.payload.request;
 
-import com.diploma.ticket.system.entity.Favor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +16,5 @@ public class TicketCreationRequest {
     private String name;
     private Time workStart;
     private Time workEnd;
-    private Favor favor;
+    private Long favorId;
 }

@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.dto;
+package com.diploma.ticket.system.payload.response;
 
 import com.diploma.ticket.system.type.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;

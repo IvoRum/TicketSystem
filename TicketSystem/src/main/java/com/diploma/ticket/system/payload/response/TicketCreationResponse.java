@@ -1,9 +1,7 @@
-package com.diploma.ticket.system.dto;
+package com.diploma.ticket.system.payload.response;
 
-import com.diploma.ticket.system.entity.Favor;
 import lombok.*;
 
-import java.sql.Time;
 @Data
 @AllArgsConstructor
 @Builder
