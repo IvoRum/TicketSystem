@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/vi/user")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -33,7 +34,13 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> getUsers(){
-        return ResponseEntity.ok().body(userService.getUsers());
+        List<User> responseBody=new ArrayList<>();
+        try{
+            responseBody=userService.getUsers();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(responseBody);
     }
 
 }

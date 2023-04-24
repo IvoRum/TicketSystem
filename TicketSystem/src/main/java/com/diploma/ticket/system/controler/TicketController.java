@@ -1,6 +1,6 @@
 package com.diploma.ticket.system.controler;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
-import com.diploma.ticket.system.payload.response.TicketCreationResponse;
+import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.service.TicketService;
 import com.diploma.ticket.system.entity.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/v1/ticket")
+@RequestMapping(path="api/v2/ticket")
 public class TicketController {
 
     private final TicketService ticketService;
@@ -34,10 +34,10 @@ public class TicketController {
     }
 
     @PostMapping
-    public ResponseEntity<TicketCreationResponse> registerNewTicket(
+    public ResponseEntity<CreationResponse> registerNewTicket(
             @RequestBody TicketCreationRequest ticket
     ){
-        TicketCreationResponse responseBody=null;
+        CreationResponse responseBody=null;
         try {
             responseBody=
                     ticketService.addNewTicket(ticket);

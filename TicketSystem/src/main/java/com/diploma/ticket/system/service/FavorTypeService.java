@@ -23,7 +23,7 @@ public class FavorTypeService {
         return favorTypeRepository.findAll();
     }
 
-    public void addNewServiceType(FavorType favorType) {
+    public FavorType addNewServiceType(FavorType favorType) {
         Optional<FavorType> serviceTypeOptional
                 = favorTypeRepository.findServiceTypeByName(favorType.getName());
         boolean exists=serviceTypeOptional.isPresent();
@@ -31,6 +31,7 @@ public class FavorTypeService {
             throw new IllegalStateException("Name is taken");
         }
         favorTypeRepository.save(favorType);
+        return favorType;
     }
 
     public void updateTicket(String nameOfServiceTypToUpdate, FavorType favorType) {

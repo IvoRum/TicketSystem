@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
-@RequestMapping(path="api/v1/tickettype")
+@RequestMapping(path="api/v2/tickettype")
 public class TicketTypeController {
 
     private final TicketTypeService ticketTypeService;
@@ -21,9 +21,14 @@ public class TicketTypeController {
     }
 
     @GetMapping
-    public List<TicketType> getTickets(){
-
-        return ticketTypeService.getTicketTypes();
+    public ResponseEntity<List<TicketType>> getTickets(){
+        List<TicketType> responseBody=new ArrayList<>();
+        try{
+            responseBody=ticketTypeService.getTicketTypes();
+        }catch (Exception e){
+            return  ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(responseBody);
     }
 
     @PostMapping

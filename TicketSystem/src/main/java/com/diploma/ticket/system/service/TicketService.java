@@ -3,7 +3,7 @@ package com.diploma.ticket.system.service;
 import com.diploma.ticket.system.entity.TicketType;
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
-import com.diploma.ticket.system.payload.response.TicketCreationResponse;
+import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.repository.FavorRepository;
@@ -38,7 +38,7 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-    public TicketCreationResponse addNewTicket(TicketCreationRequest request) {
+    public CreationResponse addNewTicket(TicketCreationRequest request) {
         Optional<Ticket> ticketOptional
                 =ticketRepository.findByTicketName(request.getName());
         boolean exists=ticketOptional.isPresent();
@@ -58,7 +58,7 @@ public class TicketService {
         //Searching for the type in the repository and returning an obj
         TicketType ticketType
                 =ticketTypeRepository.findById(request.getTypeId()).orElseThrow(
-                ()->new IllegalStateException("ticket whit name " + request.getTypeId() + " does not exost")
+                ()->new IllegalStateException("ticket whit id " + request.getTypeId() + " does not exost")
         );
         List<TicketType> ticketTypes= new ArrayList<>();
         ticketTypes.add(ticketType);
@@ -75,7 +75,7 @@ public class TicketService {
 
         ticketRepository.save(createdTicke);
         Long idOfTheNewTicket =createdTicke.getId();
-        return new TicketCreationResponse(idOfTheNewTicket,"Ticket Created successfully");
+        return new CreationResponse(idOfTheNewTicket,"Ticket Created successfully");
     }
 
     public void updateTicket(String nameOfTicketToUpdate, Ticket ticket) {

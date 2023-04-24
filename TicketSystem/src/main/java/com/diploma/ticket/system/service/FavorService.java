@@ -2,10 +2,8 @@ package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.FavorType;
-import com.diploma.ticket.system.entity.PersonalTicket;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
-import com.diploma.ticket.system.payload.response.FavorCreationResponce;
-import com.diploma.ticket.system.payload.response.TicketCreationResponse;
+import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.FavorRepository;
 import com.diploma.ticket.system.repository.FavorTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ public class FavorService {
         return favorRepository.findAll();
     }
 
-    public FavorCreationResponce addNewService(FavorCreationReqest favorRequest) {
+    public CreationResponse addNewService(FavorCreationReqest favorRequest) {
         Optional<Favor> service1
                 = favorRepository.findServiceByName(favorRequest.getName());
         boolean exists=service1.isPresent();
@@ -53,7 +51,7 @@ public class FavorService {
 
         Long idOFTheNewFavor =favorRepository.save(favor).getId();
         //Long idOFTheNewFavor=favor.getId();
-        return new FavorCreationResponce(idOFTheNewFavor,"Favor Created successfully");
+        return new CreationResponse(idOFTheNewFavor,"Favor Created successfully");
     }
 
     public void updateService(String nameToUpdate, Favor favor) {

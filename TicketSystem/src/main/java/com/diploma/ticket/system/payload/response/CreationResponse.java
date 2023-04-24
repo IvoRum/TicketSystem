@@ -1,15 +1,12 @@
 package com.diploma.ticket.system.payload.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @Builder
 @Setter
-public class FavorCreationResponce {
+public class CreationResponse {
     private Long id;
     private String massage;
 }
