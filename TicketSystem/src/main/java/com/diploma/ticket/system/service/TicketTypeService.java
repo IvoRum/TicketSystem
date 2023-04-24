@@ -31,7 +31,7 @@ public class TicketTypeService {
         ticketRepository.save(ticket);
     }
 
-    public void addNewTicket(TicketType ticketType) {
+    public TicketType addNewTicket(TicketType ticketType) {
         Optional<TicketType> ticketOptional
                 =ticketRepository.findByTicketTypesName(ticketType.getName());
         boolean exists=ticketOptional.isPresent();
@@ -39,5 +39,6 @@ public class TicketTypeService {
             throw new IllegalStateException("Name is taken");
         }
         ticketRepository.save(ticketType);
+        return ticketType;
     }
 }

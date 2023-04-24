@@ -23,6 +23,7 @@ public class TicketController {
 
     @GetMapping
     public ResponseEntity<List<Ticket>> getTickets(){
+
         return ResponseEntity.ok().body(ticketService.getTickets());
     }
 

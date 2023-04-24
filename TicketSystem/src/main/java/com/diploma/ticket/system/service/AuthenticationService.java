@@ -28,15 +28,6 @@ public class AuthenticationService {
     private PasswordEncoder passwordEncoder;
 
 
-    @Transactional
-    public void register(User request) {
-        User userop= userRepository.findByEmail(request.getEmail()).orElseThrow(
-                ()->new IllegalStateException("User whit email " + request.getEmail() + " does not exost")
-        );
-        request.setPassword(passwordEncoder.encode(request.getPassword()));
-        userRepository.save(request);
-    }
-
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var authentication =
                 authenticationManager.authenticate(
