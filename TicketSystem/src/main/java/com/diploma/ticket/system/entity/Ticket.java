@@ -1,12 +1,18 @@
 package com.diploma.ticket.system.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.sql.Time;
 import java.util.List;
 import java.util.Set;
-
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name="Ticket")
 public class Ticket {
     @Id
@@ -36,44 +42,6 @@ public class Ticket {
     @ManyToMany
     @JoinColumn(name = "user")
     private Set<User> users;
-    Ticket(){}
-
-    public Ticket(String name, List<TicketType> type, List<PersonalTicket> personalTickets) {
-        this.name = name;
-        this.type = type;
-        this.personalTickets = personalTickets;
-    }
-
-    public Ticket(String name, Set<Favor> favors, List<TicketType> type, List<PersonalTicket> personalTickets) {
-        this.name = name;
-        this.favors = favors;
-        this.type = type;
-        this.personalTickets = personalTickets;
-    }
-
-    /**
-     * Crates a Tickete
-     * @param id
-     * @param name
-     * @param type
-     */
-    public Ticket(Long id, String name, List<TicketType> type) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-    }
-
-    /**
-     * Creates a Ticket
-     * @param name
-     * @param type
-     */
-    public Ticket(String name, List<TicketType> type) {
-        this.name = name;
-        this.type = type;
-    }
-
-
     @Override
     public String toString() {
         return "Ticket{" +
@@ -84,35 +52,4 @@ public class Ticket {
     }
 
 
-    public List<PersonalTicket> getPersonalTickets() {
-        return personalTickets;
-    }
-
-    public void setPersonalTickets(List<PersonalTicket> personalTickets) {
-        this.personalTickets = personalTickets;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<TicketType> getType() {
-        return type;
-    }
-
-    public void setType(List<TicketType> type) {
-        this.type = type;
-    }
 }

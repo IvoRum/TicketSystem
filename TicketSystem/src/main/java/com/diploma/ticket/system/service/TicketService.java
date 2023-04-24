@@ -1,5 +1,7 @@
 package com.diploma.ticket.system.service;
 
+import com.diploma.ticket.system.dto.TicketCreationRequest;
+import com.diploma.ticket.system.dto.TicketCreationResponse;
 import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,23 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-    public void addNewTicket(Ticket ticket) {
+    public TicketCreationResponse addNewTicket(TicketCreationRequest request) {
         Optional<Ticket> ticketOptional
-                =ticketRepository.findByTicketName(ticket.getName());
+                =ticketRepository.findByTicketName(request.getName());
         boolean exists=ticketOptional.isPresent();
         if(exists){
             throw new IllegalStateException("Name is taken");
         }
-        ticketRepository.save(ticket);
+        Ticket createdTicke=
+                 Ticket.builder()
+                         .name(request.getName())
+                         .workStart(request.getWorkStart())
+                         .workEnd(request.getWorkEnd())
+                         .build();
+
+        ticketRepository.save(createdTicke);
+        Long idOfTheNewTicket =createdTicke.getId();
+        return new TicketCreationResponse(idOfTheNewTicket,"Ticket Created successfully");
     }
 
     public void updateTicket(String nameOfTicketToUpdate, Ticket ticket) {
