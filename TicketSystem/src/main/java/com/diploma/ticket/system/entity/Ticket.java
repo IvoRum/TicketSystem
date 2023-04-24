@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Time;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 @Data
@@ -39,17 +40,14 @@ public class Ticket {
     @Temporal(TemporalType.TIME)
     private Time workEnd;
 
-    @ManyToMany
-    @JoinColumn(name = "user")
-    private Set<User> users;
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + getType().getClass() +
-                '}';
-    }
+    @ManyToMany(targetEntity = User.class, cascade = { CascadeType.ALL })
+    @JoinTable(name = "user_ticket",
+            joinColumns = { @JoinColumn(name = "ticket_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") })
+    private Set<User> users=new HashSet<>();
 
+    public void addUser(User user){
+        this.users.add(user);
+    }
 
 }

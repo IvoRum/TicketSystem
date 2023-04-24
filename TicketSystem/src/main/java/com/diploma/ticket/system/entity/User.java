@@ -10,7 +10,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -40,7 +42,9 @@ public class User implements UserDetails {
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="personal_ticket")
-    private List<Ticket> tickets;
+    private List<Ticket> personalTickets;
+
+
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="service")
@@ -81,65 +85,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public List<FavorType> getFavorTypes() {
-        return favorTypes;
-    }
-
-    public void setFavorTypes(List<FavorType> favorTypes) {
-        this.favorTypes = favorTypes;
-    }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,8 +24,13 @@ public class TicketController {
 
     @GetMapping
     public ResponseEntity<List<Ticket>> getTickets(){
-
-        return ResponseEntity.ok().body(ticketService.getTickets());
+        List<Ticket> responceBody=new ArrayList<>();
+        try{
+            responceBody=ticketService.getTickets();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(responceBody);
     }
 
     @PostMapping
@@ -41,9 +47,25 @@ public class TicketController {
         return ResponseEntity.created(URI.create("Ticket")).body(responseBody);
     }
 
+    @PostMapping("/add/user/{userId}/{ticketId}")
+    public ResponseEntity addUserToTicket(
+            @PathVariable Integer userId,
+            @PathVariable Long ticketId)
+    {
+        String body=null;
+        try {
+            body =
+                    ticketService.addUserToTicket(userId,ticketId);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(body);
+    }
+
     @PutMapping(path="{ticketId}")
     public void updateTicket(@PathVariable("ticketName")String name,
                              @RequestBody Ticket ticket){
         ticketService.updateTicket(name,ticket);
     }
+
 }

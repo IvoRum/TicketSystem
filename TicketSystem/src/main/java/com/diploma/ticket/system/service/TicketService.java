@@ -1,6 +1,7 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.TicketType;
+import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.TicketCreationResponse;
 import com.diploma.ticket.system.entity.Favor;
@@ -8,6 +9,7 @@ import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.repository.FavorRepository;
 import com.diploma.ticket.system.repository.TicketRepository;
 import com.diploma.ticket.system.repository.TicketTypeRepository;
+import com.diploma.ticket.system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +20,19 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final FavorRepository favorRepository;
     private final TicketTypeRepository ticketTypeRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public TicketService(
             TicketRepository ticketRepository,
             FavorRepository favorRepository,
-            TicketTypeRepository ticketTypeRepository
+            TicketTypeRepository ticketTypeRepository,
+            UserRepository userRepository
     ){
         this.ticketRepository=ticketRepository;
         this.favorRepository=favorRepository;
         this.ticketTypeRepository=ticketTypeRepository;
+        this.userRepository=userRepository;
     }
     public List<Ticket> getTickets() {
         return ticketRepository.findAll();
@@ -78,12 +83,28 @@ public class TicketService {
         Optional<Ticket> updatedTicket=ticketRepository.findByTicketName(nameOfTicketToUpdate);
         boolean exits=updatedTicket.isPresent();
         if(exits) {
-            new IllegalStateException("ticket whit name " + nameOfTicketToUpdate + " does not exost");
+            new IllegalStateException("ticket whit name " + nameOfTicketToUpdate + " does not exist");
         }
         if(name!=null
                 &&!Objects.equals(ticket.getName(),name)){
             updatedTicket.get().setName(name);
         }
         ticketRepository.save(ticket);
+    }
+
+    public String addUserToTicket(Integer userId,Long ticketId) {
+        User user
+                =userRepository.findById(userId).orElseThrow(
+                ()->new IllegalStateException("User whit ID:"+userId+"dose not exist!")
+        );
+        Ticket ticket
+                =ticketRepository.findById(ticketId).orElseThrow(
+                ()->new IllegalStateException("Ticket whit ID:"+ticketId+"does not exist!")
+        );
+
+        ticket.addUser(user);
+        ticketRepository.save(ticket);
+
+        return "Successfully added user to the ticket";
     }
 }
