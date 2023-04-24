@@ -1,11 +1,13 @@
 package com.diploma.ticket.system.service;
 
+import com.diploma.ticket.system.entity.TicketType;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.TicketCreationResponse;
 import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.repository.FavorRepository;
 import com.diploma.ticket.system.repository.TicketRepository;
+import com.diploma.ticket.system.repository.TicketTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,17 @@ import java.util.*;
 public class TicketService {
     private final TicketRepository ticketRepository;
     private final FavorRepository favorRepository;
+    private final TicketTypeRepository ticketTypeRepository;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository, FavorRepository favorRepository){
+    public TicketService(
+            TicketRepository ticketRepository,
+            FavorRepository favorRepository,
+            TicketTypeRepository ticketTypeRepository
+    ){
         this.ticketRepository=ticketRepository;
         this.favorRepository=favorRepository;
+        this.ticketTypeRepository=ticketTypeRepository;
     }
     public List<Ticket> getTickets() {
         return ticketRepository.findAll();
@@ -32,7 +40,8 @@ public class TicketService {
         if(exists){
             throw new IllegalStateException("Name is taken");
         }
-
+        //Searching for the favor from the repository
+        //TODO Pitai koe ot dveto e po razumno
         Favor favor
                 =favorRepository.getReferenceById(request.getFavorId());
         if(favor==null){
@@ -41,6 +50,14 @@ public class TicketService {
 
         Set<Favor> favors=new HashSet<>();
         favors.add(favor);
+        //Searching for the type in the repository and returning an obj
+        TicketType ticketType
+                =ticketTypeRepository.findById(request.getTypeId()).orElseThrow(
+                ()->new IllegalStateException("ticket whit name " + request.getTypeId() + " does not exost")
+        );
+        List<TicketType> ticketTypes= new ArrayList<>();
+        ticketTypes.add(ticketType);
+
 
         Ticket createdTicke=
                  Ticket.builder()
@@ -48,6 +65,7 @@ public class TicketService {
                          .workStart(request.getWorkStart())
                          .workEnd(request.getWorkEnd())
                          .favors(favors)
+                         .type(ticketTypes)
                          .build();
 
         ticketRepository.save(createdTicke);

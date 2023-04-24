@@ -17,4 +17,5 @@ public class TicketCreationRequest {
     private Time workStart;
     private Time workEnd;
     private Long favorId;
+    private Long typeId;
 }

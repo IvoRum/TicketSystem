@@ -9,7 +9,7 @@ public class TicketType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String discription;
+    private String description;
     /**
      * This ticket opttion represents if the ticket hase
      * a check and uncheked option to fish of the ticket
@@ -26,9 +26,9 @@ public class TicketType {
     private boolean active;
     public TicketType(){}
 
-    public TicketType(String name, String discription, boolean chekedTicket, boolean subTicket, boolean active) {
+    public TicketType(String name, String description, boolean chekedTicket, boolean subTicket, boolean active) {
         this.name = name;
-        this.discription = discription;
+        this.description = description;
         this.chekedTicket = chekedTicket;
         this.subTicket = subTicket;
         this.active = active;
@@ -50,12 +50,12 @@ public class TicketType {
         this.name = name;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isChekedTicket() {
