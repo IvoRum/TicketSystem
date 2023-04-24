@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/v1/servicetype")
+@RequestMapping(path="api/v1/favoretype")
 public class FavorTypeController {
 
 

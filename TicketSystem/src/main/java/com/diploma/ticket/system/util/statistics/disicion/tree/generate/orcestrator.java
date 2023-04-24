@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.decission.tree.generate;
+package com.diploma.ticket.system.util.statistics.disicion.tree.generate;
 
 import java.util.ArrayList;
 import java.util.List;

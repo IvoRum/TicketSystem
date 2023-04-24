@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class TicketController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(responseBody);
+        return ResponseEntity.created(URI.create("Ticket")).body(responseBody);
     }
 
     @PutMapping(path="{ticketId}")

@@ -1,7 +1,7 @@
 package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.entity.TicketType;
-import com.diploma.ticket.system.service.TicketStypeService;
+import com.diploma.ticket.system.service.TicketTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +10,10 @@ import java.util.List;
 @RequestMapping(path="api/v1/tickettype")
 public class TicketTypeController {
 
-    private final TicketStypeService ticketTypeService;
+    private final TicketTypeService ticketTypeService;
 
     @Autowired
-    public TicketTypeController(TicketStypeService ticketTypeService){
+    public TicketTypeController(TicketTypeService ticketTypeService){
         this.ticketTypeService=ticketTypeService;
     }
 

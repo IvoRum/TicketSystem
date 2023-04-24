@@ -1,10 +1,14 @@
 package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.entity.Favor;
+import com.diploma.ticket.system.payload.request.FavorCreationReqest;
+import com.diploma.ticket.system.payload.response.FavorCreationResponce;
 import com.diploma.ticket.system.service.FavorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,8 +24,14 @@ public class FavorController {
     }
 
     @PostMapping
-    public void registerNewService(@RequestBody Favor favor){
-        favorService.addNewService(favor);
+    public ResponseEntity<FavorCreationResponce> registerNewService(@RequestBody FavorCreationReqest favor){
+        FavorCreationResponce responce=null;
+        //try{
+            responce=favorService.addNewService(favor);
+        //}catch (Exception e){
+         //   return ResponseEntity.badRequest().build();
+       // }
+        return ResponseEntity.ok(responce);
     }
 
     @PutMapping(path="{ticketId}")

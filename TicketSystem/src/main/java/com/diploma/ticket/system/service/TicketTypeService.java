@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 @Service
-public class TicketStypeService {
+public class TicketTypeService {
     private final TicketTypeRepository ticketRepository;
     @Autowired
-    public TicketStypeService(TicketTypeRepository ticketTypeRepository){this.ticketRepository=ticketTypeRepository;}
+    public TicketTypeService(TicketTypeRepository ticketTypeRepository){this.ticketRepository=ticketTypeRepository;}
     public List<TicketType> getTicketTypes() {
         return ticketRepository.findAll();
     }

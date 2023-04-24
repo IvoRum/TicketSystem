@@ -35,6 +35,10 @@ public class TicketService {
 
         Favor favor
                 =favorRepository.getReferenceById(request.getFavorId());
+        if(favor==null){
+            throw new IllegalStateException("Id of the favor is not found");
+        }
+
         Set<Favor> favors=new HashSet<>();
         favors.add(favor);
 

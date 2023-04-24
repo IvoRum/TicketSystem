@@ -1,6 +1,5 @@
-package com.diploma.ticket.system.decission.tree;
+package com.diploma.ticket.system.util.statistics.disicion.tree;
 
-import java.io.*;
 import java.util.Set;
 
 class App {
