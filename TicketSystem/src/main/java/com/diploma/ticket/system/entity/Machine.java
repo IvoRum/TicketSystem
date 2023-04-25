@@ -8,9 +8,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Getter
 @Setter
-@Entity
 @Table(name="Machine")
 public class Machine {
     @Id

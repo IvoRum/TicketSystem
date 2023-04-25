@@ -1,7 +1,11 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.Counter;
+import com.diploma.ticket.system.entity.FavorType;
+import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.CounterRepository;
+import com.diploma.ticket.system.repository.FavorRepository;
+import com.diploma.ticket.system.repository.FavorTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +17,16 @@ import java.util.Optional;
 public class  CounterService {
 
     private final CounterRepository counterRepository;
+    private final FavorTypeRepository favorTypeRepository;
     @Autowired
-    public CounterService(CounterRepository counterRepository){
+    public CounterService(
+            CounterRepository counterRepository
+            ,FavorTypeRepository favorTypeRepository
+    ){
         this.counterRepository=counterRepository;
+        this.favorTypeRepository=favorTypeRepository;
     }
-    public void addNewCounter(Counter counter) {
+    public CreationResponse addNewCounter(Counter counter) {
         Optional<Counter> counterOptional
                 =counterRepository.findCounterByName(counter.getName());
         boolean exists=counterOptional.isPresent();
@@ -25,6 +34,8 @@ public class  CounterService {
             throw new IllegalStateException("Name is taken");
         }
         counterRepository.save(counter);
+        return new CreationResponse(counter.getId(),
+                "Counter was created successfully!");
     }
 
     public List<Counter> getCounters() {
@@ -43,5 +54,24 @@ public class  CounterService {
             updatedCounter.get().setName(name);
         }
         counterRepository.save(counter);
+    }
+
+
+
+    public CreationResponse addNewFavor(Long favorId, Long counterId) {
+        CreationResponse creationResponse=null;
+        FavorType favorType
+                =favorTypeRepository.findById(favorId).orElseThrow(
+                ()-> new IllegalStateException("FavorType whit ID:"+favorId+" dose not exist!")
+        );
+        Counter counter
+                =counterRepository.findById(counterId).orElseThrow(
+                ()-> new IllegalStateException("Counter whit ID:"+counterId+" dose not exist!")
+        );
+
+        counter.addFavorType(favorType);
+        counterRepository.save(counter);
+        return new CreationResponse(favorId,
+                "Now has a new favor type whit the name: "+favorType.getName());
     }
 }

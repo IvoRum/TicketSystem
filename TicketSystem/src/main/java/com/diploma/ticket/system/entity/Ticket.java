@@ -11,9 +11,9 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Getter
 @Setter
+@Entity
 @Table(name="Ticket")
 public class Ticket {
     @Id
