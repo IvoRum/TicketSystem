@@ -64,8 +64,13 @@ public class PersonalTicketController {
 
 
     @PutMapping(path="{personalTicketId}")
-    public void updateTicket(@PathVariable("ticketNumber")Long number,
+    public ResponseEntity updateTicket(@PathVariable("ticketNumber")Long number,
                              @RequestBody PersonalTicket personalTicket){
-        personalTicketService.updatePersonalTicket(number,personalTicket);
+        try{
+            personalTicketService.updatePersonalTicket(number,personalTicket);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok("Ticket whit number:"+number+" hase been updated");
     }
 }

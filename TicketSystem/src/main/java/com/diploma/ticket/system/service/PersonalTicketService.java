@@ -2,6 +2,7 @@ package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.PersonalTicket;
 import com.diploma.ticket.system.entity.User;
+import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.PersonalTicketRepository;
 import com.diploma.ticket.system.repository.UserRepository;
@@ -37,13 +38,10 @@ public class PersonalTicketService {
         this.jwtUtil = jwtUtil;
     }
 
-    public void updatePersonalTicket(Long numberToUpdate, PersonalTicket personalTicket) {
+    public void updatePersonalTicket(Long numberToUpdate, PersonalTicket personalTicket) throws NotFountInRepositoryException {
         Long number=personalTicket.getNumber();
         PersonalTicket updatedTicket=
-                personalTicketRepository
-                        .findPersonalTicketByNUmber(numberToUpdate).orElseThrow(
-                        ()->new IllegalStateException("ticket whit name " + numberToUpdate + " does not exost")
-        );
+                findPersonalTicket(numberToUpdate);
         if(number!=null
                 &&!Objects.equals(personalTicket.getNumber(),number)){
             updatedTicket.setNumber(number);
@@ -57,27 +55,24 @@ public class PersonalTicketService {
 
 
     public CreationResponse addNewPersonalTicket(PersonalTicket personalTicket) {
-        Optional<PersonalTicket> ticketOptional
-                =personalTicketRepository
-                .findPersonalTicketByNUmber(personalTicket.getNumber());
-        boolean exists=ticketOptional.isPresent();
-        if(exists){
+        PersonalTicket ticketOptional
+                 = null;
+        try {
+            ticketOptional = findPersonalTicket(personalTicket.getNumber());
             throw new IllegalStateException("Number is taken");
+        } catch (NotFountInRepositoryException e) {
+            personalTicketRepository.save(personalTicket);
+            return new CreationResponse(personalTicket.getNumber(),
+                    "Personal Ticket Created!");
         }
-        personalTicketRepository.save(personalTicket);
-        return new CreationResponse(personalTicket.getNumber(),
-                "Personal Ticket Created!");
     }
 
     public CreationResponse finishTicket(
             Long tickeNumber,
             String authHeader
-            ) {
+            ) throws NotFountInRepositoryException {
         PersonalTicket finishedPersonalTicket
-                =personalTicketRepository.findById(tickeNumber).orElseThrow(
-                ()-> new IllegalStateException(
-                        "No personal Ticket Wiht number:"+tickeNumber+" exists!")
-        );
+                =findPersonalTicket(tickeNumber);
         if(finishedPersonalTicket.getFinishTime()!=null){
             throw new IllegalStateException();
         }
@@ -103,5 +98,15 @@ public class PersonalTicketService {
         userRepository.save(userThatHasFinishedTheTicket);
         personalTicketRepository.save(finishedPersonalTicket);
         return new CreationResponse(tickeNumber,"Finished on time:");
+    }
+
+    public PersonalTicket findPersonalTicket(Long numberOfPersonalTicket) throws NotFountInRepositoryException {
+        PersonalTicket personalTicket
+                =personalTicketRepository.findById(numberOfPersonalTicket).orElseThrow(
+                ()-> new NotFountInRepositoryException(
+                        "No personal Ticket With number:"+numberOfPersonalTicket+" exists!")
+        );
+
+        return personalTicket;
     }
 }

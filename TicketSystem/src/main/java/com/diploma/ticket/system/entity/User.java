@@ -44,10 +44,12 @@ public class User implements UserDetails {
     @JoinColumn(name="personal_ticket")
     private List<PersonalTicket> personalTickets;
 
-
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="counter")
+    private List<Counter> counters;
 
     @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="service")
+    @JoinColumn(name="service_type")
     private List<FavorType> favorTypes;
 
     @Override

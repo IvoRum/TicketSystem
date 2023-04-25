@@ -21,7 +21,6 @@ public class Counter {
     private String name;
     private String description;
     private Integer number;
-
     @ManyToMany
     @JoinColumn(name = "fovor_type")
     private Set<FavorType> favorType;

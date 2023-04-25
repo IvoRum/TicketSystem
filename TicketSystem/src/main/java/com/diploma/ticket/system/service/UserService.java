@@ -14,6 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
+
     @Autowired
     UserService(UserRepository userRepository){
         this.userRepository=userRepository;
@@ -30,5 +31,13 @@ public class UserService {
     @Transactional
     public List<User> getUsers(){
         return userRepository.findAll();
+    }
+
+    public void addCounter(Long counterId, String authHeader) {
+
+    }
+
+    public void addFavorType(Long favorTypeId, String authHeader) {
+
     }
 }
