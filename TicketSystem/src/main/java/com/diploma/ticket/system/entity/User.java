@@ -42,7 +42,7 @@ public class User implements UserDetails {
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="personal_ticket")
-    private List<Ticket> personalTickets;
+    private List<PersonalTicket> personalTickets;
 
 
 
@@ -86,5 +86,7 @@ public class User implements UserDetails {
     }
 
 
-
+    public void addPersonalTicket(PersonalTicket personalTicket) {
+        this.personalTickets.add(personalTicket);
+    }
 }

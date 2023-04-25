@@ -3,7 +3,9 @@ package com.diploma.ticket.system.controler;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.service.PersonalTicketService;
 import com.diploma.ticket.system.entity.PersonalTicket;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,12 +49,13 @@ public class PersonalTicketController {
 
     @PostMapping("/finish/{ticketNumber}")
     public ResponseEntity finishTicket(
-            @PathVariable Long ticketNumber
+            @PathVariable Long ticketNumber,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
     ){
         CreationResponse responseBody=null;
         try{
             responseBody=
-                    personalTicketService.finishTicket(ticketNumber);
+                    personalTicketService.finishTicket(ticketNumber,authHeader);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
