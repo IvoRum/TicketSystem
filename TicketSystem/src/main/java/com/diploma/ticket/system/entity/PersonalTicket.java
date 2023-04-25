@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.util.Objects;
+import java.sql.Time;
 
 @Data
 @Builder
@@ -21,4 +21,8 @@ public class PersonalTicket {
     @Column(name="number")
     private Long number;
     private boolean active=true;
+    @Column(name="finish_time")
+    private Time finishTime;
+    @Column(name="issue_time")
+    private Time issueTime;
 }
