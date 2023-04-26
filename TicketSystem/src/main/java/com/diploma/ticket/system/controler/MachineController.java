@@ -49,7 +49,7 @@ public class MachineController {
                 .body(responseBody);
     }
 
-    @PutMapping(path="{machineId}")
+    @PutMapping(path="{machineName}")
     public void updateMachine(@PathVariable("machineName")String name,
                              @RequestBody Machine machine){
         machineService.updateMachine(name,machine);

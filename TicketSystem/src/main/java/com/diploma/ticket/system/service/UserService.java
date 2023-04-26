@@ -32,11 +32,11 @@ public class UserService {
     public List<User> getUsers(){
         return userRepository.findAll();
     }
-
+    //Todo add inpleementaiton
     public void addCounter(Long counterId, String authHeader) {
 
     }
-
+    //Todo add implementaion
     public void addFavorType(Long favorTypeId, String authHeader) {
 
     }

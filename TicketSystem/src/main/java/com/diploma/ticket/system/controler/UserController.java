@@ -21,6 +21,16 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping
+    public ResponseEntity<List<User>> getUsers(){
+        List<User> responseBody=new ArrayList<>();
+        try{
+            responseBody=userService.getUsers();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(responseBody);
+    }
     @PostMapping("/register")
     public void register(
             @RequestBody User request
@@ -33,7 +43,8 @@ public class UserController {
             );
         }
     }
-    @PostMapping("/addCounter/{counterId}")
+
+    @PutMapping("/addCounter/{counterId}")
     public ResponseEntity addCounter (
             @PathVariable Long counterId,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
@@ -47,7 +58,7 @@ public class UserController {
         return ResponseEntity.ok("Added sucsesfully");
     }
 
-    @PostMapping("/favorType/{favorTypeId}")
+    @PutMapping("/favorType/{favorTypeId}")
     public ResponseEntity addFavorType (
             @PathVariable Long favorTypeId,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
@@ -60,16 +71,5 @@ public class UserController {
 
         return ResponseEntity.ok("Added Favor type");
     }
-
-    @GetMapping
-    public ResponseEntity<List<User>> getUsers(){
-        List<User> responseBody=new ArrayList<>();
-        try{
-            responseBody=userService.getUsers();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok().body(responseBody);
-    }
-
+    //TODO add a patch and delete method
 }

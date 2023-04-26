@@ -59,11 +59,16 @@ public class CounteController {
         }
         return ResponseEntity.ok().body(response);
     }
-
-    @PutMapping(path="{counterId}")
-    public void updateCounter(@PathVariable("counterName")String name,
+    //TODO make bether
+    @PatchMapping(path="{counterId}")
+    public ResponseEntity updateCounter(@PathVariable("counterName")String name,
                               @RequestBody Counter counter){
-        counterService.updateCounter(name,counter);
+        try {
+            counterService.updateCounter(name, counter);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body("ok");
     }
 
 }

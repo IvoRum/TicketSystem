@@ -47,7 +47,7 @@ public class PersonalTicketController {
         return ResponseEntity.created(URI.create("PersonaTicket")).body(response);
     }
 
-    @PostMapping("/finish/{ticketNumber}")
+    @PutMapping("/finish/{ticketNumber}")
     public ResponseEntity finishTicket(
             @PathVariable Long ticketNumber,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
@@ -63,7 +63,7 @@ public class PersonalTicketController {
     }
 
 
-    @PutMapping(path="{personalTicketId}")
+    @PatchMapping(path="{personalTicketId}")
     public ResponseEntity updateTicket(@PathVariable("ticketNumber")Long number,
                              @RequestBody PersonalTicket personalTicket){
         try{

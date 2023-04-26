@@ -47,7 +47,13 @@ public class TicketController {
         return ResponseEntity.created(URI.create("Ticket")).body(responseBody);
     }
 
-    @PostMapping("/add/user/{userId}/{ticketId}")
+    @PatchMapping(path="{ticketId}")
+    public void updateTicket(@PathVariable("ticketName")String name,
+                             @RequestBody Ticket ticket){
+        ticketService.updateTicket(name,ticket);
+    }
+    //TODO think iif this in needed
+    @PutMapping("/add/user/{userId}/{ticketId}")
     public ResponseEntity addUserToTicket(
             @PathVariable Integer userId,
             @PathVariable Long ticketId)
@@ -60,12 +66,6 @@ public class TicketController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(body);
-    }
-
-    @PutMapping(path="{ticketId}")
-    public void updateTicket(@PathVariable("ticketName")String name,
-                             @RequestBody Ticket ticket){
-        ticketService.updateTicket(name,ticket);
     }
 
 }

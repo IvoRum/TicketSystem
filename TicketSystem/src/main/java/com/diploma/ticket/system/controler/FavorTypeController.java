@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/v2/favoretype")
+@RequestMapping(path="api/v2/favortype")
 public class FavorTypeController {
 
 
@@ -47,9 +47,14 @@ public class FavorTypeController {
                 .body(responseBody);
     }
 
-    @PutMapping(path="{serviceTypeId}")
-    public void updateTicket(@PathVariable("serviceTypName")String nameOfServiceTypToUpdate,
-                             @RequestBody FavorType favorType){
-        favorTypeService.updateTicket(nameOfServiceTypToUpdate, favorType);
+    @PatchMapping(path="{favorName}")
+    public ResponseEntity updateTicket(@PathVariable("favorName")String nameOfFavorTypeToUpdate,
+                             @RequestBody FavorType favorType) {
+        try {
+            favorTypeService.updateTicket(nameOfFavorTypeToUpdate, favorType);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok("ok");
     }
 }

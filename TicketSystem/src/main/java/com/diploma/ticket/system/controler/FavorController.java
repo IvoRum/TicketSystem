@@ -41,10 +41,15 @@ public class FavorController {
         }
         return ResponseEntity.ok(responce);
     }
-
-    @PutMapping(path="{ticketId}")
-    public void updateService(@PathVariable("serviceName")String name,
+    //TODO Make better
+    @PatchMapping(path="{favorName}")
+    public ResponseEntity updateService(@PathVariable("favorName")String name,
                               @RequestBody Favor favor){
-        favorService.updateService(name, favor);
+        try{
+            favorService.updateService(name, favor);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body("ok");
     }
 }
