@@ -481,7 +481,7 @@ Allows to add a new facor type to the users profile. Requers authentication.
 
 
 -------------------
-![picture alt](https://i.pinimg.com/564x/59/99/07/599907a24655a0cdb7e14f314c78ab9d.jpg "Quintus Sertoius")
+![picture alt](https://i.pinimg.com/564x/9e/8d/02/9e8d02e364566f7d891982a29009fd1a.jpg "Quintus Sertoius")
 
 > You have power over your mind - not outside events. Realize this, and you will find strength
 Marcus Aurelius, Meditations
