@@ -3,10 +3,6 @@
 This API allows you to create, manage and user a ticket system at your own accord 
 ## Authentication ##
 
-
-
-## Endpoints ##
-
 To interact whit anything in the api you need to authenticate yourself.
 
 POST `/api/vi/auth/authenticate`
@@ -26,6 +22,18 @@ Example
 ```
 
 The response body will contain the access token and information about the user. The access token is valid for 12 hours.
+
+## Endpoints ##
+
+[Article](#article "Goto Article")
+[Favor](#favor "Goto Favor")
+Favor Type
+Machine
+Personal Ticket
+Ticket
+Ticket Type
+User
+
 
 ### Article ###
 
@@ -111,6 +119,8 @@ Example
 }
 ```
 The response body is the id of the counter and a massage.
+
+
 
 ### Favor ###
 
