@@ -1,6 +1,8 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.Article;
+import com.diploma.ticket.system.entity.Favor;
+import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final FavorService favorService;
     @Autowired
-    public ArticleService(ArticleRepository articleRepository) {
+    public ArticleService(ArticleRepository articleRepository, FavorService favorService) {
         this.articleRepository = articleRepository;
+        this.favorService = favorService;
     }
 
     public void addNewArticle(Article article){
@@ -44,6 +48,19 @@ public class ArticleService {
                 &&!Objects.equals(article.getName(),name)){
             updatedArticle.get().setName(name);
         }
+        articleRepository.save(article);
+    }
+
+    public void addFavor(Long articleId,Long favorId) throws NotFountInRepositoryException {
+        Favor favor
+                =favorService.findFavorFromRepository(favorId);
+
+        Article article
+                =articleRepository.findById(articleId).orElseThrow(
+                ()-> new IllegalStateException("Article whit id:"+articleId+"wase not found!")
+        );
+
+        article.addFavor(favor);
         articleRepository.save(article);
     }
 }

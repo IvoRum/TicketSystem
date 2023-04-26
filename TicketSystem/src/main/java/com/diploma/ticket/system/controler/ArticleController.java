@@ -4,6 +4,7 @@ import com.diploma.ticket.system.entity.Article;
 import com.diploma.ticket.system.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,10 +41,28 @@ public class ArticleController {
         return ResponseEntity.ok("Article was created ");
     }
 
+    @PostMapping("/addFavor/{articleId}/{favorId}")
+    public ResponseEntity addFavorToExistingArticle(
+            @PathVariable Long favorId,
+            @PathVariable Long articleId
+    ){
+        try {
+            articleService.addFavor(articleId,favorId);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok("Favor whit Id:"+favorId+"have been added!");
+    }
+
     @PutMapping(path="{articleId}")
-    public void updateArticle(@PathVariable("articleName")String name,
+    public ResponseEntity updateArticle(@PathVariable("articleName")String name,
                               @RequestBody Article article){
-        articleService.updateArticle(name,article);
+        try {
+            articleService.updateArticle(name, article);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return  ResponseEntity.ok("Article has been updated");
     }
 
 }

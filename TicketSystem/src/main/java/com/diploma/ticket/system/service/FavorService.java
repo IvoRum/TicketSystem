@@ -2,6 +2,7 @@ package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.FavorType;
+import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.FavorRepository;
@@ -67,6 +68,14 @@ public class FavorService {
             optionalService.get().setName(serviceName);
         }
         favorRepository.save(favor);
+    }
 
+    public Favor findFavorFromRepository(Long id) throws NotFountInRepositoryException {
+        Favor favor
+                =favorRepository.findById(id).orElseThrow(
+                ()-> new NotFountInRepositoryException
+                        ("Favor whit id:"+id+"was not found")
+        );
+        return favor;
     }
 }

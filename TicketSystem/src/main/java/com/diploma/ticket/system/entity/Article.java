@@ -25,4 +25,8 @@ public class Article {
     @ManyToMany
     @JoinColumn(name = "favor")
     Set<Favor> favors;
+
+    public void addFavor(Favor favor) {
+        this.favors.add(favor);
+    }
 }
