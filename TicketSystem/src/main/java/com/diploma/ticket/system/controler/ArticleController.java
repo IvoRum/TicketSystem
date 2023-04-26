@@ -41,7 +41,7 @@ public class ArticleController {
         return ResponseEntity.ok("Article was created ");
     }
 
-    @PostMapping("/addFavor/{articleId}/{favorId}")
+    @PutMapping("/addFavor/{articleId}/{favorId}")
     public ResponseEntity addFavorToExistingArticle(
             @PathVariable Long favorId,
             @PathVariable Long articleId
