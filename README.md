@@ -4,7 +4,7 @@ This API allows you to create, manage and user a ticket system at your own accor
 
 ## Content List ##
 
-[Sequence](https://github.com/user/repo/blob/branch/other_file.md)
+[Sequence](https://github.com/IvoRum/TicketSystem/blob/main/Documents/SequenceDiagram.md)
 
 ## TO DO ##
 
