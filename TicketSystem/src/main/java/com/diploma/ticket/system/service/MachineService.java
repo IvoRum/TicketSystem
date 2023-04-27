@@ -75,4 +75,11 @@ public class MachineService {
         }
         machineRepository.save(machine);
     }
+
+    public void deleteMachine(Long id) {
+        Machine machine
+                =machineRepository.findById(id).orElseThrow();
+
+        machineRepository.delete(machine);
+    }
 }

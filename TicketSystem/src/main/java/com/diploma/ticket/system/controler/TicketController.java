@@ -68,4 +68,16 @@ public class TicketController {
         return ResponseEntity.ok().body(body);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteATicket(
+            @PathVariable Long id
+    ) {
+        try{
+            ticketService.deleteTicket(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
 }

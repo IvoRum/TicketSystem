@@ -65,4 +65,16 @@ public class ArticleController {
         return  ResponseEntity.ok("Article has been updated");
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteArticle(
+            @PathVariable Long id
+    ) {
+        try{
+            articleService.deleteArticle(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
 }

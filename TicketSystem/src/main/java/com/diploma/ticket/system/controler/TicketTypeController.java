@@ -43,7 +43,7 @@ public class TicketTypeController {
         return ResponseEntity.created(URI.create("TickeType"))
                 .body(responseBody);
     }
-    //TODO make it better and add a delete mapping
+    //TODO make it better
     @PatchMapping(path="{ticketTypeName}")
     public ResponseEntity updateTicket(@PathVariable("ticketTypeName")String name,
                              @RequestBody TicketType ticket){
@@ -53,5 +53,17 @@ public class TicketTypeController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok("ok");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTicketType(
+            @PathVariable Long id
+    ) {
+        try{
+            ticketTypeService.deleteTickeType(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
     }
 }

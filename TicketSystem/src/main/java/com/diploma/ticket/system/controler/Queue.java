@@ -6,5 +6,5 @@ import java.util.HashMap;
 
 @Controller
 public class Queue {
-    
+
 }

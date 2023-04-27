@@ -5,7 +5,10 @@ import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Objects;
@@ -62,5 +65,12 @@ public class ArticleService {
 
         article.addFavor(favor);
         articleRepository.save(article);
+    }
+
+    public void deleteArticle(Long id) {
+        Article article
+        =articleRepository.findById(id).orElseThrow();
+
+        articleRepository.delete(article);
     }
 }

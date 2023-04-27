@@ -69,5 +69,18 @@ public class UserController {
 
         return ResponseEntity.ok("Added Favor type");
     }
-    //TODO add a patch and delete method
+    //TODO add a patch method
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(
+            @PathVariable Integer id
+    ) {
+        try{
+            userService.deleteUser(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

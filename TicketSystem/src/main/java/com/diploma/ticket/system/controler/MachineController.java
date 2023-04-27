@@ -54,4 +54,16 @@ public class MachineController {
                              @RequestBody Machine machine){
         machineService.updateMachine(name,machine);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMachine(
+            @PathVariable Long id
+    ) {
+        try{
+            machineService.deleteMachine(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

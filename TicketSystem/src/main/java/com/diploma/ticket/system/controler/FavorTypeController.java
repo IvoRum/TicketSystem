@@ -57,4 +57,16 @@ public class FavorTypeController {
         }
         return ResponseEntity.ok("ok");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteFavorType(
+            @PathVariable Long id
+    ) {
+        try{
+            favorTypeService.deleteFavorType(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

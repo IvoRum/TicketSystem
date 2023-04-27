@@ -73,4 +73,16 @@ public class PersonalTicketController {
         }
         return ResponseEntity.ok("Ticket whit number:"+number+" hase been updated");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePersonalTicket(
+            @PathVariable Long id
+    ) {
+        try{
+            personalTicketService.deletePersonalTicket(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

@@ -109,4 +109,10 @@ public class PersonalTicketService {
 
         return personalTicket;
     }
+
+    public void deletePersonalTicket(Long id) throws NotFountInRepositoryException {
+        PersonalTicket personalTicket=findPersonalTicket(id);
+
+        personalTicketRepository.delete(personalTicket);
+    }
 }

@@ -48,4 +48,11 @@ public class FavorTypeService {
         favorTypeRepository.save(favorType);
 
     }
+
+    public void deleteFavorType(Long id) {
+        FavorType favorType
+                =favorTypeRepository.findById(id).orElseThrow();
+
+        favorTypeRepository.delete(favorType);
+    }
 }

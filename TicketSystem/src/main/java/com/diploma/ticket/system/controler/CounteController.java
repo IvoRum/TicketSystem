@@ -71,4 +71,16 @@ public class CounteController {
         return ResponseEntity.ok().body("ok");
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCounter(
+            @PathVariable Long id
+    ) {
+        try{
+            counterService.deleteCounter(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
 }

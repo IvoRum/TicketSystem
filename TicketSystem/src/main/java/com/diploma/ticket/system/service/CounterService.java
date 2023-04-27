@@ -74,4 +74,11 @@ public class  CounterService {
         return new CreationResponse(favorId,
                 "Now has a new favor type whit the name: "+favorType.getName());
     }
+
+    public void deleteCounter(Long id) {
+        Counter counter
+                =counterRepository.findById(id).orElseThrow();
+
+        counterRepository.delete(counter);
+    }
 }

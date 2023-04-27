@@ -40,4 +40,10 @@ public class UserService {
     public void addFavorType(Long favorTypeId, String authHeader) {
 
     }
+
+    public void deleteUser(Integer id) {
+        User user
+                =userRepository.findById(id).orElseThrow();
+        userRepository.delete(user);
+    }
 }

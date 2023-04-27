@@ -41,4 +41,11 @@ public class TicketTypeService {
         ticketRepository.save(ticketType);
         return ticketType;
     }
+
+    public void deleteTickeType(Long id) {
+        TicketType ticketType
+                =ticketRepository.findById(id).orElseThrow();
+
+        ticketRepository.delete(ticketType);
+    }
 }

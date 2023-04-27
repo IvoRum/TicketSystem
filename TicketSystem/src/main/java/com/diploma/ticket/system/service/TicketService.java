@@ -107,4 +107,11 @@ public class TicketService {
 
         return "Successfully added user to the ticket";
     }
+
+    public void deleteTicket(Long id) {
+        Ticket ticket
+                =ticketRepository.findById(id).orElseThrow();
+
+        ticketRepository.delete(ticket);
+    }
 }
