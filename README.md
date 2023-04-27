@@ -481,5 +481,5 @@ Allows to add a new facor type to the users profile. Requers authentication.
 
 
 -------------------
-> You have power over your mind - not outside events. Realize this, and you will find strength
+> You have power over your mind - not outside events. Realize this, and you will find strength. -
 Marcus Aurelius, Meditations
