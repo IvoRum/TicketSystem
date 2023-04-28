@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class ArticleService {
                 =articleRepository.findArticleByName(article.getName());
         boolean exists=articleOptional.isPresent();
         if(exists){
-            throw new IllegalStateException("Name is taken");
+            throw new IllegalArgumentException("Name is taken");
         }
         articleRepository.save(article);
     }
@@ -56,14 +57,17 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
-    public void addFavor(Long articleId,Long favorId) throws NotFountInRepositoryException {
+    public void addFavor(Long articleId,Long favorId) {
         Favor favor
-                =favorService.findFavorFromRepository(favorId);
+                = null;
+        try {
+            favor = favorService.findFavorFromRepository(favorId);
+        } catch (NotFountInRepositoryException e) {
+            throw new NoSuchElementException();
+        }
 
         Article article
-                =articleRepository.findById(articleId).orElseThrow(
-                ()-> new IllegalStateException("Article whit id:"+articleId+"wase not found!")
-        );
+                =articleRepository.findById(articleId).orElseThrow();
 
         article.addFavor(favor);
         articleRepository.save(article);

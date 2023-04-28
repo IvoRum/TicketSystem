@@ -38,7 +38,7 @@ public class TicketTypeService {
                 =ticketRepository.findByTicketTypesName(ticketType.getName());
         boolean exists=ticketOptional.isPresent();
         if(exists){
-            throw new IllegalStateException("Name is taken");
+            throw new IllegalArgumentException("Name is taken");
         }
         ticketRepository.save(ticketType);
         return ticketType;

@@ -25,22 +25,17 @@ public class CounteController {
     @GetMapping
     public ResponseEntity<List<Counter>> getCounter(){
         List<Counter> responseBody=new ArrayList<>();
-        try{
-            responseBody=counterService.getCounters();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        responseBody=counterService.getCounters();
+
         return ResponseEntity.ok().body(responseBody);
     }
 
     @PostMapping
     public ResponseEntity<CreationResponse> registerNewCounter(@RequestBody Counter counter){
         CreationResponse response=null;
-        try{
-            response=counterService.addNewCounter(counter);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+
+        response=counterService.addNewCounter(counter);
+
         return ResponseEntity.created(URI.create("Counter"))
                 .body(response);
     }
@@ -51,23 +46,19 @@ public class CounteController {
             @PathVariable Long counterId
     ){
         CreationResponse response=null;
-        try{
-            response=
-                    counterService.addNewFavor(favorId,counterId);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+
+        counterService.addNewFavor(favorId,counterId);
+
         return ResponseEntity.ok().body(response);
     }
     //TODO make bether
     @PatchMapping(path="{counterId}")
-    public ResponseEntity updateCounter(@PathVariable("counterName")String name,
-                              @RequestBody Counter counter){
-        try {
-            counterService.updateCounter(name, counter);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity updateCounter(
+            @PathVariable("counterName")String name,
+            @RequestBody Counter counter)
+    {
+        counterService.updateCounter(name, counter);
+
         return ResponseEntity.ok().body("ok");
     }
 
@@ -75,11 +66,8 @@ public class CounteController {
     public ResponseEntity<?> deleteCounter(
             @PathVariable Long id
     ) {
-        try{
-            counterService.deleteCounter(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        counterService.deleteCounter(id);
+
         return ResponseEntity.ok().build();
     }
 

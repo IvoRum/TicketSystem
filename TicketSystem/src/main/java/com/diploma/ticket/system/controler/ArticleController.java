@@ -23,21 +23,16 @@ public class ArticleController {
     @GetMapping
     private ResponseEntity<List<Article>> getArticle(){
         List<Article> response=new ArrayList<>();
-        try {
-            response=articleService.getArticles();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+
+        response=articleService.getArticles();
+
         return ResponseEntity.ok().body(response);
     }
 
     @PostMapping
     public ResponseEntity registerNewArticle(@RequestBody Article article){
-        try {
-            articleService.addNewArticle(article);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        articleService.addNewArticle(article);
+
         return ResponseEntity.ok("Article was created ");
     }
 
@@ -46,35 +41,27 @@ public class ArticleController {
             @PathVariable Long favorId,
             @PathVariable Long articleId
     ){
-        try {
-            articleService.addFavor(articleId,favorId);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        articleService.addFavor(articleId,favorId);
+
         return ResponseEntity.ok("Favor whit Id:"+favorId+"have been added!");
     }
 
-    @PutMapping(path="{articleId}")
-    public ResponseEntity updateArticle(@PathVariable("articleName")String name,
-                              @RequestBody Article article){
-        try {
-            articleService.updateArticle(name, article);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return  ResponseEntity.ok("Article has been updated");
+    @PutMapping(path="{articleName}")
+    public ResponseEntity updateArticle(
+            @PathVariable("articleId")String name,
+            @RequestBody Article article)
+    {
+       articleService.updateArticle(name, article);
+
+       return  ResponseEntity.ok("Article whit name:"+name+"hase bean updated");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArticle(
             @PathVariable Long id
     ) {
-        try{
-            articleService.deleteArticle(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
+        articleService.deleteArticle(id);
+        return ResponseEntity.ok("Article whit Id:"+id+"is deleted");
     }
 
 }

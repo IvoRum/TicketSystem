@@ -8,16 +8,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 @Controller
 public class QueueController {
 
-    @PostMapping
-    public void createNewCounter(){}
 
-    @PutMapping
-    public void finishedTicket(){}
-
-    @GetMapping
-    public void getNextInLine(){}
-
-    @PutMapping
-    public void callNextInLine(){}
 
 }

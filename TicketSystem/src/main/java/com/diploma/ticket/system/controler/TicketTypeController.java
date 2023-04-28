@@ -34,12 +34,9 @@ public class TicketTypeController {
     @PostMapping
     public ResponseEntity<TicketType> registerNewTicket(@RequestBody TicketType ticket){
         TicketType responseBody=null;
-        try {
-            responseBody=
-            ticketTypeService.addNewTicket(ticket);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+
+        responseBody= ticketTypeService.addNewTicket(ticket);
+
         return ResponseEntity.created(URI.create("TickeType"))
                 .body(responseBody);
     }

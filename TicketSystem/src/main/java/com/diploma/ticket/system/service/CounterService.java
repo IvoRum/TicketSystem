@@ -33,7 +33,7 @@ public class  CounterService {
                 =counterRepository.findCounterByName(counter.getName());
         boolean exists=counterOptional.isPresent();
         if(exists){
-            throw new IllegalStateException("Name is taken");
+            throw new IllegalArgumentException("Name is taken");
         }
         counterRepository.save(counter);
         return new CreationResponse(counter.getId(),
@@ -49,7 +49,7 @@ public class  CounterService {
         Optional<Counter> updatedCounter=counterRepository.findCounterByName(nameOfCounterToUpdate);
         boolean exits=updatedCounter.isPresent();
         if(exits) {
-            new IllegalStateException("counter whit name " + nameOfCounterToUpdate + " does not exost");
+            new IllegalArgumentException("counter whit name " + nameOfCounterToUpdate + " does not exost");
         }
         if(name!=null
                 &&!Objects.equals(counter.getName(),name)){
@@ -64,11 +64,11 @@ public class  CounterService {
         CreationResponse creationResponse=null;
         FavorType favorType
                 =favorTypeRepository.findById(favorId).orElseThrow(
-                ()-> new IllegalStateException("FavorType whit ID:"+favorId+" dose not exist!")
+                ()-> new IllegalArgumentException("FavorType whit ID:"+favorId+" dose not exist!")
         );
         Counter counter
                 =counterRepository.findById(counterId).orElseThrow(
-                ()-> new IllegalStateException("Counter whit ID:"+counterId+" dose not exist!")
+                ()-> new IllegalArgumentException("Counter whit ID:"+counterId+" dose not exist!")
         );
 
         counter.addFavorType(favorType);
