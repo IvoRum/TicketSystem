@@ -52,21 +52,6 @@ public class TicketController {
                              @RequestBody Ticket ticket){
         ticketService.updateTicket(name,ticket);
     }
-    //TODO think iif this in needed
-    @PutMapping("/add/user/{userId}/{ticketId}")
-    public ResponseEntity addUserToTicket(
-            @PathVariable Integer userId,
-            @PathVariable Long ticketId)
-    {
-        String body=null;
-        try {
-            body =
-                    ticketService.addUserToTicket(userId,ticketId);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(body);
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteATicket(

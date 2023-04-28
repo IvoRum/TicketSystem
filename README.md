@@ -108,6 +108,8 @@ PUT `/addFavor/:articleId/:favorId`
 
 Returns the id of the article that has bean updated.
 
+DELETE `/api/v2/article/:articleId`
+
 ### Counter ###
 
 GET `/api/v2/counter`
@@ -158,6 +160,8 @@ The request body needs to be in JSON format and include the following properties
 PUT `api/v2/counter/add/ticket/:favorId/:counterId`
 
 To put a new favor in the counter options. Requires authentication.
+
+DELETE `/api/v2/counter/:counterId`
 
 ### Favor ###
 
@@ -213,6 +217,8 @@ Example
 ```
 The response body is the id of the favor and a massage.
 
+DELETE `/api/v2/favor/:favorId`
+
 ### Favor Type ###
 
 GET `api/v2/favortype`
@@ -254,6 +260,8 @@ Example
 }
 ```
 The response body is the id of the favor type and a massage.
+
+DELETE `/api/v2/machine/:machineId`
 
 ### Machine ###
 
@@ -301,6 +309,8 @@ Example
 ```
 The response body is the id of the machine and a massage.
 
+DELETE `/api/v2/machine/:machineId`
+
 ### Personal Ticket ###
 
 GET `api/v2/personalticket`
@@ -347,6 +357,7 @@ PUT `api/v2/finish/:ticketNumber`
 
 Simple put just to finish a tickets on the name of the loged user. Reqirs Authentication.
 
+DELETE `/api/v2/personalticket/:personalTicketId`
 
 ### Ticket ###
 
@@ -402,6 +413,8 @@ Example
 ```
 The response body is the id of the ticket and a massage.
 
+DELETE `/api/v2/ticket/:ticketId`
+
 ### Tciket Type ###
 
 GET `api/v2/tickettype`
@@ -444,6 +457,8 @@ Example
 ```
 The response body is the id of the ticket type and a massage.
 
+DELETE `/api/v2/tickettype/:ticketTypeId`
+
 ### User ###
 
 GET `/api/v1/user`
@@ -482,7 +497,7 @@ PUT `/api/v1/user/register/addCounter/:favorTypeId`
 
 Allows to add a new facor type to the users profile. Requers authentication.
 
-
+DELETE `/api/v1/user/:userId`
 
 
 

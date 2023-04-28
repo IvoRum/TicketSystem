@@ -12,10 +12,12 @@ import com.diploma.ticket.system.repository.TicketTypeRepository;
 import com.diploma.ticket.system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@Transactional
 public class TicketService {
     private final TicketRepository ticketRepository;
     private final FavorRepository favorRepository;
@@ -90,22 +92,6 @@ public class TicketService {
             updatedTicket.get().setName(name);
         }
         ticketRepository.save(ticket);
-    }
-
-    public String addUserToTicket(Integer userId,Long ticketId) {
-        User user
-                =userRepository.findById(userId).orElseThrow(
-                ()->new IllegalStateException("User whit ID:"+userId+"dose not exist!")
-        );
-        Ticket ticket
-                =ticketRepository.findById(ticketId).orElseThrow(
-                ()->new IllegalStateException("Ticket whit ID:"+ticketId+"does not exist!")
-        );
-
-        ticket.addUser(user);
-        ticketRepository.save(ticket);
-
-        return "Successfully added user to the ticket";
     }
 
     public void deleteTicket(Long id) {

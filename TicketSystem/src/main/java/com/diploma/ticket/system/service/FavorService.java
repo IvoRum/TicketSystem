@@ -9,10 +9,12 @@ import com.diploma.ticket.system.repository.FavorRepository;
 import com.diploma.ticket.system.repository.FavorTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@Transactional
 public class FavorService {
     private final FavorRepository favorRepository;
     private final FavorTypeRepository favorTypeRepository;

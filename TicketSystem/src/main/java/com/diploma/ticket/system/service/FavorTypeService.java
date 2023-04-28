@@ -4,12 +4,14 @@ import com.diploma.ticket.system.entity.FavorType;
 import com.diploma.ticket.system.repository.FavorTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class FavorTypeService {
 
     public final FavorTypeRepository favorTypeRepository;
