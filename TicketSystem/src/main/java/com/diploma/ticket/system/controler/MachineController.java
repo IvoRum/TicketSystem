@@ -26,11 +26,8 @@ public class MachineController {
     @GetMapping
     public ResponseEntity<List<Machine>> getMachines(){
         List<Machine> responseBody=new ArrayList<>();
-        try{
-            responseBody=machineService.getMachines();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        responseBody=machineService.getMachines();
+
         return ResponseEntity.ok().body(responseBody);
     }
 
@@ -40,11 +37,7 @@ public class MachineController {
     )
     {
         CreationResponse responseBody=null;
-       // try{
-            responseBody= machineService.addNewMachine(machine);
-       // } catch (Exception e) {
-           // return ResponseEntity.badRequest().build();
-       // }
+        responseBody= machineService.addNewMachine(machine);
         return ResponseEntity.created(URI.create("Machine"))
                 .body(responseBody);
     }
@@ -59,11 +52,8 @@ public class MachineController {
     public ResponseEntity<?> deleteMachine(
             @PathVariable Long id
     ) {
-        try{
-            machineService.deleteMachine(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
+        machineService.deleteMachine(id);
+
+        return ResponseEntity.ok("Machina whit ID:"+id+"was deleted successfully.");
     }
 }

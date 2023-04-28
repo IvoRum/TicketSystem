@@ -35,5 +35,15 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
+//IllegalStateException
+    @ExceptionHandler(
+            IllegalStateException.class)
+    public ResponseEntity<Object> handleIllegalState(
+            IllegalStateException ex, WebRequest request) {
 
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message", "The state of the request is invalid.");
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
 }

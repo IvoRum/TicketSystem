@@ -47,12 +47,7 @@ public class UserController {
             @PathVariable Long counterId,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
     ){
-        try {
-            userService.addCounter(counterId,authHeader);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-
+        userService.addCounter(counterId,authHeader);
         return ResponseEntity.ok("Added sucsesfully");
     }
 
@@ -61,11 +56,7 @@ public class UserController {
             @PathVariable Long favorTypeId,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
     ){
-        try {
-            userService.addFavorType(favorTypeId,authHeader);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        userService.addFavorType(favorTypeId,authHeader);
 
         return ResponseEntity.ok("Added Favor type");
     }
@@ -76,11 +67,8 @@ public class UserController {
     public ResponseEntity<?> deleteUser(
             @PathVariable Integer id
     ) {
-        try{
-            userService.deleteUser(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
+        userService.deleteUser(id);
+
+        return ResponseEntity.ok("User whit ID:"+id+"");
     }
 }

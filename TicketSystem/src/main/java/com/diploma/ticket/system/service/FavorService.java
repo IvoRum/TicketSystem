@@ -81,8 +81,13 @@ public class FavorService {
         return favor;
     }
 
-    public void deleteFavor(Long id) throws NotFountInRepositoryException {
-        Favor favor=findFavorFromRepository(id);
+    public void deleteFavor(Long id){
+        Favor favor= null;
+        try {
+            favor = findFavorFromRepository(id);
+        } catch (Exception e) {
+            throw  new IllegalStateException(e);
+        }
         favorRepository.delete(favor);
     }
 }

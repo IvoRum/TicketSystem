@@ -38,10 +38,15 @@ public class PersonalTicketService {
         this.jwtUtil = jwtUtil;
     }
 
-    public void updatePersonalTicket(Long numberToUpdate, PersonalTicket personalTicket) throws NotFountInRepositoryException {
+    public void updatePersonalTicket(Long numberToUpdate, PersonalTicket personalTicket) {
         Long number=personalTicket.getNumber();
         PersonalTicket updatedTicket=
-                findPersonalTicket(numberToUpdate);
+                null;
+        try {
+            updatedTicket = findPersonalTicket(numberToUpdate);
+        } catch (NotFountInRepositoryException e) {
+            throw new IllegalArgumentException(e);
+        }
         if(number!=null
                 &&!Objects.equals(personalTicket.getNumber(),number)){
             updatedTicket.setNumber(number);
@@ -70,9 +75,14 @@ public class PersonalTicketService {
     public CreationResponse finishTicket(
             Long tickeNumber,
             String authHeader
-            ) throws NotFountInRepositoryException {
+            ) {
         PersonalTicket finishedPersonalTicket
-                =findPersonalTicket(tickeNumber);
+                = null;
+        try {
+            finishedPersonalTicket = findPersonalTicket(tickeNumber);
+        } catch (NotFountInRepositoryException e) {
+            throw new IllegalArgumentException(e);
+        }
         if(finishedPersonalTicket.getFinishTime()!=null){
             throw new IllegalStateException();
         }
@@ -110,8 +120,13 @@ public class PersonalTicketService {
         return personalTicket;
     }
 
-    public void deletePersonalTicket(Long id) throws NotFountInRepositoryException {
-        PersonalTicket personalTicket=findPersonalTicket(id);
+    public void deletePersonalTicket(Long id){
+        PersonalTicket personalTicket= null;
+        try {
+            personalTicket = findPersonalTicket(id);
+        } catch (NotFountInRepositoryException e) {
+            throw new IllegalArgumentException(e);
+        }
 
         personalTicketRepository.delete(personalTicket);
     }

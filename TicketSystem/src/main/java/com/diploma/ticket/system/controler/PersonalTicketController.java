@@ -1,5 +1,6 @@
 package com.diploma.ticket.system.controler;
 
+import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.service.PersonalTicketService;
 import com.diploma.ticket.system.entity.PersonalTicket;
@@ -24,13 +25,9 @@ public class PersonalTicketController {
     }
     @GetMapping
     public ResponseEntity<List<PersonalTicket>> getTickets(){
-        List<PersonalTicket> responseBody=new ArrayList<>();
-        try{
-            responseBody
-                    = personalTicketService.getPersonaTickets();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        List<PersonalTicket> responseBody=
+                personalTicketService.getPersonaTickets();
+
         return  ResponseEntity.ok(responseBody);
     }
 
@@ -38,12 +35,9 @@ public class PersonalTicketController {
     public ResponseEntity<CreationResponse> registerPersonalTicket(
             @RequestBody PersonalTicket personalTicket
     ){
-        CreationResponse response=null;
-        try{
-            response=personalTicketService.addNewPersonalTicket(personalTicket);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        CreationResponse response
+                =personalTicketService.addNewPersonalTicket(personalTicket);
+
         return ResponseEntity.created(URI.create("PersonaTicket")).body(response);
     }
 
@@ -52,25 +46,17 @@ public class PersonalTicketController {
             @PathVariable Long ticketNumber,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
     ){
-        CreationResponse responseBody=null;
-        try{
-            responseBody=
+        CreationResponse responseBody=
                     personalTicketService.finishTicket(ticketNumber,authHeader);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(responseBody);
     }
 
 
     @PatchMapping(path="{personalTicketId}")
     public ResponseEntity updateTicket(@PathVariable("ticketNumber")Long number,
-                             @RequestBody PersonalTicket personalTicket){
-        try{
-            personalTicketService.updatePersonalTicket(number,personalTicket);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+                             @RequestBody PersonalTicket personalTicket)
+    {
+        personalTicketService.updatePersonalTicket(number,personalTicket);
         return ResponseEntity.ok("Ticket whit number:"+number+" hase been updated");
     }
 
@@ -78,11 +64,7 @@ public class PersonalTicketController {
     public ResponseEntity<?> deletePersonalTicket(
             @PathVariable Long id
     ) {
-        try{
-            personalTicketService.deletePersonalTicket(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        personalTicketService.deletePersonalTicket(id);
         return ResponseEntity.ok().build();
     }
 }

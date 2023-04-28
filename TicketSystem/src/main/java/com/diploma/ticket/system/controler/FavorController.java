@@ -22,11 +22,7 @@ public class FavorController {
     @GetMapping
     public ResponseEntity<List<Favor>> getService(){
         List<Favor> responseBody=new ArrayList<>();
-        try{
-            responseBody=favorService.getService();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        responseBody=favorService.getService();
 
         return ResponseEntity.ok().body(responseBody);
     }
@@ -34,34 +30,25 @@ public class FavorController {
     @PostMapping
     public ResponseEntity<CreationResponse> registerNewService(@RequestBody FavorCreationReqest favor){
         CreationResponse responce=null;
-        try{
-            responce=favorService.addNewService(favor);
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+        responce=favorService.addNewService(favor);
         return ResponseEntity.ok(responce);
     }
     //TODO Make better
     @PatchMapping(path="{favorName}")
-    public ResponseEntity updateService(@PathVariable("favorName")String name,
-                              @RequestBody Favor favor){
-        try{
-            favorService.updateService(name, favor);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body("ok");
+    public ResponseEntity updateService(
+            @PathVariable("favorName")String name,
+            @RequestBody Favor favor
+    ){
+
+        favorService.updateService(name, favor);
+        return ResponseEntity.ok("Favor whit name"+name+"hase bean updated");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFavor(
             @PathVariable Long id
     ) {
-        try{
-            favorService.deleteFavor(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        favorService.deleteFavor(id);
         return ResponseEntity.ok().build();
     }
 }

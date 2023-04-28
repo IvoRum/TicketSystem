@@ -24,12 +24,7 @@ public class TicketController {
 
     @GetMapping
     public ResponseEntity<List<Ticket>> getTickets(){
-        List<Ticket> responceBody=new ArrayList<>();
-        try{
-            responceBody=ticketService.getTickets();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        List<Ticket> responceBody=ticketService.getTickets();
         return ResponseEntity.ok().body(responceBody);
     }
 
@@ -37,13 +32,7 @@ public class TicketController {
     public ResponseEntity<CreationResponse> registerNewTicket(
             @RequestBody TicketCreationRequest ticket
     ){
-        CreationResponse responseBody=null;
-        try {
-            responseBody=
-                    ticketService.addNewTicket(ticket);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        CreationResponse responseBody=ticketService.addNewTicket(ticket);
         return ResponseEntity.created(URI.create("Ticket")).body(responseBody);
     }
 
@@ -57,11 +46,7 @@ public class TicketController {
     public ResponseEntity<?> deleteATicket(
             @PathVariable Long id
     ) {
-        try{
-            ticketService.deleteTicket(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        ticketService.deleteTicket(id);
         return ResponseEntity.ok().build();
     }
 

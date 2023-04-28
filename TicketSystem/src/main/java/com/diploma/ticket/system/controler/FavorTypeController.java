@@ -27,22 +27,14 @@ public class FavorTypeController {
     @GetMapping
     public ResponseEntity<List<FavorType>> getServiceTypes(){
         List<FavorType> responsBbody=new ArrayList<>();
-        try{
-            responsBbody=favorTypeService.getServiceTypes();
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
+        responsBbody=favorTypeService.getServiceTypes();
         return ResponseEntity.ok().body(responsBbody);
     }
 
     @PostMapping
     public ResponseEntity registerNewServiceType(@RequestBody FavorType favorType){
         FavorType responseBody= null;
-        try{
-            responseBody=favorTypeService.addNewServiceType(favorType);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        responseBody=favorTypeService.addNewServiceType(favorType);
         return ResponseEntity.created(URI.create("ServiceType"))
                 .body(responseBody);
     }
@@ -50,11 +42,8 @@ public class FavorTypeController {
     @PatchMapping(path="{favorName}")
     public ResponseEntity updateTicket(@PathVariable("favorName")String nameOfFavorTypeToUpdate,
                              @RequestBody FavorType favorType) {
-        try {
-            favorTypeService.updateTicket(nameOfFavorTypeToUpdate, favorType);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        favorTypeService.updateTicket(nameOfFavorTypeToUpdate, favorType);
+
         return ResponseEntity.ok("ok");
     }
 
@@ -62,11 +51,8 @@ public class FavorTypeController {
     public ResponseEntity<?> deleteFavorType(
             @PathVariable Long id
     ) {
-        try{
-            favorTypeService.deleteFavorType(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
+        favorTypeService.deleteFavorType(id);
+
+        return ResponseEntity.ok("Favor whit Id:"+id+"was deleted successfully!");
     }
 }

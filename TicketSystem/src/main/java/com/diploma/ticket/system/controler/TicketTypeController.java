@@ -22,45 +22,32 @@ public class TicketTypeController {
 
     @GetMapping
     public ResponseEntity<List<TicketType>> getTickets(){
-        List<TicketType> responseBody=new ArrayList<>();
-        try{
-            responseBody=ticketTypeService.getTicketTypes();
-        }catch (Exception e){
-            return  ResponseEntity.notFound().build();
-        }
+        List<TicketType> responseBody=ticketTypeService.getTicketTypes();
         return ResponseEntity.ok().body(responseBody);
     }
 
     @PostMapping
     public ResponseEntity<TicketType> registerNewTicket(@RequestBody TicketType ticket){
-        TicketType responseBody=null;
-
-        responseBody= ticketTypeService.addNewTicket(ticket);
+        TicketType responseBody= ticketTypeService.addNewTicket(ticket);
 
         return ResponseEntity.created(URI.create("TickeType"))
                 .body(responseBody);
     }
     //TODO make it better
     @PatchMapping(path="{ticketTypeName}")
-    public ResponseEntity updateTicket(@PathVariable("ticketTypeName")String name,
-                             @RequestBody TicketType ticket){
-        try {
-            ticketTypeService.updateTicket(name, ticket);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<String> updateTicket(
+            @PathVariable("ticketTypeName")String name,
+            @RequestBody TicketType ticket)
+    {
+        ticketTypeService.updateTicket(name, ticket);
         return ResponseEntity.ok("ok");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTicketType(
+    public ResponseEntity<String> deleteTicketType(
             @PathVariable Long id
     ) {
-        try{
-            ticketTypeService.deleteTickeType(id);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().build();
+        ticketTypeService.deleteTickeType(id);
+        return ResponseEntity.ok("Ticket type whit id:"+id+" was deleted successfully!");
     }
 }
