@@ -4,8 +4,10 @@ This API allows you to create, manage and user a ticket system at your own accor
 
 ## Content List ##
 
-[Sequence](https://github.com/IvoRum/TicketSystem/blob/main/Documents/SequenceDiagram.md)
-[Database Diagram](https://github.com/IvoRum/TicketSystem/blob/main/Documents/DatabaseDiagram.md)
+[Sequence](https://github.com/IvoRum/TicketSystem/blob/main/Documents/SequenceDiagram.md)</p>
+[Database Diagram](https://github.com/IvoRum/TicketSystem/blob/main/Documents/DatabaseDiagram.md)</p>
+
+<br>
 
 
 ## TO DO ##
@@ -13,32 +15,35 @@ This API allows you to create, manage and user a ticket system at your own accor
 <details>
     <summary>List</summary>
     <p> 
-    1. Automated Postman test for generating a lot of randome tickets
-        * ~~Ticket Creation sequence~~
-        * User Connecting to a counter
-        * User servesing a Personal Ticket
-    2. User loget to a serten counter to work
-    3. Queing system
-        * Get all Personal Tickets
-        * Get active counters
-        * Create counter filters
-        * Fillter the tickets in order
-        * Call the client when hes or her tickets is next
-        * Finish tickets when the user sends a request
-        * Make a function to desplay all tickets in a queue
-        * Make it a websocket 
-        * Have a Critical Section whit a monitor or synchronized
-        * Have a semaphore
-    4. ~~Add PATCH and DELETE mappings~~
-    5. Sequence diagrams
-        * ~~User whit Customer~~
-        * ~~Admin creating a Ticket~~
-        * Adimn creating a new User
-        * Admin creating a new Counter
-        * Admin craeting a new machine
-        * Admin creating a new article
+    1. Automated Postman test for generating a lot of randome tickets</p>
+         <ul><p><strike> Ticket Creation sequence~ </strike></p>
+        <p> User Connecting to a counter</p>
+        User servesing a Personal Ticket</p> </ul>
+    2. User loget to a serten counter to work</p>
+    3. Queing system</p>
+         <ul> Get all Personal Tickets</p>
+         Get active counters</p>
+         Create counter filters</p>
+         Fillter the tickets in order</p>
+         Call the client when hes or her tickets is next</p>
+         Finish tickets when the user sends a request</p>
+         Make a function to desplay all tickets in a queue</p>
+         Make it a websocket</p> 
+         Have a Critical Section whit a monitor or synchronized</p>
+         Have a semaphore</p> </ul>
+    4. <strike>Add PATCH and DELETE mappings</strike></p>
+    5. Sequence diagrams</p>
+         <ul> <strike>User whit Customer</strike></p>
+        * <strike>Admin creating a Ticket</strike></p>
+        * Adimn creating a new User</p>
+        * Admin creating a new Counter</p>
+        * Admin craeting a new machine</p>
+        * Admin creating a new article</p>
     </p>
 </details>
+
+<br>
+
 
 ## Authentication ##
 
@@ -61,6 +66,8 @@ Example
 ```
 
 The response body will contain the access token and information about the user. The access token is valid for 12 hours.
+
+<br>
 
 ## Endpoints ##
 
