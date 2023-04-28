@@ -1,17 +1,24 @@
 package com.diploma.ticket.system.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 
-import java.util.List;
+import java.util.*;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class Queue {
-    private List<Counter> counters;
+    private Map<User,Counter> counters;
     private List<Favor> filters;
     private List<PersonalTicket> tickets;
 
-    public void orderQueue(){}
+    public Queue() {
+        counters=new HashMap<>();
+        filters=new LinkedList<>();
+        tickets=new ArrayList<>();
+    }
+
+    public void addCounter(User user,Counter counter) {
+        if(counter.isActive())
+            counters.put(user,counter);
+    }
 }

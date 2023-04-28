@@ -66,11 +66,7 @@ public class  CounterService {
                 =favorTypeRepository.findById(favorId).orElseThrow(
                 ()-> new IllegalArgumentException("FavorType whit ID:"+favorId+" dose not exist!")
         );
-        Counter counter
-                =counterRepository.findById(counterId).orElseThrow(
-                ()-> new IllegalArgumentException("Counter whit ID:"+counterId+" dose not exist!")
-        );
-
+        Counter counter =findCounter(counterId);
         counter.addFavorType(favorType);
         counterRepository.save(counter);
         return new CreationResponse(favorId,
@@ -82,5 +78,11 @@ public class  CounterService {
                 =counterRepository.findById(id).orElseThrow();
 
         counterRepository.delete(counter);
+    }
+
+    public Counter findCounter(Long counterId) {
+        Counter counter
+                =counterRepository.findById(counterId).orElseThrow();
+        return counter;
     }
 }
