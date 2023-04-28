@@ -12,10 +12,32 @@ This API allows you to create, manage and user a ticket system at your own accor
 
 <details>
     <summary>List</summary>
-    <p>Authomathed Postvamn test for generating a lot of randome tickets</p>
-    <p>Queing system</P>
-    <p>Add PATCH and DELETE mappings</p>
-    <P>User loget to a serten counter to work</p>
+    <p> 
+    1. Automated Postman test for generating a lot of randome tickets
+        * ~~Ticket Creation sequence~~
+        * User Connecting to a counter
+        * User servesing a Personal Ticket
+    2. User loget to a serten counter to work
+    3. Queing system
+        * Get all Personal Tickets
+        * Get active counters
+        * Create counter filters
+        * Fillter the tickets in order
+        * Call the client when hes or her tickets is next
+        * Finish tickets when the user sends a request
+        * Make a function to desplay all tickets in a queue
+        * Make it a websocket 
+        * Have a Critical Section whit a monitor or synchronized
+        * Have a semaphore
+    4. ~~Add PATCH and DELETE mappings~~
+    5. Sequence diagrams
+        * ~~User whit Customer~~
+        * ~~Admin creating a Ticket~~
+        * Adimn creating a new User
+        * Admin creating a new Counter
+        * Admin craeting a new machine
+        * Admin creating a new article
+    </p>
 </details>
 
 ## Authentication ##
@@ -498,8 +520,6 @@ PUT `/api/v1/user/register/addCounter/:favorTypeId`
 Allows to add a new facor type to the users profile. Requers authentication.
 
 DELETE `/api/v1/user/:userId`
-
-
 
 -------------------
 > You have power over your mind - not outside events. Realize this, and you will find strength. -
