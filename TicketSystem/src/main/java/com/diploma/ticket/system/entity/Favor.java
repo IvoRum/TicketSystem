@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name="Service")
+@Table(name="Favor")
 public class Favor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +32,12 @@ public class Favor {
     @JoinColumn(name="type")
     private List<FavorType> type;
 
-    @ManyToMany
-    @JoinColumn(name = "ticket")
-    Set<Ticket> tickets;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "favor_tickets",
+            joinColumns = @JoinColumn(name = "favor_id"),
+            inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+    Set<Ticket> ticket;
 
     @ManyToMany
     @JoinColumn(name = "article")

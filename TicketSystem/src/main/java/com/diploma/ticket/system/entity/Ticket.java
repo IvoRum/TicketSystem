@@ -21,9 +21,12 @@ public class Ticket {
     private Long id;
     private String name;
 
-    @ManyToMany
-    @JoinColumn(name = "favor")
-    private Set<Favor> favors;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "favor_tickets",
+            joinColumns = @JoinColumn(name = "ticket_id"),
+            inverseJoinColumns = @JoinColumn(name = "favor_id"))
+    private Set<Favor> favor;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_type")
@@ -50,4 +53,11 @@ public class Ticket {
         this.users.add(user);
     }
 
+    public void addPersonalTicket(PersonalTicket personalTicket) {
+        personalTickets.add(personalTicket);
+    }
+
+    public void addFavor(Favor favor) {
+        this.favor.add(favor);
+    }
 }

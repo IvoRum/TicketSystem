@@ -13,6 +13,7 @@ import java.sql.Time;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketCreationRequest {
+    private Long id;
     private String name;
     private Time workStart;
     private Time workEnd;

@@ -1,11 +1,8 @@
 package com.diploma.ticket.system.service;
 
-import com.diploma.ticket.system.entity.TicketType;
-import com.diploma.ticket.system.entity.User;
+import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
-import com.diploma.ticket.system.entity.Favor;
-import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.repository.FavorRepository;
 import com.diploma.ticket.system.repository.TicketRepository;
 import com.diploma.ticket.system.repository.TicketTypeRepository;
@@ -47,16 +44,7 @@ public class TicketService {
         if(exists){
             throw new IllegalStateException("Name is taken");
         }
-        //Searching for the favor from the repository
-        //TODO Pitai koe ot dveto e po razumno
-        Favor favor
-                =favorRepository.getReferenceById(request.getFavorId());
-        if(favor==null){
-            throw new IllegalStateException("Id of the favor is not found");
-        }
 
-        Set<Favor> favors=new HashSet<>();
-        favors.add(favor);
         //Searching for the type in the repository and returning an obj
         TicketType ticketType
                 =ticketTypeRepository.findById(request.getTypeId()).orElseThrow(
@@ -71,11 +59,13 @@ public class TicketService {
                          .name(request.getName())
                          .workStart(request.getWorkStart())
                          .workEnd(request.getWorkEnd())
-                         .favors(favors)
                          .type(ticketTypes)
                          .build();
-
+        //ticketSet.add(createdTicke);
+        //favor.setTicket(ticketSet);
+        //favorRepository.save(favor);
         ticketRepository.save(createdTicke);
+
         Long idOfTheNewTicket =createdTicke.getId();
         return new CreationResponse(idOfTheNewTicket,"Ticket Created successfully");
     }
@@ -99,5 +89,27 @@ public class TicketService {
                 =ticketRepository.findById(id).orElseThrow();
 
         ticketRepository.delete(ticket);
+    }
+
+    public List<Ticket> findTicketByFavor(Favor favor) {
+        return ticketRepository.findByTicketFavor(favor.getId());
+    }
+
+    public void addFavor(Long idTicket, Long idFavor) {
+        //Searching for the favor from the repository
+        Favor favor
+                =favorRepository.findById(idFavor).orElseThrow();
+        if(favor==null){
+            throw new IllegalStateException("Id of the favor is not found");
+        }
+        Set<Favor> favors=new HashSet<>();
+        favors.add(favor);
+        Optional<Ticket> ticketOptional
+                =ticketRepository.findById(idTicket);
+        boolean exists=ticketOptional.isPresent();
+        if(!exists){
+            throw new IllegalStateException();
+        }
+        ticketOptional.get().addFavor(favor);
     }
 }

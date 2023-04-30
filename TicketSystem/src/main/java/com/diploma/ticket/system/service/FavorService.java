@@ -31,7 +31,7 @@ public class FavorService {
 
     public CreationResponse addNewService(FavorCreationReqest favorRequest) {
         Optional<Favor> service1
-                = favorRepository.findServiceByName(favorRequest.getName());
+                = favorRepository.findFavorByName(favorRequest.getName());
         boolean exists=service1.isPresent();
         if(exists){
             throw new IllegalArgumentException("Name of service dose not exists");
@@ -60,7 +60,7 @@ public class FavorService {
     public void updateService(String nameToUpdate, Favor favor) {
         String serviceName= favor.getName();
         Optional<Favor> optionalService
-                = favorRepository.findServiceByName(nameToUpdate);
+                = favorRepository.findFavorByName(nameToUpdate);
         boolean exists=optionalService.isPresent();
         if(exists){
             new IllegalStateException("service whit name"+nameToUpdate+"exists");
@@ -89,5 +89,10 @@ public class FavorService {
             throw  new IllegalStateException(e);
         }
         favorRepository.delete(favor);
+    }
+
+    public List<Favor> findFavorByType(FavorType favorType) {
+
+        return favorRepository.findFavorByType(favorType);
     }
 }

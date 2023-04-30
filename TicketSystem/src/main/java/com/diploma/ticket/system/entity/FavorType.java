@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="ServiceType")
+@Table(name="FavorType")
 public class FavorType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

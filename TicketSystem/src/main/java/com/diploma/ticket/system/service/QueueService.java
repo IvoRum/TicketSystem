@@ -1,26 +1,33 @@
 package com.diploma.ticket.system.service;
 
-import com.diploma.ticket.system.entity.Counter;
-import com.diploma.ticket.system.entity.PersonalTicket;
+import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.entity.Queue;
-import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Time;
+import java.util.*;
 
 @Service
 @Transactional
 public class QueueService {
 
     private final CounterService counterService;
+    private final FavorService favorService;
+    private final TicketService ticketService;
+    private final PersonalTicketService personalTicketService;
     private Queue queue;
     private final JwtUtil jwtUtil;
     private final UserService userService;
 
     @Autowired
-    public QueueService(CounterService counterService, JwtUtil jwtUtil, UserService userService) {
+    public QueueService(CounterService counterService, FavorService favorService, TicketService ticketService, PersonalTicketService personalTicketService, JwtUtil jwtUtil, UserService userService) {
         this.counterService = counterService;
+        this.favorService = favorService;
+        this.ticketService = ticketService;
+        this.personalTicketService = personalTicketService;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
         queue=new Queue();
@@ -56,12 +63,40 @@ public class QueueService {
     }
 
     public PersonalTicket getNextInLineByCounter(Long counterId) {
+        //1. get the Counter entity
+
         Counter counter
                 =counterService.findCounter(counterId);
-        //get the tickets service
-        //find the ticket that is next
-        //return the ticket that is next
-        return null;
+        //2. get the Set of Favor types for the counter
+        Set<FavorType> favorTypes
+                = counter.getFavorType();
+        //3. get the Favors for the counter
+        List<List<Favor>> favorsInLine=new ArrayList<>();
+        for(FavorType favorType:favorTypes){
+            favorsInLine.add(favorService.findFavorByType(favorType));
+        }
+        //4. get the tickets for counter
+        List<List<Ticket>> ticketInLine=new ArrayList<>();
+        for(List<Favor> favors:favorsInLine){
+            for(Favor favor:favors){
+                List<Ticket> ticket=ticketService.findTicketByFavor(favor);
+                if(ticket!=null){
+                    ticketInLine.add(ticket);
+                }
+            }
+        }
+        //5. get the personal tickets for the counter
+        List<PersonalTicket> personalTicketsInLine =new LinkedList<>();
+        for(List<Ticket>list:ticketInLine) {
+            for (Ticket ticket : list) {
+                personalTicketsInLine = personalTicketService.findActivePersonalTicketByTicket(ticket);
+            }
+        }
+        //6. return the next in line
+        PersonalTicket nextInLine=null;
+        Collections.sort(personalTicketsInLine,Comparator.comparing(PersonalTicket::getIssueTime));
+
+        return personalTicketsInLine.get(0);
     }
 
     public Integer getWaitingInLineForCounter(Long counterId) {

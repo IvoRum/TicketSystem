@@ -1,24 +1,20 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.PersonalTicket;
+import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.PersonalTicketRepository;
 import com.diploma.ticket.system.repository.UserRepository;
 import com.diploma.ticket.system.util.JwtUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Service
 @Transactional
@@ -43,7 +39,7 @@ public class PersonalTicketService {
         PersonalTicket updatedTicket=
                 null;
         try {
-            updatedTicket = findPersonalTicket(numberToUpdate);
+            updatedTicket = findPersonalTicketByIdOfPersonalTicket(numberToUpdate);
         } catch (NotFountInRepositoryException e) {
             throw new IllegalArgumentException(e);
         }
@@ -63,7 +59,7 @@ public class PersonalTicketService {
         PersonalTicket ticketOptional
                  = null;
         try {
-            ticketOptional = findPersonalTicket(personalTicket.getNumber());
+            ticketOptional = findPersonalTicketByIdOfPersonalTicket(personalTicket.getNumber());
             throw new IllegalStateException("Number is taken");
         } catch (NotFountInRepositoryException e) {
             personalTicketRepository.save(personalTicket);
@@ -79,7 +75,7 @@ public class PersonalTicketService {
         PersonalTicket finishedPersonalTicket
                 = null;
         try {
-            finishedPersonalTicket = findPersonalTicket(tickeNumber);
+            finishedPersonalTicket = findPersonalTicketByIdOfPersonalTicket(tickeNumber);
         } catch (NotFountInRepositoryException e) {
             throw new IllegalArgumentException(e);
         }
@@ -110,7 +106,7 @@ public class PersonalTicketService {
         return new CreationResponse(tickeNumber,"Finished on time:");
     }
 
-    public PersonalTicket findPersonalTicket(Long numberOfPersonalTicket) throws NotFountInRepositoryException {
+    public PersonalTicket findPersonalTicketByIdOfPersonalTicket(Long numberOfPersonalTicket) throws NotFountInRepositoryException {
         PersonalTicket personalTicket
                 =personalTicketRepository.findById(numberOfPersonalTicket).orElseThrow(
                 ()-> new NotFountInRepositoryException(
@@ -123,11 +119,17 @@ public class PersonalTicketService {
     public void deletePersonalTicket(Long id){
         PersonalTicket personalTicket= null;
         try {
-            personalTicket = findPersonalTicket(id);
+            personalTicket = findPersonalTicketByIdOfPersonalTicket(id);
         } catch (NotFountInRepositoryException e) {
             throw new IllegalArgumentException(e);
         }
 
         personalTicketRepository.delete(personalTicket);
+    }
+
+    public List<PersonalTicket> findActivePersonalTicketByTicket(Ticket ticket) {
+
+        return personalTicketRepository.findPersonalTicketsByTicket(ticket.getId());
+
     }
 }

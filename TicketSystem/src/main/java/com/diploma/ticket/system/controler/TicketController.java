@@ -42,6 +42,14 @@ public class TicketController {
         ticketService.updateTicket(name,ticket);
     }
 
+    @PutMapping("addFavor/{idTicket}/{idFavor}")
+    public void addFavor(
+            @PathVariable("idTicket") Long idTicket,
+            @PathVariable("idFavor") Long idFavor
+    ){
+        ticketService.addFavor(idTicket,idFavor);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteATicket(
             @PathVariable Long id
