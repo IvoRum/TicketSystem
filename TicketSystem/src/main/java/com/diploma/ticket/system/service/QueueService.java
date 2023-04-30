@@ -1,6 +1,7 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.Counter;
+import com.diploma.ticket.system.entity.PersonalTicket;
 import com.diploma.ticket.system.entity.Queue;
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.util.JwtUtil;
@@ -30,11 +31,41 @@ public class QueueService {
                 counterService.findCounter(counterId);
         counter.setActive(true);
 
+        User user=getUserFromToken(authHeader);
+
+        queue.addCounter(user,counter);
+    }
+
+    public void closeCounter(Long counterId, String authHeader) {
+        Counter counter
+                =counterService.findCounter(counterId);
+        counter.setActive(false);
+
+        User user=getUserFromToken(authHeader);
+
+        queue.removeCounter(user,counter);
+    }
+
+
+    private User getUserFromToken(String authHeader){
         final String jwtToken;
         jwtToken = authHeader.substring(7);
         String userEmail = jwtUtil.extractUsername(jwtToken);
         User user=userService.findUserByEmail(userEmail);
+        return user;
+    }
 
-        queue.addCounter(user,counter);
+    public PersonalTicket getNextInLineByCounter(Long counterId) {
+        Counter counter
+                =counterService.findCounter(counterId);
+        //get the tickets service
+        //find the ticket that is next
+        //return the ticket that is next
+        return null;
+    }
+
+    public Integer getWaitingInLineForCounter(Long counterId) {
+
+        return 0;
     }
 }

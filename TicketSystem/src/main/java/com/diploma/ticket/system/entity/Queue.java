@@ -1,9 +1,5 @@
 package com.diploma.ticket.system.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.*;
-
 import java.util.*;
 
 public class Queue {
@@ -20,5 +16,9 @@ public class Queue {
     public void addCounter(User user,Counter counter) {
         if(counter.isActive())
             counters.put(user,counter);
+    }
+
+    public void removeCounter(User user, Counter counter) {
+        counters.remove(user,counter);
     }
 }

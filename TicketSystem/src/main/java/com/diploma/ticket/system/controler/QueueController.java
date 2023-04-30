@@ -1,5 +1,7 @@
 package com.diploma.ticket.system.controler;
 
+import com.diploma.ticket.system.entity.PersonalTicket;
+import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,11 +28,29 @@ public class QueueController {
     }
 
     @DeleteMapping("/close/counter/{counterId}")
-    public ResponseEntity<?> closeCounter(
+    public ResponseEntity<String> closeCounter(
             @PathVariable Long counterId,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
     ){
+        queueService.closeCounter(counterId,authHeader);
         return ResponseEntity.ok("Counter whit id:"+counterId+"was closed");
+    }
+
+    @GetMapping("/nextInLine/{counterId}")
+    public ResponseEntity<NextInLineResponse> getNExtInLine(
+            @PathVariable Long counterId
+    ){
+        PersonalTicket nextInLineTicket
+                =queueService.getNextInLineByCounter(counterId);
+        Integer ticketsForTheCounterWaiting
+                =queueService.getWaitingInLineForCounter(counterId);
+        NextInLineResponse response
+                = NextInLineResponse.builder()
+                .number(nextInLineTicket.getNumber())
+                .issueTime(nextInLineTicket.getIssueTime())
+                .finishTime(nextInLineTicket.getFinishTime())
+                .build();
+        return ResponseEntity.ok().body(response);
     }
 
 }

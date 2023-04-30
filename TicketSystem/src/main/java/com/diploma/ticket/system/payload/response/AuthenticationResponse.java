@@ -16,7 +16,7 @@ public class AuthenticationResponse {
     private String email;
     private Role roles;
 
-
+    //TODO remove all junck just leave the token
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("refresh_token")
