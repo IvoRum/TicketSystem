@@ -33,7 +33,6 @@ public class TicketTypeController {
         return ResponseEntity.created(URI.create("TickeType"))
                 .body(responseBody);
     }
-    //TODO make it better
     @PatchMapping(path="{ticketTypeName}")
     public ResponseEntity<String> updateTicket(
             @PathVariable("ticketTypeName")String name,

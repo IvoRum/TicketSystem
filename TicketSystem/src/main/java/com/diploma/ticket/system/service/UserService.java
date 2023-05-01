@@ -51,4 +51,10 @@ public class UserService {
     public User findUserByEmail(String email){
         return userRepository.findByEmail(email).orElseThrow();
     }
+
+    public void updateUser(Integer id, User user) {
+        User userToUpdate=userRepository.findById(id).orElseThrow();
+        user.setId(id);
+        userRepository.save(user);
+    }
 }

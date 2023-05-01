@@ -73,12 +73,12 @@ The response body will contain the access token and information about the user. 
 
 1. [Article](#article "Goto Article")
 2. [Favor](#favor "Goto Favor")
-3. [Favor-Type](#favor-type "Goto Favor type")
-4. [Machine](#machine "Goto Machine")
-5. [Personal-Ticket](#personal-ticket "Goto Personal ticket")
-6. [Ticket](#ticket "Goto ticket")
-7. [Ticket-Type](#tciket-type "Goto Ticket type")
-8. [User](#user "Goto User")
+3. [Machine](#machine "Goto Machine")
+4. [Personal-Ticket](#personal-ticket "Goto Personal ticket")
+5. [Ticket](#ticket "Goto ticket")
+6. [Ticket-Type](#ticket-type "Goto Ticket type")
+7. [User](#user "Goto User")
+8. [Queue](#Queue "Goto Queue")
 
 
 ### Article ###
@@ -248,50 +248,6 @@ The response body is the id of the favor and a massage.
 
 DELETE `/api/v2/favor/:favorId`
 
-### Favor Type ###
-
-GET `api/v2/favortype`
-
-Returns a list of favors. Requires authentication.
-
-POST `api/v2/favortype`
-
-Allows for the creation of a favor type. Requirs authentication.
-The request body needs to be in JSON format and include the following properties:
-
-- `name` - String - Required
-- `discription` -String - Required
-
-Example
-
-```
-{
-    "name":"Adminstation",
-    "description":"some description"
-}
-```
-The response body is the id of the favor type and a massage.
-
-PATCH `api/v2/favortype/:favorName`
-
-Allows for the creation of a favor type. Requirs authentication.
-The request body needs to be in JSON format and include the following properties:
-
-- `name` - String - Required
-- `discription` -String - Required
-
-Example
-
-```
-{
-    "name":"Adminstation",
-    "description":"some description"
-}
-```
-The response body is the id of the favor type and a massage.
-
-DELETE `/api/v2/machine/:machineId`
-
 ### Machine ###
 
 GET `api/v1/machine`
@@ -346,6 +302,10 @@ GET `api/v2/personalticket`
 
 Returns a list of personal tickets. Requires authentication.
 
+GET `api/v2/personalticket/:ticketId`
+
+Returns a list of personal tickets by the ticket id. Requires authentication.
+
 POST `api/v2/personalticket`
 
 Allows for the creation of a personal ticket. Requirs authentication.
@@ -394,6 +354,10 @@ GET `api/v2/ticket`
 
 Returns a list of tickets. Requires authentication.
 
+GET `api/v2/ticket/:favorId`
+
+Returns a list of all tickets whit the privided favorId. Requires authentication.
+
 POST `api/v2/ticket`
 
 Allows for the creation of a ticket. Requirs authentication.
@@ -441,6 +405,14 @@ Example
 }
 ```
 The response body is the id of the ticket and a massage.
+
+PUT `addFavor/:idTicket/:idFavor`
+
+Adds a favor to the ticket. Requirs authentication.
+
+PUT `addFavor/:idTicket/:idPersonalTicket`
+
+Adds a personal ticket to the ticket. Requirs authentication.
 
 DELETE `/api/v2/ticket/:ticketId`
 
@@ -527,6 +499,24 @@ PUT `/api/v1/user/register/addCounter/:favorTypeId`
 Allows to add a new facor type to the users profile. Requers authentication.
 
 DELETE `/api/v1/user/:userId`
+
+### Queue ###
+
+GET `api/v1/queue/nextInLine/:counterId`
+
+Gets the next tickt in the line.
+
+PUT `api/v1/queue/open/counter/:counterId`
+
+Opens the counter whit the loged in user.
+
+DELETE `api/v1/queue/close/counter/:counterId`
+
+Closes the counter.
+
+GET `api/v1/queue/waiting ForCounter/:counterId`
+
+Returns all the personal tickets for the counter.
 
 -------------------
 > You have power over your mind - not outside events. Realize this, and you will find strength. -

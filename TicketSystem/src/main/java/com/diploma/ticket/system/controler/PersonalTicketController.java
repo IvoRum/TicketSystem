@@ -50,6 +50,13 @@ public class PersonalTicketController {
 
         return ResponseEntity.created(URI.create("PersonaTicket")).body(response);
     }
+    @PatchMapping(path="{personalTicketId}")
+    public ResponseEntity updateTicket(@PathVariable("ticketNumber")Long number,
+                             @RequestBody PersonalTicket personalTicket)
+    {
+        personalTicketService.updatePersonalTicket(number,personalTicket);
+        return ResponseEntity.ok("Ticket whit number:"+number+" hase been updated");
+    }
 
     @PutMapping("/finish/{ticketNumber}")
     public ResponseEntity finishTicket(
@@ -62,13 +69,6 @@ public class PersonalTicketController {
     }
 
 
-    @PatchMapping(path="{personalTicketId}")
-    public ResponseEntity updateTicket(@PathVariable("ticketNumber")Long number,
-                             @RequestBody PersonalTicket personalTicket)
-    {
-        personalTicketService.updatePersonalTicket(number,personalTicket);
-        return ResponseEntity.ok("Ticket whit number:"+number+" hase been updated");
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePersonalTicket(

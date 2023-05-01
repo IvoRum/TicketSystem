@@ -1,5 +1,6 @@
 package com.diploma.ticket.system.controler;
 
+import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +61,15 @@ public class UserController {
 
         return ResponseEntity.ok("Added Favor type");
     }
-    //TODO add a patch method
+    @PatchMapping(path="{userId}")
+    public ResponseEntity updateService(
+            @PathVariable("userId")Integer id,
+            @RequestBody User user
+    ){
 
+        userService.updateUser(id, user);
+        return ResponseEntity.ok("User whit id:"+id+"hase bean updated");
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(

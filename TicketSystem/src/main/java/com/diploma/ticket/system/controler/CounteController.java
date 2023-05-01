@@ -40,7 +40,7 @@ public class CounteController {
                 .body(response);
     }
 
-    @PostMapping("/add/ticket/{favorId}/{counterId}")
+    @PutMapping("/add/ticket/{favorId}/{counterId}")
     public ResponseEntity addFavorToCounter(
             @PathVariable Long favorId,
             @PathVariable Long counterId

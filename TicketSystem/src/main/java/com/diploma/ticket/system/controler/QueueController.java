@@ -6,10 +6,8 @@ import com.diploma.ticket.system.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -20,25 +18,7 @@ public class QueueController {
     public QueueController(QueueService queueService) {
         this.queueService = queueService;
     }
-
-    @PutMapping("/open/counter/{counterId}")
-    public ResponseEntity<?> openCounter(
-            @PathVariable Long counterId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
-    ){
-        queueService.openCounter(counterId,authHeader);
-        return ResponseEntity.ok("Counter whit id:"+counterId+" was opened");
-    }
-
-    @DeleteMapping("/close/counter/{counterId}")
-    public ResponseEntity<String> closeCounter(
-            @PathVariable Long counterId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
-    ){
-        queueService.closeCounter(counterId,authHeader);
-        return ResponseEntity.ok("Counter whit id:"+counterId+"was closed");
-    }
-
+    //ToDo asc how to act whit log in to counter🔥💀
     @GetMapping("/nextInLine/{counterId}")
     public ResponseEntity<NextInLineResponse> getNExtInLine(
             @PathVariable Long counterId
@@ -59,6 +39,24 @@ public class QueueController {
                 .build();
         return ResponseEntity.ok().body(response);
     }
+    @PutMapping("/open/counter/{counterId}")
+    public ResponseEntity<?> openCounter(
+            @PathVariable Long counterId,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
+    ){
+        queueService.openCounter(counterId,authHeader);
+        return ResponseEntity.ok("Counter whit id:"+counterId+" was opened");
+    }
+
+    @DeleteMapping("/close/counter/{counterId}")
+    public ResponseEntity<String> closeCounter(
+            @PathVariable Long counterId,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
+    ){
+        queueService.closeCounter(counterId,authHeader);
+        return ResponseEntity.ok("Counter whit id:"+counterId+"was closed");
+    }
+
 
     @GetMapping("/waiting ForCounter/{counterId}")
     public Set<PersonalTicket> getwaithingForCounter(
@@ -66,5 +64,6 @@ public class QueueController {
     ){
         return queueService.getWaithingForCounter(counterId);
     }
+
 
 }

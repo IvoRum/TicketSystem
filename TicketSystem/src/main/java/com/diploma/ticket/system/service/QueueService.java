@@ -1,7 +1,6 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.*;
-import com.diploma.ticket.system.entity.Queue;
 import com.diploma.ticket.system.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ public class QueueService {
     private final FavorService favorService;
     private final TicketService ticketService;
     private final PersonalTicketService personalTicketService;
-    private Queue queue;
     private final JwtUtil jwtUtil;
     private final UserService userService;
 
@@ -30,7 +28,6 @@ public class QueueService {
         this.personalTicketService = personalTicketService;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
-        queue=new Queue();
     }
 
     public void openCounter(Long counterId, String authHeader) {
@@ -39,8 +36,6 @@ public class QueueService {
         counter.setActive(true);
 
         User user=getUserFromToken(authHeader);
-
-        queue.addCounter(user,counter);
     }
 
     public void closeCounter(Long counterId, String authHeader) {
@@ -49,8 +44,6 @@ public class QueueService {
         counter.setActive(false);
 
         User user=getUserFromToken(authHeader);
-
-        queue.removeCounter(user,counter);
     }
 
 
@@ -63,20 +56,14 @@ public class QueueService {
     }
 
     public Set<PersonalTicket> getWaithingForCounter(Long counterId){
+        //todo pitaì dali e dobre 👍😘
         //1. get the Counter entity
-
-        Counter counter
-                =counterService.findCounter(counterId);
+        Counter counter =counterService.findCounter(counterId);
         //2. get the Set of Favor types for the counter
-        Set<Favor> favors
-                = counter.getFavor();
-
-        //4. get the tickets for counter
-        List<List<Ticket>> ticketInLine=new ArrayList<>();
-        for(Favor favor:favors){
-            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
-        }
-        //5. get the personal tickets for the counter
+        Set<Favor> favors = counter.getFavor();
+        //3. get the tickets for counter
+        List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
+        //4. get the personal tickets for the counter
         List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
         for (List<Ticket> ticketList:ticketInLine){
             for (Ticket ticket:ticketList){
@@ -91,33 +78,14 @@ public class QueueService {
                 waithingTickets.add(next);
             }
         }
-
-
         return waithingTickets;
     }
     public PersonalTicket getNextInLineByCounter(Long counterId) {
-        //1. get the Counter entity
+        Counter counter =counterService.findCounter(counterId);
+        Set<Favor> favors = counter.getFavor();
+        List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
+        List<Set<PersonalTicket>> personalTickets=getPersonalTichetsFromTicket(ticketInLine);
 
-        Counter counter
-                =counterService.findCounter(counterId);
-        //2. get the Set of Favor types for the counter
-        Set<Favor> favors
-                = counter.getFavor();
-
-        //4. get the tickets for counter
-        List<List<Ticket>> ticketInLine=new ArrayList<>();
-        for(Favor favor:favors){
-            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
-        }
-        //5. get the personal tickets for the counter
-        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
-        for (List<Ticket> ticketList:ticketInLine){
-            for (Ticket ticket:ticketList){
-                personalTickets.add(ticket.getPersonalTickets());
-            }
-        }
-
-        //6. return the next in line
         PersonalTicket nextInLine=new PersonalTicket();
         nextInLine.setIssueTime(new Time(23,59,59));
         SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
@@ -131,6 +99,24 @@ public class QueueService {
             return null;
         }
         return nextInLine;
+    }
+
+    private List<List<Ticket>> getTicketFromFavors(Set<Favor> favors){
+        List<List<Ticket>> ticketInLine=new ArrayList<>();
+        for(Favor favor:favors){
+            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
+        }
+        return ticketInLine;
+    }
+
+    private List<Set<PersonalTicket>> getPersonalTichetsFromTicket(List<List<Ticket>> ticketInLine){
+        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
+        for (List<Ticket> ticketList:ticketInLine){
+            for (Ticket ticket:ticketList){
+                personalTickets.add(ticket.getPersonalTickets());
+            }
+        }
+        return personalTickets;
     }
 
 

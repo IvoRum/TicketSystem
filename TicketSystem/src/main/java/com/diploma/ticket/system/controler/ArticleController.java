@@ -45,7 +45,7 @@ public class ArticleController {
 
         return ResponseEntity.ok("Favor whit Id:"+favorId+"have been added!");
     }
-
+    //TODO add patch mapping
     @PutMapping(path="{articleName}")
     public ResponseEntity updateArticle(
             @PathVariable("articleId")String name,

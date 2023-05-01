@@ -49,20 +49,23 @@ public class TicketController {
                              @RequestBody Ticket ticket){
         ticketService.updateTicket(name,ticket);
     }
-
+    //todo make bether
     @PutMapping("addFavor/{idTicket}/{idFavor}")
-    public void addFavor(
+    public ResponseEntity<String> addFavor(
             @PathVariable("idTicket") Long idTicket,
             @PathVariable("idFavor") Long idFavor
     ){
         ticketService.addFavor(idTicket,idFavor);
+        return ResponseEntity.ok("Favor had bean added to the Ticket successfully!");
     }
+    //todo make bether
     @PutMapping("addPersonalTicket/{idTicket}/{idPersnoalTicket}")
-    public void addPersonalTicket(
+    public ResponseEntity<String> addPersonalTicket(
             @PathVariable("idTicket") Long idTicket,
             @PathVariable("idPersnoalTicket") Long idPersnoalTicket
     ){
         ticketService.addPersonalTicket(idTicket,idPersnoalTicket);
+        return ResponseEntity.ok("Personal Ticket has bean added to the Ticket successfully!");
     }
 
     @DeleteMapping("/{id}")
