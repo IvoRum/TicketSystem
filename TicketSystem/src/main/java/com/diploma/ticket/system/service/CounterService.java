@@ -1,11 +1,10 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.Counter;
-import com.diploma.ticket.system.entity.FavorType;
+import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.CounterRepository;
 import com.diploma.ticket.system.repository.FavorRepository;
-import com.diploma.ticket.system.repository.FavorTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +18,14 @@ import java.util.Optional;
 public class  CounterService {
 
     private final CounterRepository counterRepository;
-    private final FavorTypeRepository favorTypeRepository;
+    private final FavorRepository favorRepository;
     @Autowired
     public CounterService(
             CounterRepository counterRepository
-            ,FavorTypeRepository favorTypeRepository
+            ,FavorRepository favorTypeRepository
     ){
         this.counterRepository=counterRepository;
-        this.favorTypeRepository=favorTypeRepository;
+        this.favorRepository=favorTypeRepository;
     }
     public CreationResponse addNewCounter(Counter counter) {
         Optional<Counter> counterOptional
@@ -62,15 +61,15 @@ public class  CounterService {
 
     public CreationResponse addNewFavor(Long favorId, Long counterId) {
         CreationResponse creationResponse=null;
-        FavorType favorType
-                =favorTypeRepository.findById(favorId).orElseThrow(
+        Favor favor
+                =favorRepository.findById(favorId).orElseThrow(
                 ()-> new IllegalArgumentException("FavorType whit ID:"+favorId+" dose not exist!")
         );
         Counter counter =findCounter(counterId);
-        counter.addFavorType(favorType);
+        counter.addFavorType(favor);
         counterRepository.save(counter);
         return new CreationResponse(favorId,
-                "Now has a new favor type whit the name: "+favorType.getName());
+                "Now has a new favor type whit the name: "+favor.getName());
     }
 
     public void deleteCounter(Long id) {

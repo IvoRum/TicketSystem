@@ -30,14 +30,4 @@ public class Queue {
         counters.remove(user,counter);
     }
 
-    public PersonalTicket getNextTicketByFavorTypes(
-            Set<FavorType> FavorTypes
-    )
-    {
-        PersonalTicket ticket;
-
-
-
-        return null;
-    }
 }

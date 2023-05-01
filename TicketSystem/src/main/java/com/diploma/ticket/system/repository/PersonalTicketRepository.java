@@ -16,4 +16,7 @@ public interface PersonalTicketRepository extends JpaRepository<PersonalTicket,L
     Optional<PersonalTicket> findPersonalTicketByNUmber(Long number);
     @Query("SELECT f FROM PersonalTicket f WHERE EXISTS (SELECT t FROM f.ticket t WHERE t.id = ?1 )")
     List<PersonalTicket> findPersonalTicketsByTicket(Long ticketID);
+
+    @Query("SELECT f FROM PersonalTicket f WHERE EXISTS (SELECT t FROM f.ticket t WHERE t.id = ?1 )")
+    List<PersonalTicket> findPersonalTicketsByTicket1(Long ticketID);
 }

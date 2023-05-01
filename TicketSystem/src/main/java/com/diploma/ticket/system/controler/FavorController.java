@@ -1,6 +1,7 @@
 package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.entity.Favor;
+import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.service.FavorService;
@@ -24,14 +25,6 @@ public class FavorController {
         List<Favor> responseBody=new ArrayList<>();
         responseBody=favorService.getService();
 
-        return ResponseEntity.ok().body(responseBody);
-    }
-    @GetMapping("/{typeId}")
-    public ResponseEntity<List<Favor>> getFavorsByType(
-            @PathVariable("typeId") Long id
-    ){
-        List<Favor> responseBody=new ArrayList<>();
-        responseBody=favorService.findFavorByTypeId(id);
         return ResponseEntity.ok().body(responseBody);
     }
 

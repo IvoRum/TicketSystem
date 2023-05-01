@@ -25,12 +25,12 @@ public class Counter {
     private boolean workingOnClient;
     @ManyToMany
     @JoinTable(
-            name = "counter_favor_type",
+            name = "counter_favor",
             joinColumns = @JoinColumn(name = "counter_id"),
-            inverseJoinColumns = @JoinColumn(name = "favor_type_id"))
-    private Set<FavorType> favorType;
+            inverseJoinColumns = @JoinColumn(name = "favor_id"))
+    private Set<Favor> favor;
 
-    public void addFavorType(FavorType favorType) {
-        this.favorType.add(favorType);
+    public void addFavorType(Favor favor) {
+        this.favor.add(favor);
     }
 }

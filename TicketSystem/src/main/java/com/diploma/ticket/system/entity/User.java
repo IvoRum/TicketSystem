@@ -49,8 +49,8 @@ public class User implements UserDetails {
     private List<Counter> counters;
 
     @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="service_type")
-    private List<FavorType> favorTypes;
+    @JoinColumn(name="favor")
+    private List<Favor> favor;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

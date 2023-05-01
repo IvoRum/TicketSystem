@@ -68,35 +68,53 @@ public class QueueService {
         Counter counter
                 =counterService.findCounter(counterId);
         //2. get the Set of Favor types for the counter
-        Set<FavorType> favorTypes
-                = counter.getFavorType();
-        //3. get the Favors for the counter
-        List<List<Favor>> favorsInLine=new ArrayList<>();
-        for(FavorType favorType:favorTypes){
-            favorsInLine.add(favorService.findFavorByType(favorType));//tested:ok
-        }
+        Set<Favor> favors
+                = counter.getFavor();
+
         //4. get the tickets for counter
         List<List<Ticket>> ticketInLine=new ArrayList<>();
-        for(List<Favor> favors:favorsInLine){
-            for(Favor favor:favors){
-                List<Ticket> ticket=ticketService.findTicketByFavor(favor.getId());//tested:ok
-                if(ticket!=null){
-                    ticketInLine.add(ticket);
-                }
-            }
+        for(Favor favor:favors){
+            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
         }
         //5. get the personal tickets for the counter
-        List<PersonalTicket> personalTicketsInLine =new LinkedList<>();
-        for(List<Ticket>list:ticketInLine) {
-            for (Ticket ticket : list) {
-                personalTicketsInLine = personalTicketService.findActivePersonalTicketByTicket(ticket.getId());
+        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
+        for (List<Ticket> ticketList:ticketInLine){
+            for (Ticket ticket:ticketList){
+                personalTickets.add(ticket.getPersonalTickets());
             }
         }
-        //6. return the next in line
-        PersonalTicket nextInLine=null;
-        Collections.sort(personalTicketsInLine,Comparator.comparing(PersonalTicket::getIssueTime));
 
-        return personalTicketsInLine.get(0);
+        //6. return the next in line
+        //PersonalTicket nextInLine=null;
+        //Collections.sort(personalTicketsInLine,Comparator.comparing(PersonalTicket::getIssueTime));
+        //Collections.sort()
+        //return personalTicketsInLine.get(0).get(0);
+        return null;
+    }
+
+    public Set<PersonalTicket> getWaithingForCounter(Long counterId){
+        //1. get the Counter entity
+
+        Counter counter
+                =counterService.findCounter(counterId);
+        //2. get the Set of Favor types for the counter
+        Set<Favor> favors
+                = counter.getFavor();
+
+        //4. get the tickets for counter
+        List<List<Ticket>> ticketInLine=new ArrayList<>();
+        for(Favor favor:favors){
+            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
+        }
+        //5. get the personal tickets for the counter
+        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
+        for (List<Ticket> ticketList:ticketInLine){
+            for (Ticket ticket:ticketList){
+                personalTickets.add(ticket.getPersonalTickets());
+            }
+        }
+
+        return personalTickets.get(0);
     }
 
     public Integer getWaitingInLineForCounter(Long counterId) {

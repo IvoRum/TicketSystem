@@ -1,10 +1,9 @@
 package com.diploma.ticket.system.service;
-
-import com.diploma.ticket.system.entity.FavorType;
+import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.Machine;
 import com.diploma.ticket.system.payload.request.MachineCreationRequest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
-import com.diploma.ticket.system.repository.FavorTypeRepository;
+import com.diploma.ticket.system.repository.FavorRepository;
 import com.diploma.ticket.system.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +18,14 @@ import java.util.Optional;
 @Transactional
 public class MachineService {
     private final MachineRepository machineRepository;
-    private final FavorTypeRepository favorTypeRepository;
+    private final FavorRepository favorRepository;
     @Autowired
     public MachineService(
             MachineRepository machineRepository,
-            FavorTypeRepository favorTypeRepository
-            )
+            FavorRepository favorRepository)
     {
         this.machineRepository = machineRepository;
-        this.favorTypeRepository=favorTypeRepository;
+        this.favorRepository = favorRepository;
     }
 
 
@@ -43,19 +41,19 @@ public class MachineService {
         if(exists){
             throw new IllegalStateException("Name is taken");
         }
-        FavorType favorType
-                =favorTypeRepository.findById(request.getFavorId()).orElseThrow(
+        Favor favor
+                =favorRepository.findById(request.getFavorId()).orElseThrow(
                 ()->new IllegalStateException("FavorType whit id:"+request.getFavorId()+"dose not exist!")
         );
 
-        List<FavorType> favorTypes=new ArrayList<>();
-        favorTypes.add(favorType);
+        List<Favor> favors=new ArrayList<>();
+        favors.add(favor);
 
         Machine machine=
                 Machine.builder()
                         .name(request.getName())
                         .type(request.getType())
-                        .favorTypes(favorTypes)
+                        .favor(favors)
                         .build();
 
         machineRepository.save(machine);

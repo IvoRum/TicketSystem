@@ -19,8 +19,8 @@ public class Machine {
     private String name;
     private String type;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "favor_type")
-    private List<FavorType> favorTypes;
+    @JoinColumn(name = "favor")
+    private List<Favor> favor;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "personal_ticket")
     private List<PersonalTicket> personalTickets;

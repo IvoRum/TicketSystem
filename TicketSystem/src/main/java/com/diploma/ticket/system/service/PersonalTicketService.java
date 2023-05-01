@@ -96,7 +96,6 @@ public class PersonalTicketService {
                 ()-> new IllegalStateException(
                         "No user whit email "+userEmail+"i found!")
         );
-        //TODO pitai dali e edekvatno
         Time sqlTime=new Time(new java.util.Date().getTime());
         finishedPersonalTicket.setFinishTime(sqlTime);
         finishedPersonalTicket.setActive(false);

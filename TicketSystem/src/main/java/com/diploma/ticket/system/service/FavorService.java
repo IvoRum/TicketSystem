@@ -1,12 +1,11 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.Favor;
-import com.diploma.ticket.system.entity.FavorType;
+import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.FavorRepository;
-import com.diploma.ticket.system.repository.FavorTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +16,10 @@ import java.util.*;
 @Transactional
 public class FavorService {
     private final FavorRepository favorRepository;
-    private final FavorTypeRepository favorTypeRepository;
+    private final FavorRepository favorTypeRepository;
 
     @Autowired
-    public FavorService(FavorRepository favorRepository, FavorTypeRepository favorTypeRepository){
+    public FavorService(FavorRepository favorRepository, FavorRepository favorTypeRepository){
         this.favorRepository = favorRepository;
         this.favorTypeRepository=favorTypeRepository;
     }
@@ -36,24 +35,15 @@ public class FavorService {
         if(exists){
             throw new IllegalArgumentException("Name of service dose not exists");
         }
-        //Finding all the Favor types that the favor has
-
-        List<FavorType> favorTypes=new ArrayList<>();
-        for (Long i:favorRequest.getIdsOfTypeOfFavors()) {
-            favorTypes.add(favorTypeRepository.findById(i).get());
-        }
-
 
         Favor favor= Favor.builder()
                 .name(favorRequest.getName())
                 .description(favorRequest.getDescription())
                 .workStart(favorRequest.getWorkStart())
                 .workEnd(favorRequest.getWorkEnd())
-                .type(favorTypes)
                 .build();
 
         Long idOFTheNewFavor =favorRepository.save(favor).getId();
-        //Long idOFTheNewFavor=favor.getId();
         return new CreationResponse(idOFTheNewFavor,"Favor Created successfully");
     }
 
@@ -89,14 +79,5 @@ public class FavorService {
             throw  new IllegalStateException(e);
         }
         favorRepository.delete(favor);
-    }
-
-    public List<Favor> findFavorByType(FavorType favorType) {
-        //TODO lock up this
-        return favorRepository.findFavorByType(favorType.getId());
-    }
-
-    public List<Favor> findFavorByTypeId(Long id) {
-        return favorRepository.findFavorByType(id);
     }
 }

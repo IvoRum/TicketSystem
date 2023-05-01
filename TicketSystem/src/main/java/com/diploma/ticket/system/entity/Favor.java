@@ -29,10 +29,6 @@ public class Favor {
     @Temporal(TemporalType.TIME)
     private Time workEnd;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="type")
-    private List<FavorType> type;
-
     @ManyToMany
     @JoinTable(
             name = "favor_tickets",

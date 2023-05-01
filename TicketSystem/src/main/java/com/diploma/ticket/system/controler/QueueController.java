@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping(path="api/v1/queue")
 public class QueueController {
@@ -42,6 +44,7 @@ public class QueueController {
     ){
         PersonalTicket nextInLineTicket
                 =queueService.getNextInLineByCounter(counterId);
+
         Integer ticketsForTheCounterWaiting
                 =queueService.getWaitingInLineForCounter(counterId);
         NextInLineResponse response
@@ -51,6 +54,13 @@ public class QueueController {
                 .finishTime(nextInLineTicket.getFinishTime())
                 .build();
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/waiting ForCounter/{counterId}")
+    public Set<PersonalTicket> getwaithingForCounter(
+            @PathVariable Long counterId
+    ){
+        return queueService.getWaithingForCounter(counterId);
     }
 
 }
