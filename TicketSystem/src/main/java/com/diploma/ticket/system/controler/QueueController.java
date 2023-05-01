@@ -45,6 +45,9 @@ public class QueueController {
     ){
         PersonalTicket nextInLineTicket
                 =queueService.getNextInLineByCounter(counterId);
+        if(nextInLineTicket==null){
+            return ResponseEntity.notFound().build();
+        }
 
         Integer ticketsForTheCounterWaiting
                 =queueService.getWaitingInLineForCounter(counterId);
@@ -58,7 +61,7 @@ public class QueueController {
     }
 
     @GetMapping("/waiting ForCounter/{counterId}")
-    public List<Set<PersonalTicket>> getwaithingForCounter(
+    public Set<PersonalTicket> getwaithingForCounter(
             @PathVariable Long counterId
     ){
         return queueService.getWaithingForCounter(counterId);

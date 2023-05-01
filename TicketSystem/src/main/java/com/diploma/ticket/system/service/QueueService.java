@@ -62,7 +62,7 @@ public class QueueService {
         return user;
     }
 
-    public List<Set<PersonalTicket>> getWaithingForCounter(Long counterId){
+    public Set<PersonalTicket> getWaithingForCounter(Long counterId){
         //1. get the Counter entity
 
         Counter counter
@@ -83,8 +83,17 @@ public class QueueService {
                 personalTickets.add(ticket.getPersonalTickets());
             }
         }
+        Set<PersonalTicket> waithingTickets=new HashSet<>();
+        SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
+        while(nextInLineIterator.hasNext()){
+            PersonalTicket next=nextInLineIterator.next();
+            if(next.isActive()&&next.getFinishTime()==null){
+                waithingTickets.add(next);
+            }
+        }
 
-        return personalTickets;
+
+        return waithingTickets;
     }
     public PersonalTicket getNextInLineByCounter(Long counterId) {
         //1. get the Counter entity
@@ -114,9 +123,12 @@ public class QueueService {
         SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
         while(nextInLineIterator.hasNext()){
             PersonalTicket next=nextInLineIterator.next();
-            if(next.getIssueTime().before(nextInLine.getIssueTime())){
+            if(next.getIssueTime().before(nextInLine.getIssueTime())&&next.isActive()&&next.getFinishTime()==null){
                 nextInLine=next;
             }
+        }
+        if(nextInLine.getNumber()==null){
+            return null;
         }
         return nextInLine;
     }
