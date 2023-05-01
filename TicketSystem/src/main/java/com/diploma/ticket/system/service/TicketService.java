@@ -3,10 +3,7 @@ package com.diploma.ticket.system.service;
 import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
-import com.diploma.ticket.system.repository.FavorRepository;
-import com.diploma.ticket.system.repository.TicketRepository;
-import com.diploma.ticket.system.repository.TicketTypeRepository;
-import com.diploma.ticket.system.repository.UserRepository;
+import com.diploma.ticket.system.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +16,7 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final FavorRepository favorRepository;
     private final TicketTypeRepository ticketTypeRepository;
+    private final PersonalTicketRepository personalTicketRepository;
     private final UserRepository userRepository;
 
     @Autowired
@@ -26,11 +24,12 @@ public class TicketService {
             TicketRepository ticketRepository,
             FavorRepository favorRepository,
             TicketTypeRepository ticketTypeRepository,
-            UserRepository userRepository
+            PersonalTicketRepository personalTicketRepository, UserRepository userRepository
     ){
         this.ticketRepository=ticketRepository;
         this.favorRepository=favorRepository;
         this.ticketTypeRepository=ticketTypeRepository;
+        this.personalTicketRepository = personalTicketRepository;
         this.userRepository=userRepository;
     }
     public List<Ticket> getTickets() {
@@ -50,7 +49,7 @@ public class TicketService {
                 =ticketTypeRepository.findById(request.getTypeId()).orElseThrow(
                 ()->new IllegalStateException("ticket whit id " + request.getTypeId() + " does not exost")
         );
-        List<TicketType> ticketTypes= new ArrayList<>();
+        Set<TicketType> ticketTypes= new HashSet<>();
         ticketTypes.add(ticketType);
 
 
@@ -91,8 +90,8 @@ public class TicketService {
         ticketRepository.delete(ticket);
     }
 
-    public List<Ticket> findTicketByFavor(Favor favor) {
-        return ticketRepository.findByTicketFavor(favor.getId());
+    public List<Ticket> findTicketByFavor(Long favorId) {
+        return ticketRepository.findByTicketFavor(favorId);
     }
 
     public void addFavor(Long idTicket, Long idFavor) {
@@ -102,14 +101,22 @@ public class TicketService {
         if(favor==null){
             throw new IllegalStateException("Id of the favor is not found");
         }
-        Set<Favor> favors=new HashSet<>();
-        favors.add(favor);
-        Optional<Ticket> ticketOptional
-                =ticketRepository.findById(idTicket);
-        boolean exists=ticketOptional.isPresent();
-        if(!exists){
-            throw new IllegalStateException();
-        }
-        ticketOptional.get().addFavor(favor);
+        Ticket ticket=findById(idTicket);
+        //ticket.addFavor(favor);
+        favor.addTicket(ticket);
+        //ticketRepository.save(ticket);
+        favorRepository.save(favor);
+    }
+
+    public Ticket findById(Long id){
+        return ticketRepository.findById(id).orElseThrow();
+    }
+
+    public void addPersonalTicket(Long idTicket, Long idPersnoalTicket) {
+        PersonalTicket personalTicket=
+                personalTicketRepository.findById(idPersnoalTicket).orElseThrow();
+        Ticket ticket=findById(idTicket);
+        ticket.addPersonalTicket(personalTicket);
+        ticketRepository.save(ticket);
     }
 }

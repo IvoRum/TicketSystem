@@ -127,9 +127,9 @@ public class PersonalTicketService {
         personalTicketRepository.delete(personalTicket);
     }
 
-    public List<PersonalTicket> findActivePersonalTicketByTicket(Ticket ticket) {
+    public List<PersonalTicket> findActivePersonalTicketByTicket(Long ticketId) {
 
-        return personalTicketRepository.findPersonalTicketsByTicket(ticket.getId());
+        return personalTicketRepository.findPersonalTicketsByTicket(ticketId);
 
     }
 }

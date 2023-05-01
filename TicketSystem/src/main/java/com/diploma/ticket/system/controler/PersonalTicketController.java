@@ -31,6 +31,16 @@ public class PersonalTicketController {
         return  ResponseEntity.ok(responseBody);
     }
 
+    @GetMapping("/{ticketId}")
+    public ResponseEntity<List<PersonalTicket>> getPersonalTicketsByTicketId(
+            @PathVariable("ticketId") Long ticketId
+    ){
+        List<PersonalTicket> responseBody=
+                personalTicketService.findActivePersonalTicketByTicket(ticketId);
+        return ResponseEntity.ok(responseBody);
+    }
+
+
     @PostMapping
     public ResponseEntity<CreationResponse> registerPersonalTicket(
             @RequestBody PersonalTicket personalTicket

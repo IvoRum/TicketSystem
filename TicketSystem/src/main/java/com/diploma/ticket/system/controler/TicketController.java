@@ -28,6 +28,14 @@ public class TicketController {
         return ResponseEntity.ok().body(responceBody);
     }
 
+    @GetMapping("/{favorId}")
+    public ResponseEntity<List<Ticket>> getTicketsByFavorId(
+            @PathVariable("favorId") Long favorId
+    ){
+        List<Ticket> responseBody=ticketService.findTicketByFavor(favorId);
+        return ResponseEntity.ok().body(responseBody);
+    }
+
     @PostMapping
     public ResponseEntity<CreationResponse> registerNewTicket(
             @RequestBody TicketCreationRequest ticket
@@ -48,6 +56,13 @@ public class TicketController {
             @PathVariable("idFavor") Long idFavor
     ){
         ticketService.addFavor(idTicket,idFavor);
+    }
+    @PutMapping("addPersonalTicket/{idTicket}/{idPersnoalTicket}")
+    public void addPersonalTicket(
+            @PathVariable("idTicket") Long idTicket,
+            @PathVariable("idPersnoalTicket") Long idPersnoalTicket
+    ){
+        ticketService.addPersonalTicket(idTicket,idPersnoalTicket);
     }
 
     @DeleteMapping("/{id}")

@@ -21,7 +21,7 @@ public class TicketSystemExceptionHandler extends ResponseEntityExceptionHandler
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("message", "Argument is not correct for this request"+ex.getMessage());
+        body.put("message", "Argument is not correct for this request"+ex);
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
@@ -32,7 +32,7 @@ public class TicketSystemExceptionHandler extends ResponseEntityExceptionHandler
             NoSuchElementException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", "Id or Name of an entity is invalid!"+ex.getMessage()+ex+ex.getLocalizedMessage()+ex.toString());
+        body.put("message", "Id or Name of an entity is invalid!"+ex);
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
@@ -43,7 +43,7 @@ public class TicketSystemExceptionHandler extends ResponseEntityExceptionHandler
             IllegalStateException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", "The state of the request is invalid."+ex.getMessage());
+        body.put("message", "The state of the request is invalid."+ex);
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }

@@ -14,6 +14,6 @@ public interface FavorRepository extends JpaRepository<Favor, Long> {
     // to be the name of the class not the table
     @Query("SELECT f FROM Favor f WHERE f.name= ?1")
     Optional<Favor> findFavorByName(String name);
-    @Query("SELECT f FROM Favor f WHERE f.type= ?1")
-    List<Favor> findFavorByType(FavorType favorType);
+    @Query("SELECT f FROM Favor f WHERE EXISTS (SELECT t FROM f.type t WHERE t.id = ?1 )")
+    List<Favor> findFavorByType(Long id);
 }

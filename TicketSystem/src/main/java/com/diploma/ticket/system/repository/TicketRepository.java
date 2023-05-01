@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface TicketRepository extends JpaRepository<Ticket,Long>, JpaSpecificationExecutor<Ticket> {
     @Query("SELECT t FROM Ticket t WHERE t.name= ?1")
     Optional<Ticket> findByTicketName(String name);
-    @Query("SELECT t FROM Ticket t JOIN t.favor f WHERE f.id= ?1")
+    @Query("SELECT f FROM Ticket f WHERE EXISTS (SELECT t FROM f.favor t WHERE t.id = ?1 )")
     List<Ticket> findByTicketFavor(Long favor);
 }
 

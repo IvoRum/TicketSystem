@@ -24,7 +24,10 @@ public class Counter {
     private boolean active;
     private boolean workingOnClient;
     @ManyToMany
-    @JoinColumn(name = "fovor_type")
+    @JoinTable(
+            name = "counter_favor_type",
+            joinColumns = @JoinColumn(name = "counter_id"),
+            inverseJoinColumns = @JoinColumn(name = "favor_type_id"))
     private Set<FavorType> favorType;
 
     public void addFavorType(FavorType favorType) {

@@ -10,6 +10,8 @@ public class TicketType {
     private Long id;
     private String name;
     private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Ticket ticket;
     /**
      * This ticket opttion represents if the ticket hase
      * a check and uncheked option to fish of the ticket

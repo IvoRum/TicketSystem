@@ -14,6 +14,6 @@ import java.util.Optional;
 public interface PersonalTicketRepository extends JpaRepository<PersonalTicket,Long>, JpaSpecificationExecutor<PersonalTicket> {
     @Query("SELECT p FROM PersonalTicket p WHERE p.number= ?1")
     Optional<PersonalTicket> findPersonalTicketByNUmber(Long number);
-    @Query("SELECT p FROM PersonalTicket p WHERE p.ticket.id = ?1")
+    @Query("SELECT f FROM PersonalTicket f WHERE EXISTS (SELECT t FROM f.ticket t WHERE t.id = ?1 )")
     List<PersonalTicket> findPersonalTicketsByTicket(Long ticketID);
 }

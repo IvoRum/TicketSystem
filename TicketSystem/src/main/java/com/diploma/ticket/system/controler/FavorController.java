@@ -26,6 +26,14 @@ public class FavorController {
 
         return ResponseEntity.ok().body(responseBody);
     }
+    @GetMapping("/{typeId}")
+    public ResponseEntity<List<Favor>> getFavorsByType(
+            @PathVariable("typeId") Long id
+    ){
+        List<Favor> responseBody=new ArrayList<>();
+        responseBody=favorService.findFavorByTypeId(id);
+        return ResponseEntity.ok().body(responseBody);
+    }
 
     @PostMapping
     public ResponseEntity<CreationResponse> registerNewService(@RequestBody FavorCreationReqest favor){

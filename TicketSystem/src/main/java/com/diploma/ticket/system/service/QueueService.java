@@ -73,13 +73,13 @@ public class QueueService {
         //3. get the Favors for the counter
         List<List<Favor>> favorsInLine=new ArrayList<>();
         for(FavorType favorType:favorTypes){
-            favorsInLine.add(favorService.findFavorByType(favorType));
+            favorsInLine.add(favorService.findFavorByType(favorType));//tested:ok
         }
         //4. get the tickets for counter
         List<List<Ticket>> ticketInLine=new ArrayList<>();
         for(List<Favor> favors:favorsInLine){
             for(Favor favor:favors){
-                List<Ticket> ticket=ticketService.findTicketByFavor(favor);
+                List<Ticket> ticket=ticketService.findTicketByFavor(favor.getId());//tested:ok
                 if(ticket!=null){
                     ticketInLine.add(ticket);
                 }
@@ -89,7 +89,7 @@ public class QueueService {
         List<PersonalTicket> personalTicketsInLine =new LinkedList<>();
         for(List<Ticket>list:ticketInLine) {
             for (Ticket ticket : list) {
-                personalTicketsInLine = personalTicketService.findActivePersonalTicketByTicket(ticket);
+                personalTicketsInLine = personalTicketService.findActivePersonalTicketByTicket(ticket.getId());
             }
         }
         //6. return the next in line

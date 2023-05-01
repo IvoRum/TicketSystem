@@ -22,7 +22,7 @@ public class PersonalTicket {
     private Time finishTime;
     @Column(name="issue_time")
     private Time issueTime;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 }

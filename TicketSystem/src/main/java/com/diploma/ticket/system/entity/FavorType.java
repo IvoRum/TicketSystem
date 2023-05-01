@@ -12,10 +12,16 @@ public class FavorType {
     private Long id;
     private String name;
     private String description;
-
     @ManyToMany
-    @JoinColumn(name = "counter")
+    @JoinTable(
+            name = "counter_favor_type",
+            joinColumns = @JoinColumn(name = "favor_type_id"),
+            inverseJoinColumns = @JoinColumn(name = "counter_id"))
     private Set<Counter> counter;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "favor_id")
+    private Favor favor;
     //TODO ADD User
     //TODO add Machine
 

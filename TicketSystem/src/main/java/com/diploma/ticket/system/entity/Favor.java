@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Time;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name="Favor")
+@Table(name="favor")
 public class Favor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +29,11 @@ public class Favor {
     @Temporal(TemporalType.TIME)
     private Time workEnd;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="type")
     private List<FavorType> type;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "favor_tickets",
             joinColumns = @JoinColumn(name = "favor_id"),
@@ -43,4 +44,7 @@ public class Favor {
     @JoinColumn(name = "article")
     Set<Article> article;
 
+    public void addTicket(Ticket ticket) {
+        this.ticket.add(ticket);
+    }
 }

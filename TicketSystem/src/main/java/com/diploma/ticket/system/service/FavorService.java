@@ -92,7 +92,11 @@ public class FavorService {
     }
 
     public List<Favor> findFavorByType(FavorType favorType) {
+        //TODO lock up this
+        return favorRepository.findFavorByType(favorType.getId());
+    }
 
-        return favorRepository.findFavorByType(favorType);
+    public List<Favor> findFavorByTypeId(Long id) {
+        return favorRepository.findFavorByType(id);
     }
 }

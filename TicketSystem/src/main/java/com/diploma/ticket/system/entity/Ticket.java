@@ -21,19 +21,20 @@ public class Ticket {
     private Long id;
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "favor_tickets",
             joinColumns = @JoinColumn(name = "ticket_id"),
             inverseJoinColumns = @JoinColumn(name = "favor_id"))
     private Set<Favor> favor;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ticket_type")
-    private List<TicketType> type;
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "ticket_type_id")
+    private Set<TicketType> type;
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="personal_ticket")
-    private List<PersonalTicket> personalTickets;
+    private Set<PersonalTicket> personalTickets;
 
     @Basic
     @Temporal(TemporalType.TIME)
