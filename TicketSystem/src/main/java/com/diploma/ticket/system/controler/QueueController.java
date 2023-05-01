@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -57,7 +58,7 @@ public class QueueController {
     }
 
     @GetMapping("/waiting ForCounter/{counterId}")
-    public Set<PersonalTicket> getwaithingForCounter(
+    public List<Set<PersonalTicket>> getwaithingForCounter(
             @PathVariable Long counterId
     ){
         return queueService.getWaithingForCounter(counterId);

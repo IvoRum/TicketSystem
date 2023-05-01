@@ -62,6 +62,30 @@ public class QueueService {
         return user;
     }
 
+    public List<Set<PersonalTicket>> getWaithingForCounter(Long counterId){
+        //1. get the Counter entity
+
+        Counter counter
+                =counterService.findCounter(counterId);
+        //2. get the Set of Favor types for the counter
+        Set<Favor> favors
+                = counter.getFavor();
+
+        //4. get the tickets for counter
+        List<List<Ticket>> ticketInLine=new ArrayList<>();
+        for(Favor favor:favors){
+            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
+        }
+        //5. get the personal tickets for the counter
+        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
+        for (List<Ticket> ticketList:ticketInLine){
+            for (Ticket ticket:ticketList){
+                personalTickets.add(ticket.getPersonalTickets());
+            }
+        }
+
+        return personalTickets;
+    }
     public PersonalTicket getNextInLineByCounter(Long counterId) {
         //1. get the Counter entity
 
@@ -85,40 +109,62 @@ public class QueueService {
         }
 
         //6. return the next in line
-        //PersonalTicket nextInLine=null;
-        //Collections.sort(personalTicketsInLine,Comparator.comparing(PersonalTicket::getIssueTime));
-        //Collections.sort()
-        //return personalTicketsInLine.get(0).get(0);
-        return null;
-    }
-
-    public Set<PersonalTicket> getWaithingForCounter(Long counterId){
-        //1. get the Counter entity
-
-        Counter counter
-                =counterService.findCounter(counterId);
-        //2. get the Set of Favor types for the counter
-        Set<Favor> favors
-                = counter.getFavor();
-
-        //4. get the tickets for counter
-        List<List<Ticket>> ticketInLine=new ArrayList<>();
-        for(Favor favor:favors){
-            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
-        }
-        //5. get the personal tickets for the counter
-        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
-        for (List<Ticket> ticketList:ticketInLine){
-            for (Ticket ticket:ticketList){
-                personalTickets.add(ticket.getPersonalTickets());
+        PersonalTicket nextInLine=new PersonalTicket();
+        nextInLine.setIssueTime(new Time(23,59,59));
+        SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
+        while(nextInLineIterator.hasNext()){
+            PersonalTicket next=nextInLineIterator.next();
+            if(next.getIssueTime().before(nextInLine.getIssueTime())){
+                nextInLine=next;
             }
         }
-
-        return personalTickets.get(0);
+        return nextInLine;
     }
+
 
     public Integer getWaitingInLineForCounter(Long counterId) {
 
-        return 0;
+        return 1;
+    }
+
+
+    public class SetInListIterator<T> implements Iterator<T> {
+
+        private final List<Set<T>> list;
+        private int currentListIndex;
+        private Iterator<T> currentSetIterator;
+
+        public SetInListIterator(List<Set<T>> list) {
+            this.list = list;
+            this.currentListIndex = 0;
+            this.currentSetIterator = list.get(0).iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (currentSetIterator.hasNext()) {
+                return true;
+            } else if (currentListIndex < list.size() - 1) {
+                currentListIndex++;
+                currentSetIterator = list.get(currentListIndex).iterator();
+                return hasNext();
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public T next() {
+            if (hasNext()) {
+                return currentSetIterator.next();
+            } else {
+                throw new java.util.NoSuchElementException();
+            }
+        }
+
+        public Iterator<T> getCurrent(){
+            return currentSetIterator;
+        }
     }
 }
+
