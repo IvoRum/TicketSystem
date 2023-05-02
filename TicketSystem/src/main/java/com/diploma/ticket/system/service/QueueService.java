@@ -80,7 +80,10 @@ public class QueueService {
         }
         return waithingTickets;
     }
-    public PersonalTicket getNextInLineByCounter(Long counterId) {
+    public PersonalTicket getNextInLineByCounter(
+            Long counterId,
+            String authHeader
+    ) {
         Counter counter =counterService.findCounter(counterId);
         Set<Favor> favors = counter.getFavor();
         List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
@@ -98,6 +101,9 @@ public class QueueService {
         if(nextInLine.getNumber()==null){
             return null;
         }
+
+        personalTicketService.setTicketToUser(authHeader,nextInLine);
+
         return nextInLine;
     }
 

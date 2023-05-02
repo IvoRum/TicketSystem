@@ -8,6 +8,7 @@ import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.PersonalTicketRepository;
 import com.diploma.ticket.system.repository.UserRepository;
 import com.diploma.ticket.system.util.JwtUtil;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class PersonalTicketService {
         this.jwtUtil = jwtUtil;
     }
 
-    public void updatePersonalTicket(Long numberToUpdate, PersonalTicket personalTicket) {
+    public void updatePersonalTicket(Long numberToUpdate, @NotNull PersonalTicket personalTicket) {
         Long number=personalTicket.getNumber();
         PersonalTicket updatedTicket=
                 null;
@@ -82,24 +83,13 @@ public class PersonalTicketService {
         if(finishedPersonalTicket.getFinishTime()!=null){
             throw new IllegalStateException();
         }
-        //Searching for the user
-        final String userEmail;
-        final String jwtToken;
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-            throw new IllegalStateException();
-        }
-        jwtToken = authHeader.substring(7);
-        userEmail = jwtUtil.extractUsername(jwtToken);
+        User userThatHasFinishedTheTicket=findUserByHeader(authHeader);
 
-        User userThatHasFinishedTheTicket
-                =userRepository.findByEmail(userEmail).orElseThrow(
-                ()-> new IllegalStateException(
-                        "No user whit email "+userEmail+"i found!")
-        );
         Time sqlTime=new Time(new java.util.Date().getTime());
         finishedPersonalTicket.setFinishTime(sqlTime);
         finishedPersonalTicket.setActive(false);
         userThatHasFinishedTheTicket.addPersonalTicket(finishedPersonalTicket);
+
         userRepository.save(userThatHasFinishedTheTicket);
         personalTicketRepository.save(finishedPersonalTicket);
         return new CreationResponse(tickeNumber,"Finished on time:");
@@ -130,5 +120,33 @@ public class PersonalTicketService {
 
         return personalTicketRepository.findPersonalTicketsByTicket(ticketId);
 
+    }
+
+    public boolean setTicketToUser(String authHeader,PersonalTicket personalTicket){
+        User user=findUserByHeader(authHeader);
+        try {
+            personalTicket.setActive(false);
+            user.addPersonalTicket(personalTicket);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    private User findUserByHeader(String authHeader){
+        //Searching for the user
+        final String userEmail;
+        final String jwtToken;
+        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+            throw new IllegalStateException();
+        }
+        jwtToken = authHeader.substring(7);
+        userEmail = jwtUtil.extractUsername(jwtToken);
+
+        User user
+                =userRepository.findByEmail(userEmail).orElseThrow(
+                ()-> new IllegalStateException(
+                        "No user whit email "+userEmail+"i found!")
+        );
+        return user;
     }
 }

@@ -21,10 +21,11 @@ public class QueueController {
     //ToDo asc how to act whit log in to counter🔥💀
     @GetMapping("/nextInLine/{counterId}")
     public ResponseEntity<NextInLineResponse> getNExtInLine(
-            @PathVariable Long counterId
+            @PathVariable Long counterId,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
     ){
         PersonalTicket nextInLineTicket
-                =queueService.getNextInLineByCounter(counterId);
+                =queueService.getNextInLineByCounter(counterId,authHeader);
         if(nextInLineTicket==null){
             return ResponseEntity.notFound().build();
         }
