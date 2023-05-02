@@ -1,6 +1,8 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.*;
+import com.diploma.ticket.system.exception.NoOneInLineException;
+import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -78,21 +80,23 @@ public class QueueService {
         }
         return waithingTickets;
     }
-    public PersonalTicket getNextInLineByCounter(
+    public NextInLineResponse getNextInLineByCounter(
             Long counterId,
             String authHeader
-    ) {
+    )  {
         Counter counter =counterService.findCounter(counterId);
         Set<Favor> favors = counter.getFavor();
         List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
         List<Set<PersonalTicket>> personalTickets=getPersonalTichetsFromTicket(ticketInLine);
 
+        Integer waitingInLine=-1;
         PersonalTicket nextInLine=new PersonalTicket();
         nextInLine.setIssueTime(new Time(23,59,59));
         SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
         while(nextInLineIterator.hasNext()){
             PersonalTicket next=nextInLineIterator.next();
             if(next.getIssueTime().before(nextInLine.getIssueTime())&&next.isActive()&&next.getFinishTime()==null){
+                waitingInLine++;
                 nextInLine=next;
             }
         }
@@ -102,7 +106,16 @@ public class QueueService {
 
         personalTicketService.setTicketToUser(authHeader,nextInLine);
 
-        return nextInLine;
+        NextInLineResponse response=
+                NextInLineResponse
+                        .builder()
+                        .number(nextInLine.getNumber())
+                        .issueTime(nextInLine.getIssueTime())
+                        .finishTime(nextInLine.getFinishTime())
+                        .peopleInLine(waitingInLine)
+                        .build();
+
+        return response;
     }
 
     private List<List<Ticket>> getTicketFromFavors(Set<Favor> favors){
@@ -113,10 +126,10 @@ public class QueueService {
         return ticketInLine;
     }
 
-    private List<Set<PersonalTicket>> getPersonalTichetsFromTicket(List<List<Ticket>> ticketInLine){
-        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
-        for (List<Ticket> ticketList:ticketInLine){
-            for (Ticket ticket:ticketList){
+    private List<Set<PersonalTicket>> getPersonalTichetsFromTicket(List<List<Ticket>> ticketInLine)  {
+        List<Set<PersonalTicket>> personalTickets = new ArrayList<>();
+        for (List<Ticket> ticketList : ticketInLine) {
+            for (Ticket ticket : ticketList) {
                 personalTickets.add(ticket.getPersonalTickets());
             }
         }
@@ -124,10 +137,7 @@ public class QueueService {
     }
 
 
-    public Integer getWaitingInLineForCounter(Long counterId) {
 
-        return 1;
-    }
 
 
     public class SetInListIterator<T> implements Iterator<T> {

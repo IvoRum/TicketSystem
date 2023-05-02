@@ -1,5 +1,6 @@
 package com.diploma.ticket.system.handler;
 
+import com.diploma.ticket.system.exception.NoOneInLineException;
 import com.diploma.ticket.system.payload.response.TicketSystemExceptionHandleResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,21 @@ public class TicketSystemExceptionHandler extends ResponseEntityExceptionHandler
         TicketSystemExceptionHandleResponse responseBody=
                 TicketSystemExceptionHandleResponse.builder()
                         .message("The state of the request is invalid!")
+                        .timestamp( LocalDateTime.now())
+                        .exeptionMessage(ex.toString())
+                        .build();
+
+
+        return ResponseEntity.badRequest().body(responseBody);
+    }
+    //NoOneInLineException
+    @ExceptionHandler(
+            NoOneInLineException.class)
+    public ResponseEntity<TicketSystemExceptionHandleResponse> handleNoOneInLineException(
+            NoOneInLineException ex, WebRequest request) {
+        TicketSystemExceptionHandleResponse responseBody=
+                TicketSystemExceptionHandleResponse.builder()
+                        .message("Theirs is no one in the Line!")
                         .timestamp( LocalDateTime.now())
                         .exeptionMessage(ex.toString())
                         .build();

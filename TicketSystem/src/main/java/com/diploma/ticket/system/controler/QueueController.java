@@ -1,6 +1,7 @@
 package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.entity.PersonalTicket;
+import com.diploma.ticket.system.exception.NoOneInLineException;
 import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +26,13 @@ public class QueueController {
     public ResponseEntity<NextInLineResponse> getNExtInLine(
             @PathVariable Long counterId,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
-    ){
-        PersonalTicket nextInLineTicket
+    )  {
+        NextInLineResponse response
                 =queueService.getNextInLineByCounter(counterId,authHeader);
-        if(nextInLineTicket==null){
+        if(response==null){
             return ResponseEntity.notFound().build();
         }
 
-        Integer ticketsForTheCounterWaiting
-                =queueService.getWaitingInLineForCounter(counterId);
-        NextInLineResponse response
-                = NextInLineResponse.builder()
-                .number(nextInLineTicket.getNumber())
-                .issueTime(nextInLineTicket.getIssueTime())
-                .finishTime(nextInLineTicket.getFinishTime())
-                .build();
         return ResponseEntity.ok().body(response);
     }
     @GetMapping("/authentication")
