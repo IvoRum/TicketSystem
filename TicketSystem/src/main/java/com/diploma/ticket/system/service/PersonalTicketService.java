@@ -29,14 +29,18 @@ public class PersonalTicketService {
     public PersonalTicketService(
             PersonalTicketRepository personalTicketRepository,
             UserRepository userRepository,
-            JwtUtil jwtUtil){
+            JwtUtil jwtUtil
+    ){
         this.userRepository=userRepository;
         this.personalTicketRepository=personalTicketRepository;
         this.jwtUtil = jwtUtil;
     }
 
-    public void updatePersonalTicket(Long numberToUpdate, @NotNull PersonalTicket personalTicket) {
-        Long number=personalTicket.getNumber();
+    public void updatePersonalTicket(
+            Long numberToUpdate,
+            @NotNull PersonalTicket personalTicket
+    ){
+        Long number=personalTicket.getId();
         PersonalTicket updatedTicket=
                 null;
         try {
@@ -45,8 +49,8 @@ public class PersonalTicketService {
             throw new IllegalArgumentException(e);
         }
         if(number!=null
-                &&!Objects.equals(personalTicket.getNumber(),number)){
-            updatedTicket.setNumber(number);
+                &&!Objects.equals(personalTicket.getId(),number)){
+            updatedTicket.setId(number);
         }
         personalTicketRepository.save(personalTicket);
     }
@@ -60,23 +64,23 @@ public class PersonalTicketService {
         PersonalTicket ticketOptional
                  = null;
         try {
-            ticketOptional = findPersonalTicketByIdOfPersonalTicket(personalTicket.getNumber());
+            ticketOptional = findPersonalTicketByIdOfPersonalTicket(personalTicket.getId());
             throw new IllegalStateException("Number is taken");
         } catch (NotFountInRepositoryException e) {
             personalTicketRepository.save(personalTicket);
-            return new CreationResponse(personalTicket.getNumber(),
+            return new CreationResponse(personalTicket.getId(),
                     "Personal Ticket Created!");
         }
     }
 
     public CreationResponse finishTicket(
-            Long tickeNumber,
+            Long ticketNumber,
             String authHeader
             ) {
         PersonalTicket finishedPersonalTicket
                 = null;
         try {
-            finishedPersonalTicket = findPersonalTicketByIdOfPersonalTicket(tickeNumber);
+            finishedPersonalTicket = findPersonalTicketByIdOfPersonalTicket(ticketNumber);
         } catch (NotFountInRepositoryException e) {
             throw new IllegalArgumentException(e);
         }
@@ -92,17 +96,17 @@ public class PersonalTicketService {
 
         userRepository.save(userThatHasFinishedTheTicket);
         personalTicketRepository.save(finishedPersonalTicket);
-        return new CreationResponse(tickeNumber,"Finished on time:");
+        return new CreationResponse(ticketNumber,"Finished on time:");
     }
 
-    public PersonalTicket findPersonalTicketByIdOfPersonalTicket(Long numberOfPersonalTicket) throws NotFountInRepositoryException {
-        PersonalTicket personalTicket
-                =personalTicketRepository.findById(numberOfPersonalTicket).orElseThrow(
+    public PersonalTicket findPersonalTicketByIdOfPersonalTicket(
+            Long numberOfPersonalTicket
+    ) throws NotFountInRepositoryException
+    {
+        return personalTicketRepository.findById(numberOfPersonalTicket).orElseThrow(
                 ()-> new NotFountInRepositoryException(
                         "No personal Ticket With number:"+numberOfPersonalTicket+" exists!")
         );
-
-        return personalTicket;
     }
 
     public void deletePersonalTicket(Long id){
@@ -122,7 +126,10 @@ public class PersonalTicketService {
 
     }
 
-    public boolean setTicketToUser(String authHeader,PersonalTicket personalTicket){
+    public boolean setTicketToUser(
+            String authHeader,
+            PersonalTicket personalTicket
+    ){
         User user=findUserByHeader(authHeader);
         try {
             personalTicket.setActive(false);

@@ -1,5 +1,6 @@
 package com.diploma.ticket.system.service;
 
+import com.diploma.ticket.system.entity.Counter;
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,14 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CounterService counterService;
 
 
     @Autowired
-    UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CounterService counterService){
         this.userRepository=userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.counterService = counterService;
     }
 
     @Transactional
@@ -36,14 +39,13 @@ public class UserService {
     public List<User> getUsers(){
         return userRepository.findAll();
     }
-    //Todo add inpleementaiton
-    public void addCounter(Long counterId, String authHeader) {
 
+    public void addCounter(Long counterId, String email) {
+        User user=findUserByEmail(email);
+        Counter counter=counterService.findCounter(counterId);
+        user.addCounter(counter);
     }
-    //Todo add implementaion
-    public void addFavorType(Long favorTypeId, String authHeader) {
 
-    }
 
     public void deleteUser(Integer id) {
         User user

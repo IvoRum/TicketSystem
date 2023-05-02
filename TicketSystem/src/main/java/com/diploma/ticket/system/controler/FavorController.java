@@ -1,7 +1,6 @@
 package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.entity.Favor;
-import com.diploma.ticket.system.entity.Ticket;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.service.FavorService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +32,8 @@ public class FavorController {
         responce=favorService.addNewService(favor);
         return ResponseEntity.ok(responce);
     }
-    //TODO Make better
     @PatchMapping(path="{favorName}")
-    public ResponseEntity updateService(
+    public ResponseEntity<String> updateService(
             @PathVariable("favorName")String name,
             @RequestBody Favor favor
     ){

@@ -24,8 +24,8 @@ public class TicketController {
 
     @GetMapping
     public ResponseEntity<List<Ticket>> getTickets(){
-        List<Ticket> responceBody=ticketService.getTickets();
-        return ResponseEntity.ok().body(responceBody);
+        List<Ticket> responseBody=ticketService.getTickets();
+        return ResponseEntity.ok().body(responseBody);
     }
 
     @GetMapping("/{favorId}")
@@ -45,11 +45,12 @@ public class TicketController {
     }
 
     @PatchMapping(path="{ticketId}")
-    public void updateTicket(@PathVariable("ticketName")String name,
-                             @RequestBody Ticket ticket){
+    public void updateTicket(
+            @PathVariable("ticketName")String name,
+            @RequestBody Ticket ticket
+    ){
         ticketService.updateTicket(name,ticket);
     }
-    //todo make bether
     @PutMapping("addFavor/{idTicket}/{idFavor}")
     public ResponseEntity<String> addFavor(
             @PathVariable("idTicket") Long idTicket,
@@ -58,7 +59,6 @@ public class TicketController {
         ticketService.addFavor(idTicket,idFavor);
         return ResponseEntity.ok("Favor had bean added to the Ticket successfully!");
     }
-    //todo make bether
     @PutMapping("addPersonalTicket/{idTicket}/{idPersnoalTicket}")
     public ResponseEntity<String> addPersonalTicket(
             @PathVariable("idTicket") Long idTicket,

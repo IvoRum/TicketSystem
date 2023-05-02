@@ -51,9 +51,8 @@ public class CounteController {
 
         return ResponseEntity.ok().body(response);
     }
-    //TODO make bether
     @PatchMapping(path="{counterId}")
-    public ResponseEntity updateCounter(
+    public ResponseEntity<String> updateCounter(
             @PathVariable("counterName")String name,
             @RequestBody Counter counter)
     {

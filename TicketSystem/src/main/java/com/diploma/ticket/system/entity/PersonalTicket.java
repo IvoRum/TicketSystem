@@ -15,8 +15,7 @@ import java.sql.Time;
 @Table(name="PersonalTicket")
 public class PersonalTicket {
     @Id
-    @Column(name="number")
-    private Long number;
+    private Long id;
     private boolean active=true;
     @Column(name="finish_time")
     private Time finishTime;

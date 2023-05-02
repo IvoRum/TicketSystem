@@ -61,7 +61,9 @@ public class MachineService {
         return new CreationResponse(idOfNewMachine,"Machine create successfully!");
     }
 
-    public void updateMachine(String nameOfMachineToUpdate, Machine machine) {
+    public void updateMachine(
+            String nameOfMachineToUpdate, Machine machine
+    ){
         String name=machine.getName();
         Optional<Machine> updatedMachine
                 =machineRepository.findMachineByName(nameOfMachineToUpdate);

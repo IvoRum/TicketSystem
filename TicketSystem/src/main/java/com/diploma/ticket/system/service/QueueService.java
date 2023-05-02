@@ -1,20 +1,22 @@
 package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.*;
-import com.diploma.ticket.system.exception.NoOneInLineException;
 import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.integration.annotation.InboundChannelAdapter;
+import org.springframework.integration.annotation.Poller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.sql.Time;
 import java.util.*;
 
 @Service
 @Transactional
-public class QueueService {
+public class QueueService implements Runnable{
 
     private final CounterService counterService;
     private final FavorService favorService;
@@ -24,7 +26,14 @@ public class QueueService {
     private final UserService userService;
 
     @Autowired
-    public QueueService(CounterService counterService, FavorService favorService, TicketService ticketService, PersonalTicketService personalTicketService, JwtUtil jwtUtil, UserService userService) {
+    public QueueService(
+            CounterService counterService,
+            FavorService favorService,
+            TicketService ticketService,
+            PersonalTicketService personalTicketService,
+            JwtUtil jwtUtil,
+            UserService userService
+    ) {
         this.counterService = counterService;
         this.favorService = favorService;
         this.ticketService = ticketService;
@@ -80,6 +89,8 @@ public class QueueService {
         }
         return waithingTickets;
     }
+
+    //@InboundChannelAdapter(value = "someChannel", poller = @Poller(value = "pollerMetadata"))
     public NextInLineResponse getNextInLineByCounter(
             Long counterId,
             String authHeader
@@ -100,7 +111,7 @@ public class QueueService {
                 nextInLine=next;
             }
         }
-        if(nextInLine.getNumber()==null){
+        if(nextInLine.getId()==null){
             return null;
         }
 
@@ -109,7 +120,7 @@ public class QueueService {
         NextInLineResponse response=
                 NextInLineResponse
                         .builder()
-                        .number(nextInLine.getNumber())
+                        .number(nextInLine.getId())
                         .issueTime(nextInLine.getIssueTime())
                         .finishTime(nextInLine.getFinishTime())
                         .peopleInLine(waitingInLine)
@@ -136,8 +147,10 @@ public class QueueService {
         return personalTickets;
     }
 
+    @Override
+    public void run() {
 
-
+    }
 
 
     public class SetInListIterator<T> implements Iterator<T> {

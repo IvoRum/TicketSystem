@@ -51,9 +51,10 @@ public class PersonalTicketController {
         return ResponseEntity.created(URI.create("PersonaTicket")).body(response);
     }
     @PatchMapping(path="{personalTicketId}")
-    public ResponseEntity updateTicket(@PathVariable("ticketNumber")Long number,
-                             @RequestBody PersonalTicket personalTicket)
-    {
+    public ResponseEntity updateTicket(
+            @PathVariable("ticketNumber")Long number,
+            @RequestBody PersonalTicket personalTicket
+    ){
         personalTicketService.updatePersonalTicket(number,personalTicket);
         return ResponseEntity.ok("Ticket whit number:"+number+" hase been updated");
     }

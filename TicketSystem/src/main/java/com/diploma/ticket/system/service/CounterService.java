@@ -21,8 +21,8 @@ public class  CounterService {
     private final FavorRepository favorRepository;
     @Autowired
     public CounterService(
-            CounterRepository counterRepository
-            ,FavorRepository favorTypeRepository
+            CounterRepository counterRepository,
+            FavorRepository favorTypeRepository
     ){
         this.counterRepository=counterRepository;
         this.favorRepository=favorTypeRepository;
@@ -43,7 +43,10 @@ public class  CounterService {
         return counterRepository.findAll();
     }
 
-    public void updateCounter(String nameOfCounterToUpdate, Counter counter) {
+    public void updateCounter(
+            String nameOfCounterToUpdate,
+            Counter counter
+    ){
         String name=counter.getName();
         Optional<Counter> updatedCounter=counterRepository.findCounterByName(nameOfCounterToUpdate);
         boolean exits=updatedCounter.isPresent();

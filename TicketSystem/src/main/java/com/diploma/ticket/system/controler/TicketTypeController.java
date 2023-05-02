@@ -27,10 +27,12 @@ public class TicketTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<TicketType> registerNewTicket(@RequestBody TicketType ticket){
+    public ResponseEntity<TicketType> registerNewTicket(
+            @RequestBody TicketType ticket
+    ){
         TicketType responseBody= ticketTypeService.addNewTicket(ticket);
 
-        return ResponseEntity.created(URI.create("TickeType"))
+        return ResponseEntity.created(URI.create("TicketType"))
                 .body(responseBody);
     }
     @PatchMapping(path="{ticketTypeName}")

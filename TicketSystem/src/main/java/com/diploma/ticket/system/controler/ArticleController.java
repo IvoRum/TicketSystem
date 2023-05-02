@@ -1,6 +1,7 @@
 package com.diploma.ticket.system.controler;
 
 import com.diploma.ticket.system.entity.Article;
+import com.diploma.ticket.system.entity.TicketType;
 import com.diploma.ticket.system.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,8 +46,7 @@ public class ArticleController {
 
         return ResponseEntity.ok("Favor whit Id:"+favorId+"have been added!");
     }
-    //TODO add patch mapping
-    @PutMapping(path="{articleName}")
+    @PatchMapping(path="{articleName}")
     public ResponseEntity updateArticle(
             @PathVariable("articleId")String name,
             @RequestBody Article article)

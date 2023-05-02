@@ -90,4 +90,8 @@ public class User implements UserDetails {
     public void addPersonalTicket(PersonalTicket personalTicket) {
         this.personalTickets.add(personalTicket);
     }
+
+    public void addCounter(Counter counter) {
+        this.counters.add(counter);
+    }
 }

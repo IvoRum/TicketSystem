@@ -47,13 +47,16 @@ public class FavorService {
         return new CreationResponse(idOFTheNewFavor,"Favor Created successfully");
     }
 
-    public void updateService(String nameToUpdate, Favor favor) {
+    public void updateService(
+            String nameToUpdate,
+            Favor favor
+    ){
         String serviceName= favor.getName();
         Optional<Favor> optionalService
                 = favorRepository.findFavorByName(nameToUpdate);
         boolean exists=optionalService.isPresent();
         if(exists){
-            new IllegalStateException("service whit name"+nameToUpdate+"exists");
+            throw new IllegalStateException("service whit name"+nameToUpdate+"exists");
         }
         if(serviceName!=null
                 &&!Objects.equals(favor.getName(),serviceName)){

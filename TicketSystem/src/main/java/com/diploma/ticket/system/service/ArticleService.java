@@ -43,7 +43,10 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-    public void updateArticle(String nameOfTheArticleToUpdate, Article article) {
+    public void updateArticle(
+            String nameOfTheArticleToUpdate,
+            Article article
+    ) {
         String name=article.getName();
         Optional<Article> updatedArticle=articleRepository.findArticleByName(nameOfTheArticleToUpdate);
         boolean exits=updatedArticle.isPresent();
@@ -57,7 +60,10 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
-    public void addFavor(Long articleId,Long favorId) {
+    public void addFavor(
+            Long articleId,
+            Long favorId
+    ) {
         Favor favor
                 = null;
         try {

@@ -43,8 +43,10 @@ public class MachineController {
     }
 
     @PatchMapping(path="{machineName}")
-    public void updateMachine(@PathVariable("machineName")String name,
-                             @RequestBody Machine machine){
+    public void updateMachine(
+            @PathVariable("machineName")String name,
+            @RequestBody Machine machine
+    ){
         machineService.updateMachine(name,machine);
     }
 

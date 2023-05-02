@@ -49,21 +49,12 @@ public class UserController {
     @PutMapping("/addCounter/{counterId}")
     public ResponseEntity addCounter (
             @PathVariable Long counterId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
+            @CurrentSecurityContext(expression = "authentication") Authentication authentication
     ){
-        userService.addCounter(counterId,authHeader);
-        return ResponseEntity.ok("Added sucsesfully");
+        userService.addCounter(counterId,authentication.getName());
+        return ResponseEntity.ok("Added successfully");
     }
 
-    @PutMapping("/favorType/{favorTypeId}")
-    public ResponseEntity addFavorType (
-            @PathVariable Long favorTypeId,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
-    ){
-        userService.addFavorType(favorTypeId,authHeader);
-
-        return ResponseEntity.ok("Added Favor type");
-    }
     @PatchMapping(path="{userId}")
     public ResponseEntity updateService(
             @PathVariable("userId")Integer id,

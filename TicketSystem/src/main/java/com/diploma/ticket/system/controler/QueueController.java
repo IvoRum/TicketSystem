@@ -36,8 +36,9 @@ public class QueueController {
         return ResponseEntity.ok().body(response);
     }
     @GetMapping("/authentication")
-    public Object getAuthentication(@CurrentSecurityContext(expression = "authentication")
-                                    Authentication authentication) {
+    public Object getAuthentication(
+            @CurrentSecurityContext(expression = "authentication") Authentication authentication
+    ) {
         return authentication.getName();
     }
     @PutMapping("/open/counter/{counterId}")
@@ -60,7 +61,7 @@ public class QueueController {
 
 
     @GetMapping("/waiting ForCounter/{counterId}")
-    public Set<PersonalTicket> getwaithingForCounter(
+    public Set<PersonalTicket> getWaitingForCounter(
             @PathVariable Long counterId
     ){
         return queueService.getWaithingForCounter(counterId);

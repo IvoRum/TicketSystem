@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface PersonalTicketRepository extends JpaRepository<PersonalTicket,Long>, JpaSpecificationExecutor<PersonalTicket> {
-    @Query("SELECT p FROM PersonalTicket p WHERE p.number= ?1")
+    @Query("SELECT p FROM PersonalTicket p WHERE p.id= ?1")
     Optional<PersonalTicket> findPersonalTicketByNUmber(Long number);
     @Query("SELECT f FROM PersonalTicket f WHERE EXISTS (SELECT t FROM f.ticket t WHERE t.id = ?1 )")
     List<PersonalTicket> findPersonalTicketsByTicket1(Long ticketID);
