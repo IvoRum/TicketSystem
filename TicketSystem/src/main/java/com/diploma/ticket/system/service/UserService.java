@@ -8,24 +8,27 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    UserService(UserRepository userRepository){
+    UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
         this.userRepository=userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     public void register(User request) {
-        User userop= userRepository.findByEmail(request.getEmail()).orElseThrow(
-                ()->new IllegalStateException("User whit email " + request.getEmail() + " does not exost")
-        );
+        Optional<User> userop= userRepository.findByEmail(request.getEmail());
+        if(userop.isPresent()){
+            throw new IllegalArgumentException("User whit email:"+request.getEmail()+"Exists! Try a different email.");
+        }
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(request);
     }

@@ -3,6 +3,7 @@ package com.diploma.ticket.system.service;
 import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,27 +31,24 @@ public class QueueService {
         this.userService = userService;
     }
 
-    public void openCounter(Long counterId, String authHeader) {
+    public void openCounter(Long counterId, String email) {
         Counter counter=
                 counterService.findCounter(counterId);
         counter.setActive(true);
 
-        User user=getUserFromToken(authHeader);
+        User user=getUserFromToken(email);
     }
 
-    public void closeCounter(Long counterId, String authHeader) {
+    public void closeCounter(Long counterId, String email) {
         Counter counter
                 =counterService.findCounter(counterId);
         counter.setActive(false);
 
-        User user=getUserFromToken(authHeader);
+        User user=getUserFromToken(email);
     }
 
 
-    private User getUserFromToken(String authHeader){
-        final String jwtToken;
-        jwtToken = authHeader.substring(7);
-        String userEmail = jwtUtil.extractUsername(jwtToken);
+    private User getUserFromToken(String userEmail){
         User user=userService.findUserByEmail(userEmail);
         return user;
     }

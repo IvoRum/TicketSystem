@@ -33,7 +33,6 @@ public class User implements UserDetails {
     @Size(min = 3, max = 20)
     private String email;
     @NotBlank
-    @Size(max = 120)
     private String password;
 
     @Enumerated(EnumType.STRING)
