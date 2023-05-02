@@ -1,5 +1,6 @@
 package com.diploma.ticket.system.handler;
 
+import com.diploma.ticket.system.payload.response.TicketSystemExceptionHandleResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,35 +17,50 @@ import java.util.NoSuchElementException;
 public class TicketSystemExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgument(
-            IllegalArgumentException ex, WebRequest request) {
+    public ResponseEntity<TicketSystemExceptionHandleResponse> handleIllegalArgument(
+            IllegalArgumentException ex, WebRequest request
+    ) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("message", "Argument is not correct for this request"+ex);
+        TicketSystemExceptionHandleResponse responseBody=
+                 TicketSystemExceptionHandleResponse.builder()
+                         .message("Argument is not correct for this request")
+                         .timestamp( LocalDateTime.now())
+                         .exeptionMessage(ex.toString())
+                         .build();
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.badRequest().body(responseBody);
     }
 
     @ExceptionHandler(
             NoSuchElementException.class)
-    public ResponseEntity<Object> handleNoSuchElement(
-            NoSuchElementException ex, WebRequest request) {
+    public ResponseEntity<TicketSystemExceptionHandleResponse> handleNoSuchElement(
+            NoSuchElementException ex, WebRequest request
+    ) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", "Id or Name of an entity is invalid!"+ex);
+        TicketSystemExceptionHandleResponse responseBody=
+                TicketSystemExceptionHandleResponse.builder()
+                        .message("Id or Name of an entity is invalid!")
+                        .timestamp( LocalDateTime.now())
+                        .exeptionMessage(ex.toString())
+                        .build();
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.badRequest().body(responseBody);
     }
-//IllegalStateException
+
     @ExceptionHandler(
             IllegalStateException.class)
-    public ResponseEntity<Object> handleIllegalState(
+    public ResponseEntity<TicketSystemExceptionHandleResponse> handleIllegalState(
             IllegalStateException ex, WebRequest request) {
+        TicketSystemExceptionHandleResponse responseBody=
+                TicketSystemExceptionHandleResponse.builder()
+                        .message("The state of the request is invalid!")
+                        .timestamp( LocalDateTime.now())
+                        .exeptionMessage(ex.toString())
+                        .build();
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", "The state of the request is invalid."+ex);
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().body(responseBody);
     }
 }
