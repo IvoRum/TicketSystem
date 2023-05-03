@@ -2,7 +2,7 @@
 
 This API allows you to create, manage and user a ticket system at your own accord 
 
-## Content List ##
+## Documentation ##
 
 [Sequence](https://github.com/IvoRum/TicketSystem/blob/main/Documents/SequenceDiagram.md)</p>
 [Database Diagram](https://github.com/IvoRum/TicketSystem/blob/main/Documents/DatabaseDiagram.md)</p>
