@@ -3,6 +3,7 @@ package com.diploma.ticket.system.service;
 import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.util.JwtUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.InboundChannelAdapter;
@@ -24,6 +25,7 @@ public class QueueService implements Runnable{
     private final PersonalTicketService personalTicketService;
     private final JwtUtil jwtUtil;
     private final UserService userService;
+    private static Logger logger= Logger.getLogger(QueueService.class.getName());
 
     @Autowired
     public QueueService(
@@ -46,21 +48,24 @@ public class QueueService implements Runnable{
         Counter counter=
                 counterService.findCounter(counterId);
         counter.setActive(true);
-
+        logger.info("Counter whit Id:"+counterId+" was opened");
         User user=getUserFromToken(email);
+        //TODO Think a way to integrite to filter
     }
 
     public void closeCounter(Long counterId, String email) {
         Counter counter
                 =counterService.findCounter(counterId);
         counter.setActive(false);
-
+        logger.info("Counter whit Id:"+counterId+" was closed");
         User user=getUserFromToken(email);
+        //TODO Think a way to integrite to filter
     }
 
 
     private User getUserFromToken(String userEmail){
         User user=userService.findUserByEmail(userEmail);
+        logger.info("Get user from Token was invoked");
         return user;
     }
 
@@ -90,7 +95,6 @@ public class QueueService implements Runnable{
         return waithingTickets;
     }
 
-    //@InboundChannelAdapter(value = "someChannel", poller = @Poller(value = "pollerMetadata"))
     public NextInLineResponse getNextInLineByCounter(
             Long counterId,
             String authHeader
@@ -98,7 +102,7 @@ public class QueueService implements Runnable{
         Counter counter =counterService.findCounter(counterId);
         Set<Favor> favors = counter.getFavor();
         List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
-        List<Set<PersonalTicket>> personalTickets=getPersonalTichetsFromTicket(ticketInLine);
+        List<Set<PersonalTicket>> personalTickets=getPersonalTicetsFromTicket(ticketInLine);
 
         Integer waitingInLine=-1;
         PersonalTicket nextInLine=new PersonalTicket();
@@ -134,10 +138,11 @@ public class QueueService implements Runnable{
         for(Favor favor:favors){
             ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
         }
+        logger.info("Get Ticket from Favor was invoked");
         return ticketInLine;
     }
 
-    private List<Set<PersonalTicket>> getPersonalTichetsFromTicket(List<List<Ticket>> ticketInLine)  {
+    private List<Set<PersonalTicket>> getPersonalTicetsFromTicket(List<List<Ticket>> ticketInLine)  {
         List<Set<PersonalTicket>> personalTickets = new ArrayList<>();
         for (List<Ticket> ticketList : ticketInLine) {
             for (Ticket ticket : ticketList) {
@@ -152,7 +157,10 @@ public class QueueService implements Runnable{
 
     }
 
-
+    /**
+     * The class is used for the way in witch the line filters out the next ticket
+     * @param <T> The set of Personal Tickets
+     */
     public class SetInListIterator<T> implements Iterator<T> {
 
         private final List<Set<T>> list;

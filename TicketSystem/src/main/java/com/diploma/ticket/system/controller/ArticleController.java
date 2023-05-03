@@ -1,11 +1,9 @@
-package com.diploma.ticket.system.controler;
+package com.diploma.ticket.system.controller;
 
 import com.diploma.ticket.system.entity.Article;
-import com.diploma.ticket.system.entity.TicketType;
 import com.diploma.ticket.system.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

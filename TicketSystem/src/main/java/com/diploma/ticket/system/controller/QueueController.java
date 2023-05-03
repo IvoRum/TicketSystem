@@ -1,7 +1,6 @@
-package com.diploma.ticket.system.controler;
+package com.diploma.ticket.system.controller;
 
 import com.diploma.ticket.system.entity.PersonalTicket;
-import com.diploma.ticket.system.exception.NoOneInLineException;
 import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;

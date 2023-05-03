@@ -4,6 +4,7 @@ import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ public class TicketService {
     private final TicketTypeRepository ticketTypeRepository;
     private final PersonalTicketRepository personalTicketRepository;
     private final UserRepository userRepository;
+    private static Logger logger= Logger.getLogger(TicketService.class.getName());
 
     @Autowired
     public TicketService(
@@ -37,17 +39,19 @@ public class TicketService {
     }
 
     public CreationResponse addNewTicket(TicketCreationRequest request) {
+        String ticketName=request.getName();
         Optional<Ticket> ticketOptional
-                =ticketRepository.findByTicketName(request.getName());
+                =ticketRepository.findByTicketName(ticketName);
         boolean exists=ticketOptional.isPresent();
         if(exists){
-            throw new IllegalStateException("Name is taken");
+            logger.info("Ticket whit Name:"+ticketName+" is taken");
+            throw new IllegalStateException("Name:"+ticketName+" is taken");
         }
 
         //Searching for the type in the repository and returning an obj
         TicketType ticketType
                 =ticketTypeRepository.findById(request.getTypeId()).orElseThrow(
-                ()->new IllegalStateException("ticket whit id " + request.getTypeId() + " does not exost")
+                ()->new IllegalStateException("Ticket whit id " + request.getTypeId() + " does not exost")
         );
         Set<TicketType> ticketTypes= new HashSet<>();
         ticketTypes.add(ticketType);
@@ -60,12 +64,10 @@ public class TicketService {
                          .workEnd(request.getWorkEnd())
                          .type(ticketTypes)
                          .build();
-        //ticketSet.add(createdTicke);
-        //favor.setTicket(ticketSet);
-        //favorRepository.save(favor);
-        ticketRepository.save(createdTicke);
 
+        ticketRepository.save(createdTicke);
         Long idOfTheNewTicket =createdTicke.getId();
+        logger.info("Ticket whit Name:"+ticketName+" has bean saved to the repository successfully");
         return new CreationResponse(idOfTheNewTicket,"Ticket Created successfully");
     }
 
@@ -74,6 +76,7 @@ public class TicketService {
         Optional<Ticket> updatedTicket=ticketRepository.findByTicketName(nameOfTicketToUpdate);
         boolean exits=updatedTicket.isPresent();
         if(exits) {
+            logger.info("Ticket whit name " + nameOfTicketToUpdate + " does not exist");
             new IllegalStateException("ticket whit name " + nameOfTicketToUpdate + " does not exist");
         }
         if(name!=null
@@ -81,13 +84,14 @@ public class TicketService {
             updatedTicket.get().setName(name);
         }
         ticketRepository.save(ticket);
+        logger.info("Ticket whit name " + nameOfTicketToUpdate + " has bean saved to the repository");
     }
 
     public void deleteTicket(Long id) {
         Ticket ticket
                 =ticketRepository.findById(id).orElseThrow();
-
         ticketRepository.delete(ticket);
+        logger.info("Ticket whit id " + id + " has bean deleted from the repository");
     }
 
     public List<Ticket> findTicketByFavor(Long favorId) {
@@ -99,13 +103,13 @@ public class TicketService {
         Favor favor
                 =favorRepository.findById(idFavor).orElseThrow();
         if(favor==null){
-            throw new IllegalStateException("Id of the favor is not found");
+            logger.info("Id: " + idFavor + " of the favor is not found");
+            throw new IllegalStateException("Id:"+idFavor+" of the favor is not found");
         }
         Ticket ticket=findById(idTicket);
-        //ticket.addFavor(favor);
         favor.addTicket(ticket);
-        //ticketRepository.save(ticket);
         favorRepository.save(favor);
+        logger.info("Ticket with id: " + idTicket + "and Favor whit id:"+idFavor+" have been saved to the repository.");
     }
 
     public Ticket findById(Long id){
@@ -118,5 +122,6 @@ public class TicketService {
         Ticket ticket=findById(idTicket);
         ticket.addPersonalTicket(personalTicket);
         ticketRepository.save(ticket);
+        logger.info("Ticket with id: " + idTicket + " hase bean saved to the repository");
     }
 }

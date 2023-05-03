@@ -3,6 +3,7 @@ package com.diploma.ticket.system.service;
 import com.diploma.ticket.system.entity.Counter;
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.repository.UserRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CounterService counterService;
-
+    private static Logger logger= Logger.getLogger(TicketTypeService.class.getName());
 
     @Autowired
     UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CounterService counterService){
@@ -30,12 +31,14 @@ public class UserService {
     public void register(User request) {
         Optional<User> userop= userRepository.findByEmail(request.getEmail());
         if(userop.isPresent()){
+            logger.info("User type whit Name:"+request.getEmail()+" Exists!");
             throw new IllegalArgumentException("User whit email:"+request.getEmail()+"Exists! Try a different email.");
         }
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(request);
+        logger.info("User type whit Name:"+request.getEmail()+" has bean saved to the repository");
     }
-    @Transactional
+
     public List<User> getUsers(){
         return userRepository.findAll();
     }
@@ -44,6 +47,10 @@ public class UserService {
         User user=findUserByEmail(email);
         Counter counter=counterService.findCounter(counterId);
         user.addCounter(counter);
+        logger.info(
+                "Add counter method was invoked whit the CounterId:" +counterId+
+                " And whit the user email:"+email
+                );
     }
 
 
@@ -51,9 +58,11 @@ public class UserService {
         User user
                 =userRepository.findById(id).orElseThrow();
         userRepository.delete(user);
+        logger.info("User type whit Id:"+id+" has bean saved to the repository");
     }
 
     public User findUserByEmail(String email){
+        logger.info("Find User by Email was invoked.");
         return userRepository.findByEmail(email).orElseThrow();
     }
 
@@ -61,5 +70,6 @@ public class UserService {
         User userToUpdate=userRepository.findById(id).orElseThrow();
         user.setId(id);
         userRepository.save(user);
+        logger.info("User whit id:"+id+"was successfully updated and saved to the repository");
     }
 }

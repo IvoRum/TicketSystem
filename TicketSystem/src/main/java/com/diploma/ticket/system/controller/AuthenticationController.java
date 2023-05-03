@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.controler;
+package com.diploma.ticket.system.controller;
 
 import com.diploma.ticket.system.payload.request.AuthenticationRequest;
 import com.diploma.ticket.system.payload.response.AuthenticationResponse;

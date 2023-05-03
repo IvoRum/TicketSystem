@@ -1,17 +1,14 @@
-package com.diploma.ticket.system.controler;
+package com.diploma.ticket.system.controller;
 
-import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.service.PersonalTicketService;
 import com.diploma.ticket.system.entity.PersonalTicket;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

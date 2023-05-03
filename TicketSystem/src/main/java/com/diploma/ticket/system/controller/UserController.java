@@ -1,16 +1,12 @@
-package com.diploma.ticket.system.controler;
+package com.diploma.ticket.system.controller;
 
-import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.User;
 import com.diploma.ticket.system.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.controler;
+package com.diploma.ticket.system.controller;
 
 import com.diploma.ticket.system.entity.TicketType;
 import com.diploma.ticket.system.service.TicketTypeService;
@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 @RestController
 @RequestMapping(path="api/v2/tickettype")

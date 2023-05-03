@@ -1,4 +1,4 @@
-package com.diploma.ticket.system.controler;
+package com.diploma.ticket.system.controller;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.service.TicketService;
@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

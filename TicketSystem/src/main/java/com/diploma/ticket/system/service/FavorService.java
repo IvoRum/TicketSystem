@@ -6,6 +6,7 @@ import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.repository.FavorRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,8 @@ import java.util.*;
 public class FavorService {
     private final FavorRepository favorRepository;
     private final FavorRepository favorTypeRepository;
+    private static Logger logger= Logger.getLogger(FavorService.class.getName());
+
 
     @Autowired
     public FavorService(FavorRepository favorRepository, FavorRepository favorTypeRepository){
@@ -33,6 +36,7 @@ public class FavorService {
                 = favorRepository.findFavorByName(favorRequest.getName());
         boolean exists=service1.isPresent();
         if(exists){
+            logger.info("Name of Service is taken");
             throw new IllegalArgumentException("Name of service dose not exists");
         }
 
@@ -44,6 +48,7 @@ public class FavorService {
                 .build();
 
         Long idOFTheNewFavor =favorRepository.save(favor).getId();
+        logger.info("Service was saved to the repository");
         return new CreationResponse(idOFTheNewFavor,"Favor Created successfully");
     }
 
@@ -56,12 +61,14 @@ public class FavorService {
                 = favorRepository.findFavorByName(nameToUpdate);
         boolean exists=optionalService.isPresent();
         if(exists){
+            logger.info("Name of Service is taken");
             throw new IllegalStateException("service whit name"+nameToUpdate+"exists");
         }
         if(serviceName!=null
                 &&!Objects.equals(favor.getName(),serviceName)){
             optionalService.get().setName(serviceName);
         }
+        logger.info("Service was updated");
         favorRepository.save(favor);
     }
 
@@ -71,6 +78,7 @@ public class FavorService {
                 ()-> new NotFountInRepositoryException
                         ("Favor whit id:"+id+"was not found")
         );
+        logger.info("Favor whit id:"+id+"was found");
         return favor;
     }
 
@@ -81,6 +89,7 @@ public class FavorService {
         } catch (Exception e) {
             throw  new IllegalStateException(e);
         }
+        logger.info("Favor whit id:"+id+"was deleted");
         favorRepository.delete(favor);
     }
 }
