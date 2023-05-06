@@ -13,24 +13,12 @@
 			<h1 class="title has-text-centered">Login Page</h1>
 			<div class="columns">
 				<div class="column is-half is-offset-one-quarter">
-					<form>
-						<div class="field">
-							<label class="label">Email</label>
-							<div class="control">
-								<input class="input" type="text" v-model="username">
-							</div>
-						</div>
-						<div class="field">
-							<label class="password">Password</label>
-							<div class="control">
-								<input class="input" type="password" v-model="password">
-							</div>
-						</div>
-						<div class="field">
-							<div class="control">
-								<button type="submit">Login</button>
-							</div>
-						</div>
+					<form id="sendAuth">
+						<label class="label">Email</label>
+						<input name="email" type="text" >
+						<label class="label">Password</label>
+						<input name="pass" type="password" >
+						<button type="submit">Login</button>
 					</form>
 				</div>
 			</div>
