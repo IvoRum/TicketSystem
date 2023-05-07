@@ -1,7 +1,9 @@
 package com.diploma.ticket.system.controller;
 
+import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.entity.PersonalTicket;
 import com.diploma.ticket.system.payload.response.CreationResponse;
+import com.diploma.ticket.system.service.FavorService;
 import com.diploma.ticket.system.service.PersonalTicketService;
 import com.diploma.ticket.system.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -17,16 +21,27 @@ public class TicketDraftController {
     private final QueueService queueService;
     private final PersonalTicketService personalTicketService;
     private final TicketController ticketService;
+    private final FavorService favorService;
+
 
     @Autowired
     public TicketDraftController(
             QueueService queueService,
             PersonalTicketService personalTicketService,
-            TicketController ticketService
-    ) {
+            TicketController ticketService,
+            FavorService favorService) {
         this.queueService = queueService;
         this.personalTicketService = personalTicketService;
         this.ticketService = ticketService;
+        this.favorService = favorService;
+    }
+
+    @GetMapping("/favor")
+    public ResponseEntity<List<Favor>> getService(){
+        List<Favor> responseBody=new ArrayList<>();
+        responseBody=favorService.getService();
+
+        return ResponseEntity.ok().body(responseBody);
     }
 
     @GetMapping("/waitingForCounter/{counterId}")
