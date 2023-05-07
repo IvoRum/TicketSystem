@@ -16,10 +16,16 @@ form.addEventListener('submit', async(e)=>{
         password: data.get('pass')
     }),
   });
+  const datat = await response.json();
+  const { access_token } = datat;
+  
+  localStorage.setItem('jwtToken', access_token);
+  // redirect the user to the dashboard or another page
+
   console.log(response);   
     if(response.ok) {
-      const json = await response.json();
-      console.log(json);
+      console.log(datat);
+      location.href= 'http://127.0.0.1:5173/serve.html';
     }
     
     const result=document.querySelector('#result');
