@@ -42,9 +42,10 @@ public class PersonalTicketController {
     public ResponseEntity<CreationResponse> registerPersonalTicket(
             @RequestBody PersonalTicket personalTicket
     ){
-        CreationResponse response
+        PersonalTicket personalTicketCreated
                 =personalTicketService.addNewPersonalTicket(personalTicket);
-
+        CreationResponse response=
+                new CreationResponse(personalTicketCreated.getId(),"Created successfully");
         return ResponseEntity.created(URI.create("PersonaTicket")).body(response);
     }
     @PatchMapping(path="{personalTicketId}")

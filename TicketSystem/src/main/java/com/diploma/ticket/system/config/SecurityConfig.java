@@ -42,7 +42,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/vi/auth/**").permitAll().anyRequest().authenticated();
+                .requestMatchers("/api/vi/auth/**","api/v1/draft/**").permitAll().anyRequest().authenticated();
         http
                 .authenticationProvider(authenticationProvider());
         http

@@ -58,13 +58,4 @@ public class QueueController {
         return ResponseEntity.ok("Counter whit id:"+counterId+"was closed");
     }
 
-
-    @GetMapping("/waiting ForCounter/{counterId}")
-    public Set<PersonalTicket> getWaitingForCounter(
-            @PathVariable Long counterId
-    ){
-        return queueService.getWaithingForCounter(counterId);
-    }
-
-
 }

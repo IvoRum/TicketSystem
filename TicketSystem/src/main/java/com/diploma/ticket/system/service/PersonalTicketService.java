@@ -64,7 +64,7 @@ public class PersonalTicketService {
     }
 
 
-    public CreationResponse addNewPersonalTicket(PersonalTicket personalTicket) {
+    public PersonalTicket addNewPersonalTicket(PersonalTicket personalTicket) {
         PersonalTicket ticketOptional
                  = null;
         try {
@@ -74,8 +74,7 @@ public class PersonalTicketService {
         } catch (NotFountInRepositoryException e) {
             personalTicketRepository.save(personalTicket);
             logger.info("Personal ticket whit id:"+personalTicket.getId()+" has bean saved to the repository");
-            return new CreationResponse(personalTicket.getId(),
-                    "Personal Ticket Created!");
+            return personalTicket;
         }
     }
 
