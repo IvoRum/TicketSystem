@@ -1,15 +1,19 @@
-const ticketNumberEl = document.querySelector('.ticket-number');
 const callTicketBtn = document.querySelector('.call-ticket-btn');
 const jwtToken = localStorage.getItem('jwtToken');
 
+let headers = new Headers();
+headers.append('Authorization', 
+`Bearer ${jwtToken}`);
+
+
+console.log(jwtToken);
 callTicketBtn.addEventListener('click', () => {
   fetch('http://localhost:8080/api/v1/queue/nextInLine/1', {
-    headers: {
-      'Authorization': `Bearer ${jwtToken}`
-    }
+    method: 'GET',
+    headers: headers,
   })  .then(response => response.json())
   .then(data => {
-    // do something with the data
+    console.log(data);
   })
   .catch(error => console.error(error));
 

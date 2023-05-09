@@ -167,4 +167,9 @@ public class PersonalTicketService {
         );
         return user;
     }
+
+    public Long getLastPersonTicketId() {
+        PersonalTicket lastTicket=personalTicketRepository.findLastPersonalTicket();
+        return lastTicket.getId();
+    }
 }

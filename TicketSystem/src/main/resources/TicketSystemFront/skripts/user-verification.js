@@ -20,7 +20,6 @@ form.addEventListener('submit', async(e)=>{
   const { access_token } = datat;
   
   localStorage.setItem('jwtToken', access_token);
-  // redirect the user to the dashboard or another page
 
   console.log(response);   
     if(response.ok) {

@@ -51,6 +51,11 @@ public class TicketDraftController {
         return queueService.getWaithingForCounter(counterId);
     }
 
+    @GetMapping("/lastPersonalTicket")
+    public Long getLastPersonalTicket(){
+        return personalTicketService.getLastPersonTicketId();
+    }
+
     @PostMapping("/{ticketId}")
     public ResponseEntity<CreationResponse> draftTicket(
             @PathVariable Long ticketId,
