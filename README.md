@@ -80,6 +80,7 @@ The response body will contain the access token and information about the user. 
 6. [Ticket-Type](#ticket-type "Goto Ticket type")
 7. [User](#user "Goto User")
 8. [Queue](#Queue "Goto Queue")
+9. [Draft](#Draft "Goto Draft")
 
 
 ### Article ###
@@ -518,6 +519,40 @@ Closes the counter.
 GET `api/v1/queue/waiting ForCounter/:counterId`
 
 Returns all the personal tickets for the counter.
+
+### Draft ###
+Authentication for dis endpoint is nopt recluerd.
+
+GET `api/v1/draft/favor`
+
+Gets the Favor so that thay can be printed on the Front-end.
+
+Get `api/v1/draft/waitingForCounter/:counterId`
+
+Returs all tickets in order that are waiting for the counter.
+
+GET `api/v1/draft/lastPersonalTicket`
+
+Retuns the last draftet ticket.
+
+POST `api/v1/draft/:ticketId`
+
+Creates a new persolnal ticket or the so calld 'darafting of a ticket'.
+The request body needs to be in JSON format and include the following properties:
+
+- `id` - Long - Not Requerd
+- `issueTime` - SQLTime `HH:mm:ss` format - Requerd
+
+
+Example
+
+```
+{
+    "id":123123,
+    "issueTime":"12:00:00"
+}
+```
+
 
 -------------------
 > You have power over your mind - not outside events. Realize this, and you will find strength. -
