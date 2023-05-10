@@ -1,0 +1,214 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #EEF5F9;
+  }
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  .sidebar h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sidebar li {
+    margin-bottom: 10px;
+  }
+  .sidebar li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+  .sidebar li a:hover {
+    background-color: #92C7E8;
+    color: #fff;
+  }
+  .main {
+    margin-left: 200px;
+    padding: 20px;
+  }
+  .main h1 {
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  .main p {
+    line-height: 1.5;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
+  
+  .grid-item {
+    background-color: #fff;
+    padding: 100px;
+    text-align: center;
+  }
+  
+  .card {
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .card h2 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .card {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 2px 2px 5px #cccccc;
+}
+
+.card h2 {
+  font-size: 24px;
+  margin-top: 0;
+}
+
+.card p {
+  font-size: 16px;
+}
+
+.card button {
+  background-color: #0066cc;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.card button:hover {
+  background-color: #004c99;
+  cursor: pointer;
+}
+
+
+  @media screen and (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  .container {
+    display: flex;
+  }
+  
+  .column {
+    flex: 1;
+    padding: 10px;
+  }
+
+
+  
+  .userCard {
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .bigCard {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid black;
+  }
+  th {
+    background-color: rgb(54, 162, 235)
+  }
+  td.today {
+    background-color: rgb(54, 162, 235)
+  }
+  form {
+    margin: 0 auto;
+    width: 50%;
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: center;
+  }
+  
+  label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 20px;
+    text-align: center;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    
+  }
+  
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: rgb(255, 255, 255);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
