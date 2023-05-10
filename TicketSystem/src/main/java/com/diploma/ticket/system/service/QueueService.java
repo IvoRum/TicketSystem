@@ -70,7 +70,6 @@ public class QueueService implements Runnable{
     }
 
     public Set<PersonalTicket> getWaithingForCounter(Long counterId){
-        //todo pitaì dali e dobre 👍😘
         //1. get the Counter entity
         Counter counter =counterService.findCounter(counterId);
         //2. get the Set of Favor types for the counter

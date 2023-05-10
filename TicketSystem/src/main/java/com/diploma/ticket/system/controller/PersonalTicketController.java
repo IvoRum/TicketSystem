@@ -28,6 +28,11 @@ public class PersonalTicketController {
         return  ResponseEntity.ok(responseBody);
     }
 
+    @GetMapping("/andTicket")
+    public List<PersonalTicket> findAllAndJoinTicket(){
+        return personalTicketService.findAllAndJoinTicket();
+    }
+
     @GetMapping("/{ticketId}")
     public ResponseEntity<List<PersonalTicket>> getPersonalTicketsByTicketId(
             @PathVariable("ticketId") Long ticketId

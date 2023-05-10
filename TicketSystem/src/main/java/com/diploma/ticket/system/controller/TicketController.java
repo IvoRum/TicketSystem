@@ -58,12 +58,12 @@ public class TicketController {
         ticketService.addFavor(idTicket,idFavor);
         return ResponseEntity.ok("Favor had bean added to the Ticket successfully!");
     }
-    @PutMapping("addPersonalTicket/{idTicket}/{idPersnoalTicket}")
+    @PutMapping("addPersonalTicket/{idTicket}/{idPersonalTicket}")
     public ResponseEntity<String> addPersonalTicket(
             @PathVariable("idTicket") Long idTicket,
-            @PathVariable("idPersnoalTicket") Long idPersnoalTicket
+            @PathVariable("idPersonalTicket") Long idPersonalTicket
     ){
-        ticketService.addPersonalTicket(idTicket,idPersnoalTicket);
+        ticketService.addPersonalTicket(idTicket,idPersonalTicket);
         return ResponseEntity.ok("Personal Ticket has bean added to the Ticket successfully!");
     }
 

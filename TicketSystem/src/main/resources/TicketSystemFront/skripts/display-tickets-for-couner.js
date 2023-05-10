@@ -1,7 +1,6 @@
 const ticketsContainer = document.getElementById('ticket-content');
 
 function displayTickets(tickets) {
-  //ticketsContainer.innerHTML = '';
   tickets.forEach(ticket => {
     const ticketDiv = document.createElement('p');
     ticketDiv.classList.add('ticket-number');

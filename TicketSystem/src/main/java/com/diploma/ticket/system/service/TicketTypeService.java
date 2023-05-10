@@ -21,20 +21,20 @@ public class TicketTypeService {
         return ticketRepository.findAll();
     }
 
-    public void updateTicket(String nameOfTicketTypeTochainge, TicketType ticket) {
+    public void updateTicket(String nameOfTicketTypeToChange , TicketType ticket) {
         String name=ticket.getName();
-        Optional<TicketType> updatedTicket=ticketRepository.findByTicketTypesName(nameOfTicketTypeTochainge);
+        Optional<TicketType> updatedTicket=ticketRepository.findByTicketTypesName(nameOfTicketTypeToChange);
         boolean exits=updatedTicket.isPresent();
         if(exits) {
-            logger.info("Ticket type whit Name:"+nameOfTicketTypeTochainge+" does not exost");
-            new IllegalStateException("ticket type whit name " + nameOfTicketTypeTochainge + " does not exost");
+            logger.info("Ticket type whit Name:"+nameOfTicketTypeToChange+" does not exist");
+            new IllegalStateException("ticket type whit name " + nameOfTicketTypeToChange + " does not exist");
         }
         if(name!=null
                 &&!Objects.equals(ticket.getName(),name)){
             updatedTicket.get().setName(name);
         }
         ticketRepository.save(ticket);
-        logger.info("Ticket type whit Name:"+nameOfTicketTypeTochainge+" has bean saved to the repository");
+        logger.info("Ticket type whit Name:"+nameOfTicketTypeToChange+" has bean saved to the repository");
     }
 
     public TicketType addNewTicket(TicketType ticketType) {
@@ -50,7 +50,7 @@ public class TicketTypeService {
         return ticketType;
     }
 
-    public void deleteTickeType(Long id) {
+    public void deleteTicketType(Long id) {
         TicketType ticketType
                 =ticketRepository.findById(id).orElseThrow();
         logger.info("Ticket type whit Id:"+id+" has bean deleted from the repository");

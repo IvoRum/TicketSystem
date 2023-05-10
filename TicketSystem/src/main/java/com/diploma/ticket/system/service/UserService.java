@@ -29,8 +29,8 @@ public class UserService {
 
     @Transactional
     public void register(User request) {
-        Optional<User> userop= userRepository.findByEmail(request.getEmail());
-        if(userop.isPresent()){
+        Optional<User> user= userRepository.findByEmail(request.getEmail());
+        if(user.isPresent()){
             logger.info("User type whit Name:"+request.getEmail()+" Exists!");
             throw new IllegalArgumentException("User whit email:"+request.getEmail()+"Exists! Try a different email.");
         }

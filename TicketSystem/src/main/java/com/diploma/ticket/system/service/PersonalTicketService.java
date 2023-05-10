@@ -27,15 +27,18 @@ public class PersonalTicketService {
     private final JwtUtil jwtUtil;
     private static Logger logger= Logger.getLogger(PersonalTicketService.class.getName());
 
+    private final TicketService ticketService;
+
     @Autowired
     public PersonalTicketService(
             PersonalTicketRepository personalTicketRepository,
             UserRepository userRepository,
-            JwtUtil jwtUtil
-    ){
+            JwtUtil jwtUtil,
+            TicketService ticketService){
         this.userRepository=userRepository;
         this.personalTicketRepository=personalTicketRepository;
         this.jwtUtil = jwtUtil;
+        this.ticketService = ticketService;
     }
 
     public void updatePersonalTicket(
@@ -67,11 +70,14 @@ public class PersonalTicketService {
     public PersonalTicket addNewPersonalTicket(PersonalTicket personalTicket) {
         PersonalTicket ticketOptional
                  = null;
+        Ticket ticket=null;
         try {
             ticketOptional = findPersonalTicketByIdOfPersonalTicket(personalTicket.getId());
+
             logger.info("Id:"+personalTicket.getId()+" of Personal Ticket is taken");
             throw new IllegalStateException("Number is taken");
         } catch (NotFountInRepositoryException e) {
+
             personalTicketRepository.save(personalTicket);
             logger.info("Personal ticket whit id:"+personalTicket.getId()+" has bean saved to the repository");
             return personalTicket;
@@ -172,4 +178,11 @@ public class PersonalTicketService {
         PersonalTicket lastTicket=personalTicketRepository.findLastPersonalTicket();
         return lastTicket.getId();
     }
+
+
+    public List<PersonalTicket> findAllAndJoinTicket(){
+        //return personalTicketRepository.findAllAndJoinTicket();
+        return null;
+    }
+
 }

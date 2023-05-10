@@ -47,7 +47,7 @@ public class TicketTypeController {
     public ResponseEntity<String> deleteTicketType(
             @PathVariable Long id
     ) {
-        ticketTypeService.deleteTickeType(id);
+        ticketTypeService.deleteTicketType(id);
         return ResponseEntity.ok("Ticket type whit id:"+id+" was deleted successfully!");
     }
 }

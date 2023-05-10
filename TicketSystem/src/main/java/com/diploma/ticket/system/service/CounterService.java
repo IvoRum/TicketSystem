@@ -56,7 +56,7 @@ public class  CounterService {
         boolean exits=updatedCounter.isPresent();
         if(exits) {
             logger.info("Name of counter is taken");
-            new IllegalArgumentException("counter whit name " + nameOfCounterToUpdate + " does not exost");
+            new IllegalArgumentException("counter whit name " + nameOfCounterToUpdate + " does not exist");
         }
         if(name!=null
                 &&!Objects.equals(counter.getName(),name)){

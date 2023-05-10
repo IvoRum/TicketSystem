@@ -24,4 +24,8 @@ public class PersonalTicket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
+
+    public void addTicket(Ticket ticket) {
+        this.ticket=ticket;
+    }
 }

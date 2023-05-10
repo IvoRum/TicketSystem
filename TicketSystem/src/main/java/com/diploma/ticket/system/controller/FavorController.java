@@ -28,9 +28,9 @@ public class FavorController {
 
     @PostMapping
     public ResponseEntity<CreationResponse> registerNewService(@RequestBody FavorCreationReqest favor){
-        CreationResponse responce=null;
-        responce=favorService.addNewService(favor);
-        return ResponseEntity.ok(responce);
+        CreationResponse response=null;
+        response=favorService.addNewService(favor);
+        return ResponseEntity.ok(response);
     }
     @PatchMapping(path="{favorName}")
     public ResponseEntity<String> updateService(

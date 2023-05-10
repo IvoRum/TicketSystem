@@ -20,7 +20,6 @@ public class QueueController {
     public QueueController(QueueService queueService) {
         this.queueService = queueService;
     }
-    //ToDo asc how to act whit log in to counter🔥💀
     @GetMapping("/nextInLine/{counterId}")
     public ResponseEntity<NextInLineResponse> getNExtInLine(
             @PathVariable Long counterId,

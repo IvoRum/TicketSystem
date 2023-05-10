@@ -51,13 +51,13 @@ public class TicketService {
         //Searching for the type in the repository and returning an obj
         TicketType ticketType
                 =ticketTypeRepository.findById(request.getTypeId()).orElseThrow(
-                ()->new IllegalStateException("Ticket whit id " + request.getTypeId() + " does not exost")
+                ()->new IllegalStateException("Ticket whit id " + request.getTypeId() + " does not exist")
         );
         Set<TicketType> ticketTypes= new HashSet<>();
         ticketTypes.add(ticketType);
 
 
-        Ticket createdTicke=
+        Ticket createdTicket=
                  Ticket.builder()
                          .name(request.getName())
                          .workStart(request.getWorkStart())
@@ -65,8 +65,8 @@ public class TicketService {
                          .type(ticketTypes)
                          .build();
 
-        ticketRepository.save(createdTicke);
-        Long idOfTheNewTicket =createdTicke.getId();
+        ticketRepository.save(createdTicket);
+        Long idOfTheNewTicket =createdTicket.getId();
         logger.info("Ticket whit Name:"+ticketName+" has bean saved to the repository successfully");
         return new CreationResponse(idOfTheNewTicket,"Ticket Created successfully");
     }
@@ -116,12 +116,13 @@ public class TicketService {
         return ticketRepository.findById(id).orElseThrow();
     }
 
-    public void addPersonalTicket(Long idTicket, Long idPersnoalTicket) {
+    public void addPersonalTicket(Long idTicket, Long idPersonalTicket) {
         PersonalTicket personalTicket=
-                personalTicketRepository.findById(idPersnoalTicket).orElseThrow();
+                personalTicketRepository.findById(idPersonalTicket).orElseThrow();
         Ticket ticket=findById(idTicket);
         ticket.addPersonalTicket(personalTicket);
         ticketRepository.save(ticket);
         logger.info("Ticket with id: " + idTicket + " hase bean saved to the repository");
     }
+
 }

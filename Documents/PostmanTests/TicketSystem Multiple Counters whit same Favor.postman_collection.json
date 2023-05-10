@@ -220,7 +220,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{AuthenticationToken}}",
+									"value": "{{AuthenticationToken1}}",
 									"type": "string"
 								}
 							]
@@ -428,6 +428,58 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{   \r\n    \"name\":\"Favor1\",\r\n    \"description\":\"some description\",\r\n    \"workStart\":\"07:00:00\",\r\n    \"workEnd\":\"19:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v2/favor",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"favor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Favor 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthenticationToken1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"name\":\"Favor2\",\r\n    \"description\":\"some description\",\r\n    \"workStart\":\"07:00:00\",\r\n    \"workEnd\":\"19:00:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -811,7 +863,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{AuthenticationToken}}",
+									"value": "{{AuthenticationToken1}}",
 									"type": "string"
 								}
 							]
@@ -868,7 +920,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{AuthenticationToken}}",
+									"value": "{{AuthenticationToken1}}",
 									"type": "string"
 								}
 							]
@@ -1054,7 +1106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"number\":\"11\",\r\n    \"issueTime\":\"16:45:01\"\r\n}",
+							"raw": "{\r\n    \"id\":\"11\",\r\n    \"issueTime\":\"16:45:01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1115,7 +1167,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"number\":\"21\",\r\n    \"issueTime\":\"16:45:01\"\r\n}",
+							"raw": "{\r\n    \"id\":\"21\",\r\n    \"issueTime\":\"16:45:01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1167,7 +1219,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{AuthenticationToken}}",
+									"value": "{{AuthenticationToken1}}",
 									"type": "string"
 								}
 							]
@@ -1232,7 +1284,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{AuthenticationToken}}",
+									"value": "{{AuthenticationToken1}}",
 									"type": "string"
 								}
 							]
@@ -1288,7 +1340,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{AuthenticationToken}}",
+									"value": "{{AuthenticationToken1}}",
 									"type": "string"
 								}
 							]
@@ -1339,7 +1391,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/queue/waiting ForCounter/:counterId",
+							"raw": "http://localhost:8080/api/v1/draft/waitingForCounter/:counterId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1348,8 +1400,8 @@
 							"path": [
 								"api",
 								"v1",
-								"queue",
-								"waiting ForCounter",
+								"draft",
+								"waitingForCounter",
 								":counterId"
 							],
 							"variable": [
@@ -1512,6 +1564,64 @@
 								{
 									"key": "counterId",
 									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Draft Personal Ticket",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"22312\",\r\n    \"issueTime\":\"16:45:01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/draft/:tickeId",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"draft",
+								":tickeId"
+							],
+							"variable": [
+								{
+									"key": "tickeId",
+									"value": "1"
 								}
 							]
 						}

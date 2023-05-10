@@ -53,7 +53,7 @@ public class ArticleService {
         boolean exits=updatedArticle.isPresent();
         if(exits) {
             logger.info("Name of article is not correct");
-            new IllegalStateException("article whit name " + nameOfTheArticleToUpdate + " does not exost");
+            new IllegalStateException("article whit name " + nameOfTheArticleToUpdate + " does not exist");
         }
         if(name!=null
                 &&!Objects.equals(article.getName(),name)){

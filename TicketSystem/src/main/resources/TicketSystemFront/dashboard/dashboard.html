@@ -1,29 +1,89 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Vertical Dashboard with White CSS Style</title>
-    <link rel="stylesheet" href="Style/dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
-    <div class="sidebar">
-      <h1>Dashboard</h1>
-      <ul>
-        <li><a href="dashboard.html">Home</a></li>
-        <li><a href="Statistics.html">Statistics</a></li>
-        <li><a href="Services.html">Services</a></li>
-        <li><a href="emplyees.html">Emplyees</a></li>
-        <li><a href="TicketMachines.html">Ticket Machines</a></li>
-        <li><a href="Articles.html">Articles</a></li>
-      </ul>
-    </div>
-    <div class="main">
+
+<head>
+  <title>Vertical Dashboard with White CSS Style</title>
+  <link rel="stylesheet" href="Style/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="sidebar">
+    <h1>Dashboard</h1>
+    <ul>
+      <li><a href="dashboard.html">Home</a></li>
+      <li><a href="Statistics.html">Statistics</a></li>
+      <li><a href="Services.html">Services</a></li>
+      <li><a href="emplyees.html">Emplyees</a></li>
+      <li><a href="TicketMachines.html">Ticket Machines</a></li>
+      <li><a href="Articles.html">Articles</a></li>
+    </ul>
+  </div>
+  <div class="main">
     <div class="grid-container">
-      <div class="grid-item">100</div>
-      <div class="grid-item">111</div>
-      <div class="grid-item">1123</div>
-      <div class="grid-item">1231</div>
+      <div class="grid-item" id="users">Users</div>
+      <div class="grid-item" id="calendar">calendar</div>
+      <div class="grid-item" id="pie-chart">pie chart (ticket favors)
+        <canvas id="myPieChart" width="250" height="250"></canvas>
+        <script>
+          let ticketNames = [];
+          let ticketValue = [];
+          const jwtToken = localStorage.getItem('jwtToken');
+          let ticketWorking = 0;
+
+          let headers = new Headers();
+          headers.append('Authorization', `Bearer ${jwtToken}`);
+          const response =
+            fetch('http://localhost:8080/api/v2/ticket', {
+              method: 'GET',
+              headers: headers,
+            }).then(response => response.json())
+              .then(data => {
+                console.log(data);
+                data.forEach(element => {
+                  ticketNames.push(element.name);
+                  let ptCounter = 0;
+                  element.personalTickets.forEach(pt => {
+                    ptCounter++;
+                  })
+
+
+                  console.log(ptCounter);
+                  ticketValue.push(ptCounter);
+                  //console.log(element.name);
+                });
+                console.log(ticketNames);
+                console.log(ticketValue);
+
+                // get the canvas element
+                var ctx = document.getElementById("myPieChart").getContext("2d");
+
+                // create the chart
+                var myChart = new Chart(ctx, {
+                  type: 'pie',
+                  data: {
+                    labels: ticketNames,
+                    datasets: [{
+                      label: "My First Dataset",
+                      data: ticketValue,
+                      backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"]
+                    }]
+                  },
+                  options: {}
+                });
+
+              })
+              .catch(error => console.error(error));
+
+
+
+
+
+        </script>
+      </div>
+      <div class="grid-item" id="graph">Grapth (counters-x/ticket finished-y)</div>
     </div>
-  </div>    
-  </body>
+  </div>
+</body>
+
 </html>

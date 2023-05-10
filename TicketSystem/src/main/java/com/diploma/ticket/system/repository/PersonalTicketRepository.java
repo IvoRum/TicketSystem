@@ -20,4 +20,7 @@ public interface PersonalTicketRepository extends JpaRepository<PersonalTicket,L
 
     @Query("SELECT f FROM PersonalTicket f ORDER BY id DESC LIMIT 1")
     PersonalTicket findLastPersonalTicket();
+
+   // @Query("SELECT pt FROM PersonalTicket pt JOIN Ticket t ON pt.personalTickets=t.id")
+    //List<PersonalTicket> findAllAndJoinTicket();
 }

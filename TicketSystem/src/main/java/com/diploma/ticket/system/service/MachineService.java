@@ -73,7 +73,7 @@ public class MachineService {
                 =machineRepository.findMachineByName(nameOfMachineToUpdate);
         boolean exits=updatedMachine.isPresent();
         if(exits) {
-            logger.info("machine whit name " + nameOfMachineToUpdate + " does not exost");
+            logger.info("machine whit name " + nameOfMachineToUpdate + " does not exist");
             new IllegalStateException("machine whit name " + nameOfMachineToUpdate + " does not exost");
         }
         if(name!=null
