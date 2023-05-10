@@ -24,6 +24,7 @@ public class UserInitializer implements CommandLineRunner {
         user.setEmail("ivoAdmin@mail.com");
         user.setPassword(passwordEncoder.encode("12345678"));
         user.setRole(Role.USER);
+        user.setFirstname("Ivo");
         userRepository.save(user);
     }
 }

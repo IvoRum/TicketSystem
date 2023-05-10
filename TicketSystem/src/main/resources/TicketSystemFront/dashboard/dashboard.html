@@ -21,22 +21,117 @@
   </div>
   <div class="main">
     <div class="grid-container">
-      <div class="grid-item" id="users">Users</div>
-      <div class="grid-item" id="calendar">calendar</div>
-      <div class="grid-item" id="pie-chart">pie chart (ticket favors)
-        <canvas id="myPieChart" width="250" height="250"></canvas>
+      <div class="grid-item" id="user-column">
+        <script src="skripts/emplyee-cards.js"></script>
+      </div>
+      <div class="grid-item" id="calendar">calendar
+
+        <body onload="displayCalendar()">
+          <h1>Calendar</h1>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="7">
+                  <button onclick="previousMonth()">&lt;</button>
+                  <span id="month-year"></span>
+                  <button onclick="nextMonth()">&gt;</button>
+                </th>
+              </tr>
+              <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+              </tr>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+          </table>
+
+          <script>
+            var currentDate = new Date();
+            var currentMonth = currentDate.getMonth();
+            var currentYear = currentDate.getFullYear();
+
+            function displayCalendar() {
+              var firstDay = new Date(currentYear, currentMonth, 1);
+              var lastDay = new Date(currentYear, currentMonth + 1, 0);
+              var calendarBody = document.getElementById("calendar-body");
+              var monthYear = document.getElementById("month-year");
+
+              monthYear.innerHTML = getMonthName(currentMonth) + " " + currentYear;
+              calendarBody.innerHTML = "";
+
+              var date = 1;
+              for (var i = 0; i < 6; i++) {
+                var row = document.createElement("tr");
+                for (var j = 0; j < 7; j++) {
+                  if (i === 0 && j < firstDay.getDay()) {
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode("");
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                  } else if (date > lastDay.getDate()) {
+                    break;
+                  } else {
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode(date);
+                    if (date === currentDate.getDate() && currentMonth === currentDate.getMonth() && currentYear === currentDate.getFullYear()) {
+                      cell.classList.add("today");
+                    }
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    date++;
+                  }
+                }
+                calendarBody.appendChild(row);
+              }
+            }
+
+            function previousMonth() {
+              if (currentMonth === 0) {
+                currentMonth = 11;
+                currentYear--;
+              } else {
+                currentMonth--;
+              }
+              displayCalendar();
+            }
+
+            function nextMonth() {
+              if (currentMonth === 11) {
+                currentMonth = 0;
+                currentYear++;
+              } else {
+                currentMonth++;
+              }
+              displayCalendar();
+            }
+
+            function getMonthName(month) {
+              var monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+              return monthNames[month];
+            }
+          </script>
+        </body>
+      </div>
+      <div class="grid-item" id="pie-chart">
+        <h2>Tickets beeing drafted</h2>
+        <canvas id="myPieChart" width="10" height="10"></canvas>
         <script>
           let ticketNames = [];
           let ticketValue = [];
-          const jwtToken = localStorage.getItem('jwtToken');
-          let ticketWorking = 0;
+          const jwtToken1 = localStorage.getItem('jwtToken');
 
-          let headers = new Headers();
-          headers.append('Authorization', `Bearer ${jwtToken}`);
+          let headers1 = new Headers();
+          headers1.append('Authorization', `Bearer ${jwtToken1}`);
           const response =
             fetch('http://localhost:8080/api/v2/ticket', {
               method: 'GET',
-              headers: headers,
+              headers: headers1,
             }).then(response => response.json())
               .then(data => {
                 console.log(data);
@@ -46,18 +141,13 @@
                   element.personalTickets.forEach(pt => {
                     ptCounter++;
                   })
-
-
                   console.log(ptCounter);
                   ticketValue.push(ptCounter);
-                  //console.log(element.name);
                 });
                 console.log(ticketNames);
                 console.log(ticketValue);
-
                 // get the canvas element
                 var ctx = document.getElementById("myPieChart").getContext("2d");
-
                 // create the chart
                 var myChart = new Chart(ctx, {
                   type: 'pie',
@@ -71,17 +161,59 @@
                   },
                   options: {}
                 });
+              })
+              .catch(error => console.error(error));
+        </script>
+      </div>
+      <div class="grid-item" id="graph">
+        <h2>Counter work flow Grapth</h2>
+        <canvas id="myChart" width="10" height="10"></canvas>
+        <script>
+          let urerNames = [];
+          let userTickets = [];
 
+          const userResponse1 =
+            fetch('http://localhost:8080/api/v1/user', {
+              method: 'GET',
+              headers: headers,
+            }).then(userResponse1 => userResponse1.json())
+              .then(data => {
+                console.log(data);
+                data.forEach(element => {
+                  let tickeCount = 0;
+                  element.personalTickets.forEach(pt => {
+                    tickeCount++;
+                  })
+                  userTickets.push(tickeCount);
+                  urerNames.push(element.firstname)
+                  console.log(element);
+                });
+                console.log(urerNames);
+                console.log(userTickets);
+                // get the canvas element
+                var ctx = document.getElementById("myChart").getContext("2d");
+                // create the chart
+                var myChart = new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                    labels: urerNames,
+                    datasets: [{
+                      label: "Finished personal tickets",
+                      data: userTickets,
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      borderColor:'rgb(54, 162, 235)',
+                      tension: 0.1
+                    }]
+                  },
+                  options: {}
+                });
               })
               .catch(error => console.error(error));
 
 
-
-
-
         </script>
       </div>
-      <div class="grid-item" id="graph">Grapth (counters-x/ticket finished-y)</div>
     </div>
   </div>
 </body>
