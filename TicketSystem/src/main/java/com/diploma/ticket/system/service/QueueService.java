@@ -3,10 +3,10 @@ package com.diploma.ticket.system.service;
 import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.util.JwtUtil;
+import com.diploma.ticket.system.util.QueueUtil;
 import com.diploma.ticket.system.util.WaitingForCounter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +27,8 @@ public class QueueService {
     private final UserService userService;
     private static Logger logger= Logger.getLogger(QueueService.class.getName());
 
+    private final QueueUtil queueUtil;
+
     static Semaphore semaphore = new Semaphore(10);
     private ExecutorService executorService= Executors.newFixedThreadPool(10);;
 
@@ -37,14 +39,15 @@ public class QueueService {
             TicketService ticketService,
             PersonalTicketService personalTicketService,
             JwtUtil jwtUtil,
-            UserService userService
-    ) {
+            UserService userService,
+            QueueUtil queueUtil) {
         this.counterService = counterService;
         this.favorService = favorService;
         this.ticketService = ticketService;
         this.personalTicketService = personalTicketService;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
+        this.queueUtil = queueUtil;
     }
 
     public void openCounter(Long counterId, String email) {
@@ -52,7 +55,7 @@ public class QueueService {
                 counterService.findCounter(counterId);
         counter.setActive(true);
         logger.info("Counter whit Id:"+counterId+" was opened");
-        User user=getUserFromToken(email);
+        User user=queueUtil.getUserFromToken(email);
         //TODO Think a way to integrate to filter
     }
 
@@ -61,48 +64,12 @@ public class QueueService {
                 =counterService.findCounter(counterId);
         counter.setActive(false);
         logger.info("Counter whit Id:"+counterId+" was closed");
-        User user=getUserFromToken(email);
+        User user=queueUtil.getUserFromToken(email);
         //TODO Think a way to integrate to filter
     }
 
 
     public Set<PersonalTicket> getWaitingForCounter(Long counterId){
-        /*
-        //1. get the Counter entity
-        Counter counter =counterService.findCounter(counterId);
-        //2. get the Set of Favor types for the counter
-        Set<Favor> favors = counter.getFavor();
-        //3. get the tickets for counter
-        List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
-        //4. get the personal tickets for the counter
-        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
-        for (List<Ticket> ticketList:ticketInLine){
-            for (Ticket ticket:ticketList){
-                personalTickets.add(ticket.getPersonalTickets());
-            }
-        }
-        Set<PersonalTicket> waitingTickets=new HashSet<>();
-        SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
-        while(nextInLineIterator.hasNext()){
-            PersonalTicket next=nextInLineIterator.next();
-            if(next.isActive()&&next.getFinishTime()==null){
-                waitingTickets.add(next);
-            }
-        }
-        return waitingTickets;
-
-         */
-        /*
-        WaitingForCounter waitingForCounter=new WaitingForCounter(counterService,counterId,ticketService);
-        executorService.execute(waitingForCounter);
-        try {
-            executorService.awaitTermination( 20l, TimeUnit.NANOSECONDS );
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return waitingForCounter.getWaithingTickets();
-        *
-         */
         WaitingForCounter waitingForCounter=new WaitingForCounter(counterService,counterId,ticketService);
         if (semaphore.tryAcquire()) {
             try {
@@ -121,13 +88,13 @@ public class QueueService {
     )  {
         Counter counter =counterService.findCounter(counterId);
         Set<Favor> favors = counter.getFavor();
-        List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
-        List<Set<PersonalTicket>> personalTickets= getPersonalTicketsFromTicket(ticketInLine);
+        List<List<Ticket>> ticketInLine=queueUtil.getTicketFromFavors(favors);
+        List<Set<PersonalTicket>> personalTickets= queueUtil.getPersonalTicketsFromTicket(ticketInLine);
 
         Integer waitingInLine=-1;
         PersonalTicket nextInLine=new PersonalTicket();
         nextInLine.setIssueTime(new Time(23,59,59));
-        SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
+        QueueUtil.SetInListIterator<PersonalTicket> nextInLineIterator=new QueueUtil.SetInListIterator<>(personalTickets);
         while(nextInLineIterator.hasNext()){
             PersonalTicket next=nextInLineIterator.next();
             if(next.getIssueTime().before(nextInLine.getIssueTime())&&next.isActive()&&next.getFinishTime()==null){
@@ -152,71 +119,6 @@ public class QueueService {
 
         return response;
     }
-    private User getUserFromToken(String userEmail){
-        User user=userService.findUserByEmail(userEmail);
-        logger.info("Get user from Token was invoked");
-        return user;
-    }
-    private List<List<Ticket>> getTicketFromFavors(Set<Favor> favors){
-        List<List<Ticket>> ticketInLine=new ArrayList<>();
-        for(Favor favor:favors){
-            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
-        }
-        logger.info("Get Ticket from Favor was invoked");
-        return ticketInLine;
-    }
 
-    private List<Set<PersonalTicket>> getPersonalTicketsFromTicket(List<List<Ticket>> ticketInLine)  {
-        List<Set<PersonalTicket>> personalTickets = new ArrayList<>();
-        for (List<Ticket> ticketList : ticketInLine) {
-            for (Ticket ticket : ticketList) {
-                personalTickets.add(ticket.getPersonalTickets());
-            }
-        }
-        return personalTickets;
-    }
-
-    /**
-     * The class is used for the way in witch the line filters out the next ticket
-     * @param <T> The set of Personal Tickets
-     */
-    public static class SetInListIterator<T> implements Iterator<T> {
-
-        private final List<Set<T>> list;
-        private int currentListIndex;
-        private Iterator<T> currentSetIterator;
-
-        public SetInListIterator(List<Set<T>> list) {
-            this.list = list;
-            this.currentListIndex = 0;
-            this.currentSetIterator = list.get(0).iterator();
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (currentSetIterator.hasNext()) {
-                return true;
-            } else if (currentListIndex < list.size() - 1) {
-                currentListIndex++;
-                currentSetIterator = list.get(currentListIndex).iterator();
-                return hasNext();
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public T next() {
-            if (hasNext()) {
-                return currentSetIterator.next();
-            } else {
-                throw new java.util.NoSuchElementException();
-            }
-        }
-
-        public Iterator<T> getCurrent(){
-            return currentSetIterator;
-        }
-    }
 }
 
