@@ -3,21 +3,21 @@ package com.diploma.ticket.system.service;
 import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.util.JwtUtil;
+import com.diploma.ticket.system.util.WaitingForCounter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.integration.annotation.InboundChannelAdapter;
-import org.springframework.integration.annotation.Poller;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.sql.Time;
 import java.util.*;
+import java.util.concurrent.*;
 
 @Service
 @Transactional
-public class QueueService implements Runnable {
+public class QueueService {
 
     private final CounterService counterService;
     private final FavorService favorService;
@@ -26,6 +26,9 @@ public class QueueService implements Runnable {
     private final JwtUtil jwtUtil;
     private final UserService userService;
     private static Logger logger= Logger.getLogger(QueueService.class.getName());
+
+    static Semaphore semaphore = new Semaphore(10);
+    private ExecutorService executorService= Executors.newFixedThreadPool(10);;
 
     @Autowired
     public QueueService(
@@ -50,7 +53,7 @@ public class QueueService implements Runnable {
         counter.setActive(true);
         logger.info("Counter whit Id:"+counterId+" was opened");
         User user=getUserFromToken(email);
-        //TODO Think a way to integrite to filter
+        //TODO Think a way to integrate to filter
     }
 
     public void closeCounter(Long counterId, String email) {
@@ -59,17 +62,12 @@ public class QueueService implements Runnable {
         counter.setActive(false);
         logger.info("Counter whit Id:"+counterId+" was closed");
         User user=getUserFromToken(email);
-        //TODO Think a way to integrite to filter
+        //TODO Think a way to integrate to filter
     }
 
 
-    private User getUserFromToken(String userEmail){
-        User user=userService.findUserByEmail(userEmail);
-        logger.info("Get user from Token was invoked");
-        return user;
-    }
-
-    public Set<PersonalTicket> getWaithingForCounter(Long counterId){
+    public Set<PersonalTicket> getWaitingForCounter(Long counterId){
+        /*
         //1. get the Counter entity
         Counter counter =counterService.findCounter(counterId);
         //2. get the Set of Favor types for the counter
@@ -83,15 +81,38 @@ public class QueueService implements Runnable {
                 personalTickets.add(ticket.getPersonalTickets());
             }
         }
-        Set<PersonalTicket> waithingTickets=new HashSet<>();
+        Set<PersonalTicket> waitingTickets=new HashSet<>();
         SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
         while(nextInLineIterator.hasNext()){
             PersonalTicket next=nextInLineIterator.next();
             if(next.isActive()&&next.getFinishTime()==null){
-                waithingTickets.add(next);
+                waitingTickets.add(next);
             }
         }
-        return waithingTickets;
+        return waitingTickets;
+
+         */
+        /*
+        WaitingForCounter waitingForCounter=new WaitingForCounter(counterService,counterId,ticketService);
+        executorService.execute(waitingForCounter);
+        try {
+            executorService.awaitTermination( 20l, TimeUnit.NANOSECONDS );
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return waitingForCounter.getWaithingTickets();
+        *
+         */
+        WaitingForCounter waitingForCounter=new WaitingForCounter(counterService,counterId,ticketService);
+        if (semaphore.tryAcquire()) {
+            try {
+                waitingForCounter.run();
+            }
+            finally {
+                semaphore.release();
+            }
+        }
+        return waitingForCounter.getWaithingTickets();
     }
 
     public NextInLineResponse getNextInLineByCounter(
@@ -101,7 +122,7 @@ public class QueueService implements Runnable {
         Counter counter =counterService.findCounter(counterId);
         Set<Favor> favors = counter.getFavor();
         List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
-        List<Set<PersonalTicket>> personalTickets=getPersonalTicetsFromTicket(ticketInLine);
+        List<Set<PersonalTicket>> personalTickets= getPersonalTicketsFromTicket(ticketInLine);
 
         Integer waitingInLine=-1;
         PersonalTicket nextInLine=new PersonalTicket();
@@ -131,7 +152,11 @@ public class QueueService implements Runnable {
 
         return response;
     }
-
+    private User getUserFromToken(String userEmail){
+        User user=userService.findUserByEmail(userEmail);
+        logger.info("Get user from Token was invoked");
+        return user;
+    }
     private List<List<Ticket>> getTicketFromFavors(Set<Favor> favors){
         List<List<Ticket>> ticketInLine=new ArrayList<>();
         for(Favor favor:favors){
@@ -141,7 +166,7 @@ public class QueueService implements Runnable {
         return ticketInLine;
     }
 
-    private List<Set<PersonalTicket>> getPersonalTicetsFromTicket(List<List<Ticket>> ticketInLine)  {
+    private List<Set<PersonalTicket>> getPersonalTicketsFromTicket(List<List<Ticket>> ticketInLine)  {
         List<Set<PersonalTicket>> personalTickets = new ArrayList<>();
         for (List<Ticket> ticketList : ticketInLine) {
             for (Ticket ticket : ticketList) {
@@ -151,16 +176,11 @@ public class QueueService implements Runnable {
         return personalTickets;
     }
 
-    @Override
-    public void run() {
-
-    }
-
     /**
      * The class is used for the way in witch the line filters out the next ticket
      * @param <T> The set of Personal Tickets
      */
-    public class SetInListIterator<T> implements Iterator<T> {
+    public static class SetInListIterator<T> implements Iterator<T> {
 
         private final List<Set<T>> list;
         private int currentListIndex;

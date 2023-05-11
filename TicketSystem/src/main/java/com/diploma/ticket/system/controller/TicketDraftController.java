@@ -48,7 +48,7 @@ public class TicketDraftController {
     public Set<PersonalTicket> getWaitingForCounter(
             @PathVariable Long counterId
     ){
-        return queueService.getWaithingForCounter(counterId);
+        return queueService.getWaitingForCounter(counterId);
     }
 
     @GetMapping("/lastPersonalTicket")
