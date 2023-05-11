@@ -4,19 +4,19 @@ This API allows you to create, manage and user a ticket system at your own accor
 
 ## Documentation ##
 
-[Sequence](https://github.com/IvoRum/TicketSystem/blob/main/Documents/SequenceDiagram.md)</p>
+[Sequence](https://github.com/IvoRum/TicketSystem/blob/main/ProjetNotes/SequenceDiagram.md)</p>
 
-[Database Diagram](https://github.com/IvoRum/TicketSystem/blob/main/database.md)</p>
+[Database Diagram](https://github.com/IvoRum/TicketSystem/blob/main/ProjetNotes/database.md)</p>
 
-[UI/UX](https://github.com/IvoRum/TicketSystem/blob/main/Documents/UI/UIDisign.md)</p>
+[UI/UX](https://github.com/IvoRum/TicketSystem/blob/main/ProjetNotes/UIDisign.md)</p>
 
-[User Personas](https://github.com/IvoRum/TicketSystem/blob/main/user-personas.md)</p>
+[User Personas](https://github.com/IvoRum/TicketSystem/blob/main/ProjetNotes/user-personas.md)</p>
 
-[Queueing logic](https://github.com/IvoRum/TicketSystem/blob/main/queeueingLogic.md)</p>
-[Ansof Matrix](https://github.com/IvoRum/TicketSystem/blob/main/ansof.md)</p>
+[Queueing logic](https://github.com/IvoRum/TicketSystem/blob/main/ProjetNotes/queeueingLogic.md)</p>
+[Ansof Matrix](https://github.com/IvoRum/TicketSystem/blob/main/ProjetNotes/ansof.md)</p>
 
 
-[Project brief](https://github.com/IvoRum/TicketSystem/blob/main/prject-brief.md)</p>
+[Project brief](https://github.com/IvoRum/TicketSystem/blob/main/ProjetNotes/prject-brief.md)</p>
 <br>
 
 <br>

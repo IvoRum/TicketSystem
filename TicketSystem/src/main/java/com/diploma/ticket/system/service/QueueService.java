@@ -17,7 +17,7 @@ import java.util.*;
 
 @Service
 @Transactional
-public class QueueService implements Runnable{
+public class QueueService implements Runnable {
 
     private final CounterService counterService;
     private final FavorService favorService;
