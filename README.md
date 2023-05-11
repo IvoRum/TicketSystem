@@ -5,8 +5,15 @@ This API allows you to create, manage and user a ticket system at your own accor
 ## Documentation ##
 
 [Sequence](https://github.com/IvoRum/TicketSystem/blob/main/Documents/SequenceDiagram.md)</p>
-[Database Diagram](https://github.com/IvoRum/TicketSystem/blob/main/Documents/DatabaseDiagram.md)</p>
+
+[Database Diagram](https://github.com/IvoRum/TicketSystem/blob/main/database.md)</p>
+
 [UI/UX](https://github.com/IvoRum/TicketSystem/blob/main/Documents/UI/UIDisign.md)</p>
+
+[User Personas](https://github.com/IvoRum/TicketSystem/blob/main/user-personas.md)</p>
+
+[Queueing logic](https://github.com/IvoRum/TicketSystem/blob/main/queeueingLogic.md)</p>
+[Ansof Matrix](https://github.com/IvoRum/TicketSystem/blob/main/ansof.md)</p>
 
 <br>
 
@@ -79,8 +86,8 @@ The response body will contain the access token and information about the user. 
 5. [Ticket](#ticket "Goto ticket")
 6. [Ticket-Type](#ticket-type "Goto Ticket type")
 7. [User](#user "Goto User")
-8. [Queue](#Queue "Goto Queue")
-9. [Draft](#Draft "Goto Draft")
+8. [Queue](#queue "Goto Queue")
+9. [Draft](#draft "Goto Draft")
 
 
 ### Article ###
@@ -461,6 +468,7 @@ Example
 The response body is the id of the ticket type and a massage.
 
 DELETE `/api/v2/tickettype/:ticketTypeId`
+<br>
 
 ### User ###
 
@@ -521,6 +529,8 @@ GET `api/v1/queue/waiting ForCounter/:counterId`
 Returns all the personal tickets for the counter.
 
 ### Draft ###
+
+
 Authentication for dis endpoint is nopt recluerd.
 
 GET `api/v1/draft/favor`
