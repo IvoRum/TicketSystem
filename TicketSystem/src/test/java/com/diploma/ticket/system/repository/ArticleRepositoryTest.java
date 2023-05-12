@@ -1,6 +1,7 @@
 package com.diploma.ticket.system.repository;
 
 import com.diploma.ticket.system.entity.Article;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,8 +19,13 @@ class ArticleRepositoryTest {
     @Autowired
     private ArticleRepository underTest;
 
+    @AfterEach
+    void tearDown(){
+        underTest.deleteAll();
+    }
+
     @Test
-    void itShouldTrueWhenCheckIfArticleExistsByName() {
+    void itShouldCheckIfArticleExistsByName() {
         //given
         String name="ArticleNameEx";
         Article article=new Article(
@@ -42,7 +48,7 @@ class ArticleRepositoryTest {
         assertThat(expected).isTrue();
     }
     @Test
-    void itShouldFalseWhenCheckIfArticleExistsByName() {
+    void itShouldCheckIfArticleDoseNotExistsByName() {
         //given
         String name="ArticleNameEx";
         String wrongName="wrongName";
