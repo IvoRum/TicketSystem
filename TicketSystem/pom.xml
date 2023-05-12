@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.diploma.ticket</groupId>
 	<artifactId>system</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>TicketSystem </name>
 	<description>Ticket system for batchler`s diploma</description>
 	<properties>
@@ -18,7 +18,6 @@
 		<spring.version>3.0.5</spring.version>
 	</properties>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>

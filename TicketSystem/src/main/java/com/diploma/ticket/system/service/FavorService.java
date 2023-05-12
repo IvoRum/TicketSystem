@@ -17,14 +17,12 @@ import java.util.*;
 @Transactional
 public class FavorService {
     private final FavorRepository favorRepository;
-    private final FavorRepository favorTypeRepository;
     private static Logger logger= Logger.getLogger(FavorService.class.getName());
 
 
     @Autowired
-    public FavorService(FavorRepository favorRepository, FavorRepository favorTypeRepository){
+    public FavorService(FavorRepository favorRepository){
         this.favorRepository = favorRepository;
-        this.favorTypeRepository=favorTypeRepository;
     }
 
     public List<Favor> getService() {

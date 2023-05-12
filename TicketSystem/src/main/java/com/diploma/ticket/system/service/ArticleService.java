@@ -21,6 +21,7 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
     private final FavorService favorService;
+
     private static Logger logger= Logger.getLogger(ArticleService.class.getName());
     @Autowired
     public ArticleService(ArticleRepository articleRepository, FavorService favorService) {
