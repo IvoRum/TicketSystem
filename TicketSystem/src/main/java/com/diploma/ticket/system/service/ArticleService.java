@@ -30,9 +30,9 @@ public class ArticleService {
     }
 
     public void addNewArticle(Article article){
-        Optional<Article> articleOptional
-                =articleRepository.findArticleByName(article.getName());
-        boolean exists=articleOptional.isPresent();
+       // Optional<Article> articleOptional
+             //   =articleRepository.findArticleByName(article.getName());
+        boolean exists=articleRepository.findArticleByName(article.getName()).isPresent();
         if(exists){
             logger.info("Name of article is not correct");
             throw new IllegalArgumentException("Name is taken");
