@@ -13,8 +13,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.sql.Time;
+import java.util.Objects;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,12 +47,29 @@ class FavorServiceTest {
     @Test
     void addNewService() {
         String name="Favor name";
-        Favor favor=Favor.builder().name(name).build();
+        Long id=1l;
         FavorCreationReqest reqest
                 =FavorCreationReqest
                 .builder()
                 .name(name)
+                .description("somthing")
+                .workStart(new Time(1200l))
+                .workEnd(new Time(1900l))
                 .build();
+
+        Favor favor
+                =Favor
+                .builder()
+                .id(id)
+                .name(reqest.getName())
+                .description(reqest.getDescription())
+                .workStart(reqest.getWorkStart())
+                .workEnd(reqest.getWorkEnd())
+                .build();
+
+
+//        given(favorRepository.save(favor).getId())
+     //          .willReturn(favor.getId());
 
 
         underTest.addNewService(reqest);
@@ -76,5 +98,14 @@ class FavorServiceTest {
 
     @Test
     void deleteFavor() {
+        //when
+        Long id=1l;
+        Favor favor=Favor.builder().id(id).build();
+
+        Optional<Favor> favorOptional= Optional.ofNullable(favor);
+        given(favorRepository.findById(id)).willReturn(favorOptional);
+        underTest.deleteFavor(favor.getId());
+        verify(favorRepository).delete(favor);
+
     }
 }
