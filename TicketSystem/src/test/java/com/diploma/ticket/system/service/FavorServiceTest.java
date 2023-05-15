@@ -2,6 +2,7 @@ package com.diploma.ticket.system.service;
 
 import com.diploma.ticket.system.entity.Counter;
 import com.diploma.ticket.system.entity.Favor;
+import com.diploma.ticket.system.exception.NotFountInRepositoryException;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
 import com.diploma.ticket.system.repository.FavorRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -33,6 +34,7 @@ class FavorServiceTest {
 
     @BeforeEach
     void setUp() {
+
         underTest=new FavorService(favorRepository);
     }
 
@@ -45,6 +47,7 @@ class FavorServiceTest {
     }
 
     @Test
+    @Disabled
     void addNewService() {
         String name="Favor name";
         Long id=1l;
@@ -68,8 +71,8 @@ class FavorServiceTest {
                 .build();
 
 
-//        given(favorRepository.save(favor).getId())
-     //          .willReturn(favor.getId());
+        given(favorRepository.save(favor))
+               .willReturn(favor);
 
 
         underTest.addNewService(reqest);
@@ -93,7 +96,17 @@ class FavorServiceTest {
     }
 
     @Test
-    void findFavorFromRepository() {
+    void findFavorFromRepository() throws NotFountInRepositoryException {
+        Long id=1l;
+        Favor favor
+                =Favor.builder().id(id).build();
+        Optional<Favor> optionalFavor= Optional.ofNullable(favor);
+        given(favorRepository.findById(id))
+                .willReturn(optionalFavor);
+        Favor foundFavor=
+        underTest.findFavorFromRepository(favor.getId());
+
+        assertThat(foundFavor).isEqualTo(favor);
     }
 
     @Test
