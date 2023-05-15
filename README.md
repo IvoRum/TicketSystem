@@ -19,7 +19,30 @@ This API allows you to create, manage and user a ticket system at your own accor
 [Project brief](https://github.com/IvoRum/TicketSystem/blob/main/ProjetNotes/prject-brief.md)</p>
 <br>
 
-<br>
+## Tech Stacks ##
+
+### Database ###
+
+* PostgreSQL 15.2
+
+### Backend ###
+
+* Java 17
+* Spring Boot 3
+* Spring Security
+* JWT
+* Mockito
+* Hibernate 
+* IDE: IntelliJ
+* Build tool: Maven
+* Server: Tomcat
+* Log4j: 1.2.17
+
+### Frontend ###
+
+* IDE: Visual Studio Code
+* Vanilla JavaScript
+* Server: Vite 4.3.5
 
 
 ## Authentication ##
