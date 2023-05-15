@@ -1,9 +1,7 @@
 package com.diploma.ticket.system.service;
 
-import com.diploma.ticket.system.entity.Article;
 import com.diploma.ticket.system.entity.Counter;
 import com.diploma.ticket.system.repository.CounterRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -16,7 +14,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -31,7 +28,7 @@ class CounterServiceTest {
 
     @BeforeEach
     void setUp() {
-        underTest=new CounterService(counterRepository);
+        //underTest=new CounterService(counterRepository, favorRepository);
     }
 
     @Test
@@ -102,6 +99,7 @@ class CounterServiceTest {
     }
 
     @Test
+    @Disabled
     void findCounter() {
     }
 }

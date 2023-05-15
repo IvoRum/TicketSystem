@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "b0e3820e-038f-40fa-becd-fe9503a2dd0c",
-		"name": "TicketSystem Wierd Enjecase testing",
+		"_postman_id": "5c321a37-f773-4cbd-8577-aebfbec61866",
+		"name": "TicketSystem Demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26098814"
 	},
@@ -127,7 +127,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"firstname\":\"Ivo1\",\r\n        \"lastname\":\"Rumenov1\",\r\n        \"email\":\"ivoUser@mail.com\",\r\n        \"role\": \"USER\",\r\n        \"password\":\"12345678\"\r\n}",
+							"raw": "{\r\n        \"firstname\":\"Asen\",\r\n        \"lastname\":\"Hristov\",\r\n        \"email\":\"AsenHristov@mail.com\",\r\n        \"role\": \"USER\",\r\n        \"password\":\"12345678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -176,7 +176,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ivoUser@mail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+							"raw": "{\r\n    \"email\":\"AsenHristov@mail.com\",\r\n    \"password\":\"12345678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -323,7 +323,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Type1\",\r\n    \"description\":\"some description\",\r\n    \"chekedTicket\":true,\r\n    \"subTicket\":false,\r\n    \"active\":false\r\n}",
+							"raw": "{\r\n    \"name\":\"Flor1\",\r\n    \"description\":\"Tickets for the first floor of the building\",\r\n    \"chekedTicket\":true,\r\n    \"subTicket\":false,\r\n    \"active\":false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -375,7 +375,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Type2\",\r\n    \"description\":\"some description\",\r\n    \"chekedTicket\":true,\r\n    \"subTicket\":false,\r\n    \"active\":false\r\n}",
+							"raw": "{\r\n    \"name\":\"Flor2\",\r\n    \"description\":\"Tickets for the second flor of the building\",\r\n    \"chekedTicket\":true,\r\n    \"subTicket\":false,\r\n    \"active\":false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -427,7 +427,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"name\":\"Favor1\",\r\n    \"description\":\"some description\",\r\n    \"workStart\":\"07:00:00\",\r\n    \"workEnd\":\"19:00:00\"\r\n}",
+							"raw": "{   \r\n    \"name\":\"Pay fines\",\r\n    \"description\":\"Favor that rederects the customer directly to the cash register\",\r\n    \"workStart\":\"08:00:00\",\r\n    \"workEnd\":\"16:45:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -450,7 +450,7 @@
 					"response": []
 				},
 				{
-					"name": "Favor x",
+					"name": "Favor 2",
 					"event": [
 						{
 							"listen": "test",
@@ -479,56 +479,13 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"name\":\"{{$randomJobTitle}}\",\r\n    \"description\":\"some description\",\r\n    \"workStart\":\"07:00:00\",\r\n    \"workEnd\":\"19:00:00\"\r\n}",
+							"raw": "{   \r\n    \"name\":\"Main services\",\r\n    \"description\":\"For all main services of the instiinstitution\",\r\n    \"workStart\":\"07:00:00\",\r\n    \"workEnd\":\"19:00:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8080/api/v2/favor",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v2",
-								"favor"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Favors",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{AuthenticationToken1}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
 						"url": {
 							"raw": "localhost:8080/api/v2/favor",
 							"host": [
@@ -583,7 +540,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":1,\r\n    \"name\":\"ticketExample1\",\r\n    \"workStart\":\"07:00:01\",\r\n    \"workEnd\":\"19:00:02\",\r\n    \"favorId\":1,\r\n    \"typeId\":1\r\n}",
+							"raw": "{\r\n    \"id\":1,\r\n    \"name\":\"Pay fines and taxes\",\r\n    \"workStart\":\"08:00:00\",\r\n    \"workEnd\":\"16:45:00\",\r\n    \"favorId\":1,\r\n    \"typeId\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -644,7 +601,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":2,\r\n    \"name\":\"ticketExample2\",\r\n    \"workStart\":\"08:30:01\",\r\n    \"workEnd\":\"19:30:02\",\r\n    \"favorId\":1,\r\n    \"typeId\":2\r\n}",
+							"raw": "{\r\n    \"id\":2,\r\n    \"name\":\"Main services\",\r\n    \"workStart\":\"08:00:00\",\r\n    \"workEnd\":\"16:30:00\",\r\n    \"favorId\":2,\r\n    \"typeId\":2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -661,6 +618,61 @@
 								"api",
 								"v2",
 								"ticket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Favor 2 to ticket 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthenticationToken2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v2/ticket/addFavor/2/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"ticket",
+								"addFavor",
+								"2",
+								"2"
 							]
 						}
 					},
@@ -704,7 +716,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/v2/ticket/addFavor/:ticketId/:favorId",
+							"raw": "localhost:8080/api/v2/ticket/addFavor/1/1",
 							"host": [
 								"localhost"
 							],
@@ -714,83 +726,8 @@
 								"v2",
 								"ticket",
 								"addFavor",
-								":ticketId",
-								":favorId"
-							],
-							"variable": [
-								{
-									"key": "ticketId",
-									"value": "1"
-								},
-								{
-									"key": "favorId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add Favor 1 to ticket 2",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{AuthenticationToken2}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v2/ticket/addFavor/:ticketId/:favorId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v2",
-								"ticket",
-								"addFavor",
-								":ticketId",
-								":favorId"
-							],
-							"variable": [
-								{
-									"key": "ticketId",
-									"value": "2"
-								},
-								{
-									"key": "favorId",
-									"value": "1"
-								}
+								"1",
+								"1"
 							]
 						}
 					},
@@ -831,7 +768,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"counte1\",\r\n    \"description\":\"Some description\",\r\n    \"number\":1\r\n}",
+							"raw": "{\r\n    \"name\":\"Payment\",\r\n    \"description\":\"Counter just for payments. Floor 2\",\r\n    \"number\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -883,7 +820,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"counte2\",\r\n    \"description\":\"Some description\",\r\n    \"number\":2\r\n}",
+							"raw": "{\r\n    \"name\":\"Main\",\r\n    \"description\":\"Counter for the main services. Floor 1\",\r\n    \"number\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1008,7 +945,7 @@
 							"variable": [
 								{
 									"key": "favorId",
-									"value": "1"
+									"value": "2"
 								},
 								{
 									"key": "counterid",
@@ -1093,7 +1030,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{AuthenticationToken2}}",
+									"value": "{{AuthenticationToken1}}",
 									"type": "string"
 								}
 							]
@@ -1253,6 +1190,136 @@
 					"response": []
 				},
 				{
+					"name": "Add PT 11 to ticket 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthenticationToken1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v2/ticket/addPersonalTicket/:idTicket/:idPersnoalTicket",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"ticket",
+								"addPersonalTicket",
+								":idTicket",
+								":idPersnoalTicket"
+							],
+							"variable": [
+								{
+									"key": "idTicket",
+									"value": "1"
+								},
+								{
+									"key": "idPersnoalTicket",
+									"value": "11"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add PT 21 to ticket 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthenticationToken1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v2/ticket/addPersonalTicket/:idTicket/:idPersnoalTicket",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"ticket",
+								"addPersonalTicket",
+								":idTicket",
+								":idPersnoalTicket"
+							],
+							"variable": [
+								{
+									"key": "idTicket",
+									"value": "2"
+								},
+								{
+									"key": "idPersnoalTicket",
+									"value": "21"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Personal Tickets",
 					"event": [
 						{
@@ -1296,93 +1363,6 @@
 					"response": []
 				},
 				{
-					"name": "Personal Tickets and join Ticket",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{AuthenticationToken1}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v2/personalticket/andTicket",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v2",
-								"personalticket",
-								"andTicket"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Ticket",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{AuthenticationToken1}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v2/ticket",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v2",
-								"ticket"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get Waiting  for counter",
 					"event": [
 						{
@@ -1398,6 +1378,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthenticationToken1}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1425,7 +1415,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Counters",
+					"name": "Next in line counter 1 ok",
 					"event": [
 						{
 							"listen": "test",
@@ -1453,41 +1443,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v2/counter",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v2",
-								"counter"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get Favors",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/draft/favor",
+							"raw": "http://localhost:8080/api/v1/queue/nextInLine/:counterId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1496,99 +1452,13 @@
 							"path": [
 								"api",
 								"v1",
-								"draft",
-								"favor"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "last personal ticket saved",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/draft/lastPersonalTicket",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"draft",
-								"lastPersonalTicket"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Draft Personal Ticket",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":\"111988\",\r\n    \"issueTime\":\"16:55:01\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/draft/:tickeId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"draft",
-								":tickeId"
+								"queue",
+								"nextInLine",
+								":counterId"
 							],
 							"variable": [
 								{
-									"key": "tickeId",
+									"key": "counterId",
 									"value": "1"
 								}
 							]
@@ -1597,72 +1467,14 @@
 					"response": []
 				},
 				{
-					"name": "Draft Personal Ticket Copy",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":\"16553338\",\r\n    \"issueTime\":\"16:55:01\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/api/v1/draft/:tickeId",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"draft",
-								":tickeId"
-							],
-							"variable": [
-								{
-									"key": "tickeId",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Next in line counter 1 ok",
+					"name": "Next in line counter 1 404",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1759,8 +1571,17 @@
 					"response": []
 				},
 				{
-					"name": "Counters",
+					"name": "Draft Personal Ticket",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
@@ -1774,64 +1595,19 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{AuthenticationToken1}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/v2/counter",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v2",
-								"counter"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Next in line counter 1 404",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 404\", function () {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});"
-								],
-								"type": "text/javascript"
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"121\",\r\n    \"issueTime\":\"16:45:01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
 							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{AuthenticationToken1}}",
-									"type": "string"
-								}
-							]
 						},
-						"method": "GET",
-						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/queue/nextInLine/:counterId",
-							"protocol": "http",
+							"raw": "localhost:8080/api/v1/draft/:tickeId",
 							"host": [
 								"localhost"
 							],
@@ -1839,13 +1615,12 @@
 							"path": [
 								"api",
 								"v1",
-								"queue",
-								"nextInLine",
-								":counterId"
+								"draft",
+								":tickeId"
 							],
 							"variable": [
 								{
-									"key": "counterId",
+									"key": "tickeId",
 									"value": "1"
 								}
 							]

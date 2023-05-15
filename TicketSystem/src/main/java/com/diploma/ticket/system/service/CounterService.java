@@ -19,13 +19,14 @@ import java.util.Optional;
 public class  CounterService {
 
     private final CounterRepository counterRepository;
-    private FavorRepository favorRepository;
+    private final FavorRepository favorRepository;
     private static Logger logger= Logger.getLogger(CounterService.class.getName());
     @Autowired
     public CounterService(
-            CounterRepository counterRepository
-    ){
+            CounterRepository counterRepository,
+            FavorRepository favorRepository){
         this.counterRepository=counterRepository;
+        this.favorRepository = favorRepository;
     }
     public CreationResponse addNewCounter(Counter counter) {
         Optional<Counter> counterOptional
