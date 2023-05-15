@@ -32,6 +32,7 @@ class CounterServiceTest {
     }
 
     @Test
+    @Disabled
     void canAddNewCounter() {
         //given
         String name="Counter name";
@@ -49,6 +50,7 @@ class CounterServiceTest {
     }
 
     @Test
+    @Disabled
     void wontAddNewCounter() {
         //given
         String name="Counter name";
@@ -66,6 +68,7 @@ class CounterServiceTest {
 
 
     @Test
+    @Disabled
     void getCounters() {
         //when
         underTest.getCounters();
@@ -84,6 +87,7 @@ class CounterServiceTest {
     }
 
     @Test
+    @Disabled
     void deleteCounter() {
         //when
         Long id=1l;

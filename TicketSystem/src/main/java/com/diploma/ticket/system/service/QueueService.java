@@ -5,9 +5,6 @@ import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.util.JwtUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.integration.annotation.InboundChannelAdapter;
-import org.springframework.integration.annotation.Poller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +14,7 @@ import java.util.*;
 
 @Service
 @Transactional
-public class QueueService implements Runnable {
+public class QueueService {
 
     private final CounterService counterService;
     private final FavorService favorService;
@@ -149,11 +146,6 @@ public class QueueService implements Runnable {
             }
         }
         return personalTickets;
-    }
-
-    @Override
-    public void run() {
-
     }
 
     /**
