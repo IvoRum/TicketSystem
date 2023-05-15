@@ -3,11 +3,9 @@ package com.diploma.ticket.system.service;
 import com.diploma.ticket.system.entity.*;
 import com.diploma.ticket.system.payload.response.NextInLineResponse;
 import com.diploma.ticket.system.util.JwtUtil;
+import com.diploma.ticket.system.util.WaithingForCounter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.integration.annotation.InboundChannelAdapter;
-import org.springframework.integration.annotation.Poller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +24,9 @@ public class QueueService implements Runnable {
     private final JwtUtil jwtUtil;
     private final UserService userService;
     private static Logger logger= Logger.getLogger(QueueService.class.getName());
+   // private WaithingForCounter waithingForCounter;
+
+
 
     @Autowired
     public QueueService(
@@ -34,14 +35,16 @@ public class QueueService implements Runnable {
             TicketService ticketService,
             PersonalTicketService personalTicketService,
             JwtUtil jwtUtil,
-            UserService userService
-    ) {
+            UserService userService,
+            WaithingForCounter waithingForCounter) {
         this.counterService = counterService;
         this.favorService = favorService;
         this.ticketService = ticketService;
         this.personalTicketService = personalTicketService;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
+
+        //this.waithingForCounter = waithingForCounter;
     }
 
     public void openCounter(Long counterId, String email) {
@@ -70,28 +73,10 @@ public class QueueService implements Runnable {
     }
 
     public Set<PersonalTicket> getWaithingForCounter(Long counterId){
-        //1. get the Counter entity
-        Counter counter =counterService.findCounter(counterId);
-        //2. get the Set of Favor types for the counter
-        Set<Favor> favors = counter.getFavor();
-        //3. get the tickets for counter
-        List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
-        //4. get the personal tickets for the counter
-        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
-        for (List<Ticket> ticketList:ticketInLine){
-            for (Ticket ticket:ticketList){
-                personalTickets.add(ticket.getPersonalTickets());
-            }
-        }
-        Set<PersonalTicket> waithingTickets=new HashSet<>();
-        SetInListIterator<PersonalTicket> nextInLineIterator=new SetInListIterator<>(personalTickets);
-        while(nextInLineIterator.hasNext()){
-            PersonalTicket next=nextInLineIterator.next();
-            if(next.isActive()&&next.getFinishTime()==null){
-                waithingTickets.add(next);
-            }
-        }
-        return waithingTickets;
+        WaithingForCounter waithingForCounter=new WaithingForCounter(counterService, ticketService);
+        waithingForCounter.setCounterId(counterId);
+        waithingForCounter.start();
+        return waithingForCounter.getWaithingTickets();
     }
 
     public NextInLineResponse getNextInLineByCounter(
@@ -160,7 +145,7 @@ public class QueueService implements Runnable {
      * The class is used for the way in witch the line filters out the next ticket
      * @param <T> The set of Personal Tickets
      */
-    public class SetInListIterator<T> implements Iterator<T> {
+    public static class SetInListIterator<T> implements Iterator<T> {
 
         private final List<Set<T>> list;
         private int currentListIndex;
