@@ -19,7 +19,7 @@ import java.util.Set;
 
 @Setter
 @Getter
-
+@Component
 public class WaithingForCounter extends Thread{
 
     private final CounterService counterService;
@@ -27,7 +27,7 @@ public class WaithingForCounter extends Thread{
     private final TicketService ticketService;
     private Set<PersonalTicket> waithingTickets;
 
-    
+    @Autowired
     public WaithingForCounter(CounterService counterService, TicketService ticketService) {
         this.counterService = counterService;
         this.ticketService = ticketService;
