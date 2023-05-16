@@ -33,6 +33,15 @@ class CounterServiceTest {
 
     @Test
     @Disabled
+    void getCounters() {
+        //when
+        underTest.getCounters();
+        //then
+        verify(counterRepository).findAll();
+    }
+
+    @Test
+    @Disabled
     void canAddNewCounter() {
         //given
         String name="Counter name";
@@ -66,15 +75,6 @@ class CounterServiceTest {
 
     }
 
-
-    @Test
-    @Disabled
-    void getCounters() {
-        //when
-        underTest.getCounters();
-        //then
-        verify(counterRepository).findAll();
-    }
 
     @Disabled
     @Test

@@ -94,7 +94,8 @@ public class TicketService {
         logger.info("Ticket whit id " + id + " has bean deleted from the repository");
     }
 
-    public List<Ticket> findTicketByFavor(Long favorId) {
+    public List<Ticket> findTicketByFavor(Long favorId)
+    {
         return ticketRepository.findByTicketFavor(favorId);
     }
 
