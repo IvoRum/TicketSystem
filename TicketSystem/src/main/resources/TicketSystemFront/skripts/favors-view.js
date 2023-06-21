@@ -15,7 +15,7 @@ function displayFavors(favors) {
     favors.forEach(favor => {
         const favorDiv = document.createElement('button');
         favorDiv.className = 'call-ticket-btn';
-        favorDiv.id = favor.name;
+        favorDiv.id = favor.id;
         favorDiv.type = 'button';
         favorDiv.innerHTML = `${favor.name}`;
 
@@ -42,7 +42,7 @@ callTicketBtn.addEventListener('click', async (e) => {
             .catch(error => console.error(error));
     console.log(nextTicketID);
     const responseDraft =
-        await fetch('http://localhost:8080/api/v1/draft/1', {
+        await fetch("http://localhost:8080/api/v1/draft/"+e.target.id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
