@@ -2,8 +2,10 @@ package com.diploma.ticket.system.controller;
 
 import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
+import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.service.FavorService;
+import com.diploma.ticket.system.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +17,13 @@ import java.util.List;
 @RequestMapping(path="api/v2/favor")
 public class FavorController {
     private final FavorService favorService;
+    private final TicketService ticketService;
     @Autowired
-    public FavorController(FavorService favorService){this.favorService = favorService;}
+    public FavorController(FavorService favorService, TicketService ticketService)
+    {
+        this.favorService = favorService;
+        this.ticketService = ticketService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Favor>> getService(){
@@ -31,6 +38,18 @@ public class FavorController {
         CreationResponse response=null;
         response=favorService.addNewService(favor);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/whitTicket")
+    public ResponseEntity<CreationResponse> registerNewServiceWhitTicket(
+            @RequestBody FavorCreationReqest favor,
+            @RequestBody TicketCreationRequest ticket
+    ){
+        CreationResponse favorCreationResponse=null,ticketCreationResponse=null;
+        favorCreationResponse=favorService.addNewService(favor);
+        ticketCreationResponse=ticketService.addNewTicket(ticket);
+        ticketService.addFavor(ticketCreationResponse.getId(), favorCreationResponse.getId());
+        return ResponseEntity.ok(ticketCreationResponse);
     }
     @PatchMapping(path="{favorName}")
     public ResponseEntity<String> updateService(

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Vertical Dashboard with White CSS Style</title>
+  <link rel="stylesheet" href="Style/dashboard.css">
+</head>
+
+<body>
+  <div class="sidebar">
+    <h1>Dashboard</h1>
+    <ul>
+      <li><a href="dashboard.html">Home</a></li>
+      <li><a href="Services.html">Services</a></li>
+      <li><a href="emplyees.html">Emplyees</a></li>
+    </ul>
+  </div>
+  <div class="main">
+    <h1>Emplyees</h1>
+    <div class="container">
+      <div class="column" id="user-column">
+        <div class="userCard" onclick="location.href='add-new-user.html';">
+          Add new Employee
+        </div>
+        <script src="skripts/emplyee-cards.js"></script>
+      </div>
+      <div class="column">
+        <div class="bigCard">
+          <h2>Employee Data Table</h2>
+          <script src="skripts/employee-data-table.js"></script>
+          <table id="my-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
