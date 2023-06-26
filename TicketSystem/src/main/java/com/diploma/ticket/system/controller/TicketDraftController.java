@@ -44,6 +44,7 @@ public class TicketDraftController {
         return ResponseEntity.ok().body(responseBody);
     }
 
+
     @GetMapping("/waitingForCounter/{counterId}")
     public Set<PersonalTicket> getWaitingForCounter(
             @PathVariable Long counterId

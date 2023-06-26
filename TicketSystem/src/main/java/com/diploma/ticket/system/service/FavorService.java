@@ -90,4 +90,5 @@ public class FavorService {
         logger.info("Favor whit id:"+id+"was deleted");
         favorRepository.delete(favor);
     }
+
 }

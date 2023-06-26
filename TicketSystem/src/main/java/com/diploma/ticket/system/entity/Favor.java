@@ -29,7 +29,7 @@ public class Favor {
     @Temporal(TemporalType.TIME)
     private Time workEnd;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
             name = "favor_tickets",
             joinColumns = @JoinColumn(name = "favor_id"),

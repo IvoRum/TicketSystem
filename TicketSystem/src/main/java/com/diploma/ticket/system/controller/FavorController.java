@@ -2,8 +2,10 @@ package com.diploma.ticket.system.controller;
 
 import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
+import com.diploma.ticket.system.payload.request.FavorWhitTicketRequest;
 import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
+import com.diploma.ticket.system.payload.response.FavorWhitTicketResponse;
 import com.diploma.ticket.system.service.FavorService;
 import com.diploma.ticket.system.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +43,19 @@ public class FavorController {
     }
 
     @PostMapping("/whitTicket")
-    public ResponseEntity<CreationResponse> registerNewServiceWhitTicket(
-            @RequestBody FavorCreationReqest favor,
-            @RequestBody TicketCreationRequest ticket
+    public ResponseEntity<FavorWhitTicketResponse> registerNewServiceWhitTicket(
+            @RequestBody FavorWhitTicketRequest request
     ){
+        FavorWhitTicketResponse finalResponse;
         CreationResponse favorCreationResponse=null,ticketCreationResponse=null;
-        favorCreationResponse=favorService.addNewService(favor);
-        ticketCreationResponse=ticketService.addNewTicket(ticket);
+        favorCreationResponse=favorService.addNewService(request.getFavorCreationReqest());
+        finalResponse=new FavorWhitTicketResponse();
+        finalResponse.setFavorId(favorCreationResponse.getId());
+        ticketCreationResponse=ticketService.addNewTicket(request.getTicketCreationRequest());
+        finalResponse.setTicketId(ticketCreationResponse.getId());
         ticketService.addFavor(ticketCreationResponse.getId(), favorCreationResponse.getId());
-        return ResponseEntity.ok(ticketCreationResponse);
+
+        return ResponseEntity.ok(finalResponse);
     }
     @PatchMapping(path="{favorName}")
     public ResponseEntity<String> updateService(

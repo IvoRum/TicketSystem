@@ -21,7 +21,8 @@ public class Ticket {
     private Long id;
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade=CascadeType.ALL)
     @JoinTable(
             name = "favor_tickets",
             joinColumns = @JoinColumn(name = "ticket_id"),
