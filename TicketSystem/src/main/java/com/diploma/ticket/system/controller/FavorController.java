@@ -3,9 +3,9 @@ package com.diploma.ticket.system.controller;
 import com.diploma.ticket.system.entity.Favor;
 import com.diploma.ticket.system.payload.request.FavorCreationReqest;
 import com.diploma.ticket.system.payload.request.FavorWhitTicketRequest;
-import com.diploma.ticket.system.payload.request.TicketCreationRequest;
 import com.diploma.ticket.system.payload.response.CreationResponse;
 import com.diploma.ticket.system.payload.response.FavorWhitTicketResponse;
+import com.diploma.ticket.system.service.CounterService;
 import com.diploma.ticket.system.service.FavorService;
 import com.diploma.ticket.system.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,14 @@ import java.util.List;
 public class FavorController {
     private final FavorService favorService;
     private final TicketService ticketService;
+    private final CounterService counterService;
+
     @Autowired
-    public FavorController(FavorService favorService, TicketService ticketService)
+    public FavorController(FavorService favorService, TicketService ticketService, CounterService counterService)
     {
         this.favorService = favorService;
         this.ticketService = ticketService;
+        this.counterService = counterService;
     }
 
     @GetMapping
@@ -55,6 +58,23 @@ public class FavorController {
         finalResponse.setTicketId(ticketCreationResponse.getId());
         ticketService.addFavor(ticketCreationResponse.getId(), favorCreationResponse.getId());
 
+        return ResponseEntity.ok(finalResponse);
+    }
+    @PostMapping("/whitTicketCounter")
+    public ResponseEntity<FavorWhitTicketResponse> registerNewServiceWhitTicketAndCounter(
+            @RequestBody FavorWhitTicketRequest request
+    ){
+        FavorWhitTicketResponse finalResponse;
+        CreationResponse favorCreationResponse,
+                ticketCreationResponse;
+        favorCreationResponse=favorService.addNewService(request.getFavorCreationReqest());
+        finalResponse=new FavorWhitTicketResponse();
+        finalResponse.setFavorId(favorCreationResponse.getId());
+
+        ticketCreationResponse=ticketService.addNewTicket(request.getTicketCreationRequest());
+        finalResponse.setTicketId(ticketCreationResponse.getId());
+        ticketService.addFavor(ticketCreationResponse.getId(), favorCreationResponse.getId());
+        counterService.addNewFavor(favorCreationResponse.getId(),1L);
         return ResponseEntity.ok(finalResponse);
     }
     @PatchMapping(path="{favorName}")

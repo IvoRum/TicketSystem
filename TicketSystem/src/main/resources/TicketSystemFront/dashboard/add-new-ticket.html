@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Vertical Dashboard with White CSS Style</title>
+  <link rel="stylesheet" href="Style/dashboard.css">
+</head>
+
+<body>
+    
+  <div class="sidebar">
+    <h1>Dashboard</h1>
+    <ul>
+      <li><a href="dashboard.html">Home</a></li>
+      <li><a href="Services.html">Services</a></li>
+      <li><a href="emplyees.html">Emplyees</a></li>
+      <li><a href="ticket.html">Tickets</a></li>
+    </ul>
+  </div>
+  <div class="main">
+   
+    <form id="employee-form">
+        <label for="ticketName">Ticket name:</label>
+        <input type="text" id="ticketName" name="ticketName"><br><br>
+        
+        <label for="work-start">Work Start:</label>
+        <input type="time" id="work-start" name="workStart"><br><br>
+        <label for="work-end">Work End:</label>
+        <input type="time" id="work-end" name="workEnd"><br><br>
+        
+        <label for="ticketType">Ticket Type:</label>
+        <select id="ticketType" name="ticketType"></select><br><br>
+
+        <label for="favorType">Favor Type:</label>
+        <select id="favorType" name="favorType"></select><br><br>
+        
+        <label for="counter">Counter:</label>
+        <select id="counter" name="counter"></select><br><br>
+        
+        <input type="submit"  value="Submit">
+      </form>
+  </div>
+  <script src="skripts/ticket-type-picker.js"></script>
+</body>
+
+</html>

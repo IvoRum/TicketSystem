@@ -34,7 +34,7 @@ public class Favor {
             name = "favor_tickets",
             joinColumns = @JoinColumn(name = "favor_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))
-    Set<Ticket> ticket;
+    Set<Ticket> ticket=new HashSet<>();
 
     @ManyToMany
     @JoinColumn(name = "article")
