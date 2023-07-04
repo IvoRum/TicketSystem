@@ -95,10 +95,14 @@ public class QueueService {
             Long counterId,
             String authHeader
     )  {
+        //1. get the Counter entity
         Counter counter =counterService.findCounter(counterId);
+        //2. get the Set of Favor types for the counter
         Set<Favor> favors = counter.getFavor();
+        //3. get the tickets for counter
         List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
-        List<Set<PersonalTicket>> personalTickets=getPersonalTicetsFromTicket(ticketInLine);
+        //4. get the personal tickets for the counter
+        List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
 
         Integer waitingInLine=-1;
         PersonalTicket nextInLine=new PersonalTicket();

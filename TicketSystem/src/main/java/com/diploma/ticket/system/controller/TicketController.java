@@ -63,6 +63,8 @@ public class TicketController {
             @PathVariable("idTicket") Long idTicket,
             @PathVariable("idPersonalTicket") Long idPersonalTicket
     ){
+        assert idPersonalTicket!=null:"personal ticket id shoud not be null";
+        assert idTicket !=null:"ticket id should not be null";
         ticketService.addPersonalTicket(idTicket,idPersonalTicket);
         return ResponseEntity.ok("Personal Ticket has bean added to the Ticket successfully!");
     }
