@@ -148,7 +148,10 @@ public class PersonalTicketService {
         User user=findUserByHeader(authHeader);
         try {
             personalTicket.setActive(false);
+            personalTicketRepository.save(personalTicket);
             user.addPersonalTicket(personalTicket);
+
+            userRepository.save(user);
         } catch (Exception e) {
             logger.info("Ticket was not set set to the user");
             return false;

@@ -95,6 +95,9 @@ public class QueueService {
             Long counterId,
             String authHeader
     )  {
+        if(getWaithingForCounter(counterId).isEmpty()){
+            return new NextInLineResponse(0L,null,null,0);
+        }
         //1. get the Counter entity
         Counter counter =counterService.findCounter(counterId);
         //2. get the Set of Favor types for the counter
@@ -103,6 +106,16 @@ public class QueueService {
         List<List<Ticket>> ticketInLine=getTicketFromFavors(favors);
         //4. get the personal tickets for the counter
         List<Set<PersonalTicket>> personalTickets=new ArrayList<>();
+        for(Favor favor:favors){
+            ticketInLine.add(ticketService.findTicketByFavor(favor.getId()));
+        }
+
+        for (List<Ticket> ticketList:ticketInLine){
+            for (Ticket ticket:ticketList){
+                personalTickets.add(ticket.getPersonalTickets());
+            }
+        }
+
 
         Integer waitingInLine=-1;
         PersonalTicket nextInLine=new PersonalTicket();
@@ -111,12 +124,8 @@ public class QueueService {
         while(nextInLineIterator.hasNext()){
             PersonalTicket next=nextInLineIterator.next();
             if(next.getIssueTime().before(nextInLine.getIssueTime())&&next.isActive()&&next.getFinishTime()==null){
-                waitingInLine++;
                 nextInLine=next;
             }
-        }
-        if(nextInLine.getId()==null){
-            return null;
         }
 
         personalTicketService.setTicketToUser(authHeader,nextInLine);
