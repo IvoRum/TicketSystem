@@ -8,6 +8,7 @@
 </head>
 
 <body>
+
   <div class="sidebar">
     <h1>Dashboard</h1>
     <ul>
@@ -116,6 +117,40 @@
           </script>
         </body>
       </div>
+      <div class="grid-item">
+
+        <h2>Prediction</h2>
+        <p id="result"></p>
+        <p>That a new client myght leave</p>
+      </div>
+      <div class="grid-item">
+        <h2>Dyopont points</h2>
+        <canvas id="lineChart"></canvas>
+        <script>
+          var chartData = {
+            labels: ["Jun", "Jul", "Aug"],
+            datasets: [
+              {
+                label: "Data",
+                data: [10, 5],
+                borderColor: "rgba(0, 123, 255, 1)",
+                fill: false
+              }
+            ]
+          };
+          
+          var ctx = document.getElementById("lineChart").getContext("2d");
+          // create the chart
+          var lineChart = new Chart(ctx, {
+            type: "line",
+            data: chartData,
+            options: {
+              responsive: true
+            }
+          });
+        </script>
+
+      </div>
       <div class="grid-item" id="pie-chart">
         <h2>Tickets beeing drafted</h2>
         <canvas id="myPieChart" width="10" height="10"></canvas>
@@ -188,9 +223,7 @@
                 });
                 console.log(urerNames);
                 console.log(userTickets);
-                // get the canvas element
                 var ctx = document.getElementById("myChart").getContext("2d");
-                // create the chart
                 var myChart = new Chart(ctx, {
                   type: 'line',
                   data: {
@@ -200,7 +233,7 @@
                       data: userTickets,
                       fill: false,
                       borderColor: 'rgb(75, 192, 192)',
-                      borderColor:'rgb(54, 162, 235)',
+                      borderColor: 'rgb(54, 162, 235)',
                       tension: 0.1
                     }]
                   },
@@ -213,5 +246,14 @@
     </div>
   </div>
 </body>
+<script>
+  window.onload = function () {
+    var min = 70;
+    var max = 100;
+
+    var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    document.getElementById("result").innerHTML = randomNumber + "%";
+  };
+</script>
 
 </html>
