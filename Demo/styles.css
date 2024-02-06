@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Agbalumo&family=Bebas+Neue&family=Roboto&family=Ubuntu+Mono&display=swap");
+
+div {
+}
+strong {
+  color: blue;
+}
+.highlight {
+  color: red;
+}
+
+.center-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-family: "Agbalumo", system-ui;
+  font-size: 5em;
+}
+
+.discription {
+  font-family: "Roboto", sans-serif;
+  padding-top: 1em;
+  padding-left: 10em;
+  padding-right: 10em;
+  font-size: 2em;
+}
