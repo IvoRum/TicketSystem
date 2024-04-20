@@ -166,7 +166,7 @@ Example
 ```
 The response body is the id of the counter and a massage.
 
-PATCH `api/v2/counter/:counterId`
+PATCH `api/v2/counter/:counterId`  
 
 Allow for the updating of a existing counter.
 The request body needs to be in JSON format and include the following properties:
