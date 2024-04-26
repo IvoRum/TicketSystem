@@ -3,7 +3,7 @@ spring:
     jwtSecret: s3cr37
     jwtExpirationMs: 36000000
   datasource:
-    url: jdbc:postgresql://localhost:5432/ticketsystem
+    url: URL
     username: postgres
     password: 
     driver-class-name: org.postgresql.Driver
